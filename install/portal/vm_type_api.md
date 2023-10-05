@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Portal VM Type API
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Portal VM Type API
 
 ## Table of Contents
 
@@ -7,7 +7,7 @@
     1.2. [범위](#1.2)  
     1.3. [참고자료](#1.3)  
 
-2. [PaaS-TA AP Portal API 설치](#2)  
+2. [K-PaaS AP Portal API 설치](#2)  
     2.1. [Prerequisite](#2.1)   
     2.2. [Stemcell 확인](#2.2)    
     2.3. [Deployment 다운로드](#2.3)   
@@ -15,7 +15,7 @@
     2.5. [서비스 설치](#2.5)    
     2.6. [서비스 설치 확인](#2.6)  
 
-3. [PaaS-TA AP Portal 운영](#3)  
+3. [K-PaaS AP Portal 운영](#3)  
     3.1. [사용자의 조직 생성 Flag 활성화](#3.1)  
     3.2. [사용자포탈 UAA 페이지 오류](#3.2)  
     3.3. [운영자포탈 유저 페이지 조회 오류](#3.3)  
@@ -27,17 +27,17 @@
 ## <div id="1"/> 1. 문서 개요
 ### <div id="1.1"/> 1.1. 목적
 
-본 문서(PaaS-TA AP Portal API 설치 가이드)는 PaaS-TA AP Portal API를 BOSH를 이용하여 설치 하는 방법을 기술하였다.
+본 문서(K-PaaS AP Portal API 설치 가이드)는 K-PaaS AP Portal API를 BOSH를 이용하여 설치 하는 방법을 기술하였다.
 
 ### <div id="1.2"/> 1.2. 범위
-설치 범위는 PaaS-TA AP Portal을 검증하기 위한 Portal API 기본 설치를 기준으로 작성하였다.
+설치 범위는 K-PaaS AP Portal을 검증하기 위한 Portal API 기본 설치를 기준으로 작성하였다.
 
 
 ### <div id="1.3"/> 1.3. 참고자료
 BOSH Document: [http://bosh.io](http://bosh.io)  
 Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundry.org)  
 
-## <div id="2"/> 2. PaaS-TA AP Portal API 설치
+## <div id="2"/> 2. K-PaaS AP Portal API 설치
 
 ### <div id="2.1"/> 2.1. Prerequisite
 본 설치 가이드는 Linux 환경에서 설치하는 것을 기준으로 하였다.
@@ -82,7 +82,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Portal Deployment Git Repository URL : https://github.com/PaaS-TA/portal-deployment/tree/v5.2.23
+- Portal Deployment Git Repository URL : https://github.com/K-PaaS/portal-deployment/tree/v5.2.23.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -90,13 +90,13 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/portal-deployment.git -b v5.2.23
+$ git clone https://github.com/K-PaaS/portal-deployment.git -b v5.2.23.1
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.   
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.   
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -128,7 +128,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -161,23 +161,23 @@ Succeeded
 ```
 
 - common_vars.yml을 서버 환경에 맞게 수정한다.
-- PaaS-TA AP Portal API에서 사용하는 변수는 system_domain, paasta_admin_username, paasta_admin_password, paasta_database_ips, paasta_database_port, paasta_database_type, paasta_database_driver_class, paasta_cc_db_id, paasta_cc_db_password, paasta_uaa_db_id, paasta_uaa_db_password, uaa_client_admin_id, uaa_client_admin_secret, monitoring_api_url, portal_web_user_url, portal_web_user_language 이다.
+- K-PaaS AP Portal API에서 사용하는 변수는 system_domain, ap_admin_username, ap_admin_password, ap_database_ips, ap_database_port, ap_database_type, ap_database_driver_class, ap_cc_db_id, ap_cc_db_password, ap_uaa_db_id, ap_uaa_db_password, uaa_client_admin_id, uaa_client_admin_secret, monitoring_api_url, portal_web_user_url, portal_web_user_language 이다.
 
 > $ vi ~/workspace/common/common_vars.yml
 ```
 ... ((생략)) ...
 
 system_domain: "61.252.53.246.nip.io"		# Domain (nip.io를 사용하는 경우 HAProxy Public IP와 동일)
-paasta_admin_username: "admin"			# PaaS-TA Admin Username
-paasta_admin_password: "admin"			# PaaS-TA Admin Password
-paasta_database_ips: "10.0.1.123"		# PaaS-TA Database IP (e.g. "10.0.1.123")
-paasta_database_port: 5524			# PaaS-TA Database Port (e.g. 5524(postgresql)/13307(mysql)) -- Do Not Use "3306"&"13306" in mysql
-paasta_database_type: "postgresql"		# PaaS-TA Database Type (e.g. "postgresql" or "mysql")
-paasta_database_driver_class: "org.postgresql.Driver"	# PaaS-TA Database driver-class (e.g. "org.postgresql.Driver" or "com.mysql.jdbc.Driver")
-paasta_cc_db_id: "cloud_controller"		# CCDB ID (e.g. "cloud_controller")
-paasta_cc_db_password: "cc_admin"		# CCDB Password (e.g. "cc_admin")
-paasta_uaa_db_id: "uaa"				# UAADB ID (e.g. "uaa")
-paasta_uaa_db_password: "uaa_admin"		# UAADB Password (e.g. "uaa_admin")
+ap_admin_username: "admin"			# Application Platform Admin Username
+ap_admin_password: "admin"			# Application Platform Admin Password
+ap_database_ips: "10.0.1.123"		# Application Platform Database IP (e.g. "10.0.1.123")
+ap_database_port: 5524			# Application Platform Database Port (e.g. 5524(postgresql)/13307(mysql)) -- Do Not Use "3306"&"13306" in mysql
+ap_database_type: "postgresql"		# Application Platform Database Type (e.g. "postgresql" or "mysql")
+ap_database_driver_class: "org.postgresql.Driver"	# Application Platform Database driver-class (e.g. "org.postgresql.Driver" or "com.mysql.jdbc.Driver")
+ap_cc_db_id: "cloud_controller"		# CCDB ID (e.g. "cloud_controller")
+ap_cc_db_password: "cc_admin"		# CCDB Password (e.g. "cc_admin")
+ap_uaa_db_id: "uaa"				# UAADB ID (e.g. "uaa")
+ap_uaa_db_password: "uaa_admin"		# UAADB Password (e.g. "uaa_admin")
 uaa_client_admin_id: "admin"			# UAAC Admin Client Admin ID
 uaa_client_admin_secret: "admin-secret"		# UAAC Admin Client에 접근하기 위한 Secret 변수
 monitoring_api_url: "61.252.53.241"		# Monitoring-WEB의 Public IP
@@ -205,11 +205,11 @@ public_networks_name: "vip"                                     # public network
 
 # MARIADB INFO
 mariadb_azs: [z6]                                               # mariadb : azs
-mariadb_instances: 1                                            # mariadb : instances (1)
+mariadb_instances: 1                                            # mariadb : instances (1) 
 mariadb_vm_type: "minimal"                                      # mariadb : vm type
 mariadb_persistent_disk_type: "10GB"                            # mariadb : persistent disk type
 mariadb_port: "<MARIADB_PORT>"                                  # mariadb : database port (e.g. 13306) -- Do Not Use "3306"
-mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Paasta@2019")
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Kpaas@2019")
 
 # HAPROXY INFO
 haproxy_azs: [z7]                                               # haproxy : azs
@@ -224,10 +224,10 @@ binary_storage_instances: 1                                     # binary storage
 binary_storage_vm_type: "minimal"                               # binary storage : vm type
 binary_storage_persistent_disk_type: "10GB"                     # binary storage : persistent disk type
 binary_storage_auth_port: "<BINARY_STORAGE_AUTH_PORT>"          # binary storage : keystone port (e.g. 15001) -- Do Not Use "5000"
-binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "paasta-portal")
-binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "paasta")
-binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "paasta-portal")
-binary_storage_email: "<BINARY_STORAGE_EMAIL>"                  # binary storage : email (e.g. "paasta@paasta.com")
+binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "kpaas-portal")
+binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "kpaas")
+binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "kpaas-portal")
+binary_storage_email: "<BINARY_STORAGE_EMAIL>"                  # binary storage : email (e.g. "kpaas@kpaas.com")
 
 # PORTAL_GATEWAY INFO
 gateway_azs: [z6]                                               # gateway : azs
@@ -283,7 +283,12 @@ mail_smtp_useremail: "<MAIL_SMTP_USER_EMAIL>"                   # mail-smtp : us
 mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
 mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
 mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
-mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
+mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : properties subject (e.g. "K-PaaS User Potal")
+
+# ETC INFO
+portal_default_security_username: "admin"                       # ETC : spring security username
+portal_default_security_password: "openkpaas"                   # ETC : spring security password
+portal_default_header_auth: "Basic YWRtaW46b3BlbmtwYWFz"        # ETC : default header auth (spring security id:password(base64))
 ```
 
 ### <div id="2.5"/> 2.5. 서비스 설치
@@ -297,8 +302,8 @@ mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : pr
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"              # common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-CURRENT_IAAS="${CURRENT_IAAS}"                          # IaaS Information (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"                  # bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+CURRENT_IAAS="${CURRENT_IAAS}"                          # IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"                  # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # portal-log-api 인스턴스 갯수에 따라 logging service 활성화 여부를 분기한다.
 LOG_API_INSTANCE_CNT=`grep 'log_api_instances' vars.yml | cut -d ":" -f2 | cut -d "#" -f1`
@@ -345,22 +350,22 @@ binary_storage/9f58a9b7-2a3d-4ee9-8975-7b04b99c0a21               running       
 haproxy/8cc2d633-2b43-4f3d-a2e8-72f5279c11d5                      running        z5  10.30.107.213  vm-315bfa1b-9829-46de-a19d-3bd65e9f9ad4  portal_large   true  
 										     115.68.46.214                                                            
 mariadb/117cbf05-b223-4133-bf61-e15f16494e21                      running        z5  10.30.107.211  vm-bc5ae334-12d4-41d4-8411-d9315a96a305  portal_large   true  
-paas-ta-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c           running        z5  10.30.107.217  vm-9d2a1929-0157-4c77-af5e-707ec496ed87  portal_medium  true  
-paas-ta-portal-common-api/060320fa-7f26-4032-a1d9-6a7a41a044a8    running        z5  10.30.107.219  vm-f35e9838-74cf-40e0-9f97-894b53a68d1f  portal_medium  true  
-paas-ta-portal-gateway/6baba810-9a4a-479d-98b2-97e5ba651784       running        z5  10.30.107.214  vm-7ec75160-bf34-442e-b755-778ae7dd3fec  portal_medium  true  
-paas-ta-portal-registration/3728ed73-451e-4b93-ab9b-c610826c3135  running        z5  10.30.107.215  vm-c4020514-c458-41c6-bcbc-7e0ee1bc6f42  portal_small   true  
-paas-ta-portal-storage-api/2940366a-8294-4509-a9c0-811c8140663a   running        z5  10.30.107.220  vm-79ad6ee1-1bb5-4308-8b71-9ed30418e2c1  portal_medium  true  
+ap-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c                running        z5  10.30.107.217  vm-9d2a1929-0157-4c77-af5e-707ec496ed87  portal_medium  true  
+ap-portal-common-api/060320fa-7f26-4032-a1d9-6a7a41a044a8         running        z5  10.30.107.219  vm-f35e9838-74cf-40e0-9f97-894b53a68d1f  portal_medium  true  
+ap-portal-gateway/6baba810-9a4a-479d-98b2-97e5ba651784            running        z5  10.30.107.214  vm-7ec75160-bf34-442e-b755-778ae7dd3fec  portal_medium  true  
+ap-portal-registration/3728ed73-451e-4b93-ab9b-c610826c3135       running        z5  10.30.107.215  vm-c4020514-c458-41c6-bcbc-7e0ee1bc6f42  portal_small   true  
+ap-portal-storage-api/2940366a-8294-4509-a9c0-811c8140663a        running        z5  10.30.107.220  vm-79ad6ee1-1bb5-4308-8b71-9ed30418e2c1  portal_medium  true  
 
 8 vms
 
 Succeeded
 ```
 
-## <div id="3"/>3. PaaS-TA AP Portal 운영
+## <div id="3"/>3. K-PaaS AP Portal 운영
 
 ### <div id="3.1"/> 3.1. 사용자의 조직 생성 Flag 활성화
 
-PaaS-TA는 기본적으로 일반 사용자는 조직을 생성할 수 없도록 설정되어 있다. 포털 배포를 위해 조직 및 공간을 생성해야 하고 또 테스트를 구동하기 위해서도 필요하므로 사용자가 조직을 생성할 수 있도록 user_org_creation FLAG를 활성화 한다. FLAG 활성화를 위해서는 PaaS-TA 운영자 계정으로 로그인이 필요하다.
+K-PaaS는 기본적으로 일반 사용자는 조직을 생성할 수 없도록 설정되어 있다. 포털 배포를 위해 조직 및 공간을 생성해야 하고 또 테스트를 구동하기 위해서도 필요하므로 사용자가 조직을 생성할 수 있도록 user_org_creation FLAG를 활성화 한다. FLAG 활성화를 위해서는 K-PaaS AP 운영자 계정으로 로그인이 필요하다.
 
 ```
 $ cf enable-feature-flag user_org_creation
@@ -374,7 +379,7 @@ Feature user_org_creation Enabled.
 
 ### <div id="3.2"/> 3.2. 사용자포탈 UAA페이지 오류
 
->![paas-ta-portal-31]
+>![portal-31]
 1. uaac portalclient가 등록이 되어있지 않다면 해당 화면과 같이 redirect오류가 발생한다.
 2. uaac client add를 통해 potalclient를 추가시켜주어야 한다.
     > $ uaac target\
@@ -390,7 +395,7 @@ $ uaac client add portalclient -s xxxxx --redirect_uri "http://portal-web-user.x
 --authorities="uaa.resource" \
 --autoapprove="openid , cloud_controller_service_permissions.read"
 
- >![paas-ta-portal-32]
+ >![portal-32]
 1. uaac portalclient가 url이 잘못 등록되어있다면 해당 화면과 같이 redirect오류가 발생한다.
 2. uaac client update를 통해 url을 수정해야한다.
    > $ uaac target\
@@ -405,27 +410,27 @@ $ uaac client add portalclient -s xxxxx --redirect_uri "http://portal-web-user.x
 1. 페이지 이동시 정보를 가져오지 못하고 오류가 났을 경우 common-api VM으로 이동후에 DB 정보 config를 수정후 재시작을 해 주어야 한다.
 
 ### <div id="3.4"/> 3.4. DB Migration
-이전버전에서 사용한 Portal DB를 PaaS-TA 3.5 Portal DB에 마이그레이션 하는 방법을 설명한다.
-##### 1. DB tool을 이용해 기존에 사용한 DB와 Paas-TA 3.5 Portal DB를 연결한다.
+이전버전에서 사용한 Portal DB를 K-PaaS 3.5 Portal DB에 마이그레이션 하는 방법을 설명한다.
+##### 1. DB tool을 이용해 기존에 사용한 DB와 K-PaaS AP 3.5 Portal DB를 연결한다.
  * 가이드의 DB tool을 이용한 마이그레이션 설명은 navicat을 기준으로 한다.
 ##### 2. 마이그레이션할 table의 레코드 데이터를 전부 삭제한다.
->![paas-ta-portal-25]
+>![portal-25]
 ##### 3. Tools - Data Transfer를 클릭해서 마이그레이션 설정창을 띄운다.
->![paas-ta-portal-21]
-##### 4. 마이그레이션할 source DB(기존 DB), target DB(Paas-TA 3.5 Portal DB)를 설정한다.
->![paas-ta-portal-20]
+>![portal-21]
+##### 4. 마이그레이션할 source DB(기존 DB), target DB(K-PaaS AP 3.5 Portal DB)를 설정한다.
+>![portal-20]
 ##### 5. Option에 들어가 Table Options의 Create tables 옵션에 체크를 해제, Orther Options의 Contiune on error를 체크한 후 next를 누른다.
->![paas-ta-portal-24]
+>![portal-24]
 ##### 6. 데이터를 이동할 테이블을 설정 후 next를 누른다.
->![paas-ta-portal-22]
+>![portal-22]
 ##### 7-1. 마이그레이션이 정상적으로 완료된 모습
->![paas-ta-portal-23]
+>![portal-23]
 ##### 7-2. 마이그레이션 오류난 모습
->![paas-ta-portal-26]
-##### 7-3. 기존 DB에 오류난 Paas-TA Portal table의 Design에 맞춰 수정후에 다시 마이그레이션을 진행한다.
+>![portal-26]
+##### 7-3. 기존 DB에 오류난 K-PaaS AP Portal table의 Design에 맞춰 수정후에 다시 마이그레이션을 진행한다.
 
 ### <div id="3.5"/> 3.5. Log
-Paas-TA Portal 각각 Instance의 log를 확인 할 수 있다.
+K-PaaS AP Portal 각각 Instance의 log를 확인 할 수 있다.
 1. 로그를 확인할 Instance에 접근한다.
     > bosh ssh -d [deployment name] [instance name]
 
@@ -434,19 +439,19 @@ Paas-TA Portal 각각 Instance의 log를 확인 할 수 있다.
        haproxy/8cc2d633-2b43-4f3d-a2e8-72f5279c11d5                      running        z5  10.30.107.213  vm-315bfa1b-9829-46de-a19d-3bd65e9f9ad4  portal_large   true  
                                                                                             115.68.46.214                                                            
        mariadb/117cbf05-b223-4133-bf61-e15f16494e21                      running        z5  10.30.107.211  vm-bc5ae334-12d4-41d4-8411-d9315a96a305  portal_large   true  
-       paas-ta-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c           running        z5  10.30.107.217  vm-9d2a1929-0157-4c77-af5e-707ec496ed87  portal_medium  true  
-       paas-ta-portal-common-api/060320fa-7f26-4032-a1d9-6a7a41a044a8    running        z5  10.30.107.219  vm-f35e9838-74cf-40e0-9f97-894b53a68d1f  portal_medium  true  
-       paas-ta-portal-gateway/6baba810-9a4a-479d-98b2-97e5ba651784       running        z5  10.30.107.214  vm-7ec75160-bf34-442e-b755-778ae7dd3fec  portal_medium  true  
-       paas-ta-portal-registration/3728ed73-451e-4b93-ab9b-c610826c3135  running        z5  10.30.107.215  vm-c4020514-c458-41c6-bcbc-7e0ee1bc6f42  portal_small   true  
-       paas-ta-portal-storage-api/2940366a-8294-4509-a9c0-811c8140663a   running        z5  10.30.107.220  vm-79ad6ee1-1bb5-4308-8b71-9ed30418e2c1  portal_medium  true  
+       ap-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c                running        z5  10.30.107.217  vm-9d2a1929-0157-4c77-af5e-707ec496ed87  portal_medium  true  
+       ap-portal-common-api/060320fa-7f26-4032-a1d9-6a7a41a044a8         running        z5  10.30.107.219  vm-f35e9838-74cf-40e0-9f97-894b53a68d1f  portal_medium  true  
+       ap-portal-gateway/6baba810-9a4a-479d-98b2-97e5ba651784            running        z5  10.30.107.214  vm-7ec75160-bf34-442e-b755-778ae7dd3fec  portal_medium  true  
+       ap-portal-registration/3728ed73-451e-4b93-ab9b-c610826c3135       running        z5  10.30.107.215  vm-c4020514-c458-41c6-bcbc-7e0ee1bc6f42  portal_small   true  
+       ap-portal-storage-api/2940366a-8294-4509-a9c0-811c8140663a        running        z5  10.30.107.220  vm-79ad6ee1-1bb5-4308-8b71-9ed30418e2c1  portal_medium  true  
 
        8 vms
 
        Succeeded
-       inception@inception:~$ bosh ssh -d paas-ta-portal-v2 paas-ta-portal-api  << instance 접근(bosh ssh) 명령어 입력
+       inception@inception:~$ bosh ssh -d portal-api ap-portal-api  << instance 접근(bosh ssh) 명령어 입력
        Using environment '10.30.40.111' as user 'admin' (openid, bosh.admin)
 
-       Using deployment 'paas-ta-portal-v2'
+       Using deployment 'portal-api'
 
        Task 5195. Done
        Unauthorized use is strictly prohibited. All access and activity
@@ -466,20 +471,20 @@ Paas-TA Portal 각각 Instance의 log를 확인 할 수 있다.
        To run a command as administrator (user "root"), use "sudo <command>".
        See "man sudo_root" for details.
 
-       paas-ta-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c:~$
+       ap-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c:~$
 
 2. 로그파일이 있는 폴더로 이동한다.
     > 위치 : /var/vcap/sys/log/[job name]/
 
-         paas-ta-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c:~$ cd /var/vcap/sys/log/paas-ta-portal-api/
-         paas-ta-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c:/var/vcap/sys/log/paas-ta-portal-api$ ls
-         paas-ta-portal-api.stderr.log  paas-ta-portal-api.stdout.log
+         ap-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c:~$ cd /var/vcap/sys/log/ap-portal-api/
+         ap-portal-api/48fa0c5a-52eb-4ae8-a7b9-91275615318c:/var/vcap/sys/log/ap-portal-api$ ls
+         ap-portal-api.stderr.log  ap-portal-api.stdout.log
 
 3. 로그파일을 열어 내용을 확인한다.
     > vim [job name].stdout.log
 
         예)
-        vim paas-ta-portal-api.stdout.log
+        vim ap-portal-api.stdout.log
         2018-09-04 02:08:42.447 ERROR 7268 --- [nio-2222-exec-1] p.p.a.e.GlobalControllerExceptionHandler : Error message : Response : org.springframework.security.web.firewall.FirewalledResponse@298a1dc2
         Occured an exception : 403 Access token denied.
         Caused by...
@@ -491,8 +496,8 @@ Paas-TA Portal 각각 Instance의 log를 확인 할 수 있다.
                 at org.cloudfoundry.client.lib.rest.CloudControllerClientFactory.newCloudController(CloudControllerClientFactory.java:69)
                 at org.cloudfoundry.client.lib.CloudFoundryClient.<init>(CloudFoundryClient.java:138)
                 at org.cloudfoundry.client.lib.CloudFoundryClient.<init>(CloudFoundryClient.java:102)
-                at org.openpaas.paasta.portal.api.service.LoginService.login(LoginService.java:47)
-                at org.openpaas.paasta.portal.api.controller.LoginController.login(LoginController.java:51)
+                at org.openpaas.portal.api.service.LoginService.login(LoginService.java:47)
+                at org.openpaas.portal.api.controller.LoginController.login(LoginController.java:51)
                 at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
                 at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
                 at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -518,62 +523,62 @@ Paas-TA Portal 각각 Instance의 log를 확인 할 수 있다.
 
 ### <div id="3.6"/> 3.6. 카탈로그 적용
 ##### 1. Catalog 빌드팩, 서비스팩 추가
-Paas-TA Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을 등록해야 사용자 포탈에서 사용이 가능하다.
+K-PaaS AP Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을 등록해야 사용자 포탈에서 사용이 가능하다.
 
  1. 관리자 포탈에 접속한다.(portal-web-admin.[public ip].nip.io)
     
-    >![paas-ta-portal-15]
+    >![portal-15]
  2. 운영관리를 누른다.
     
-    >![paas-ta-portal-16]
+    >![portal-16]
  3. 카탈로그 페이지에 들어간다.
     
-    >![paas-ta-portal-17]
+    >![portal-17]
  4. 빌드팩, 서비스팩 상세화면에 들어가서 각 항목란에 값을 입력후에 저장을 누른다.
     
-    >![paas-ta-portal-18]
+    >![portal-18]
 
     ※ 카탈로그 등록 및 수정 시 카탈로그 관리 코드는 선택 필수이며, 현재 사용 가능한 코드가 없는 경우 다음 내용을 참고하여 처리하도록 한다.
     1. ①"코드 관리"를 클릭한다.
     2. **Group Table**에서 해당하는 ②"분류 코드"를 클릭한다.
     3. **Detail Table**에 ③"등록"버튼을 클릭하여 카탈로그 관리 코드를 추가 후 사용한다.
-    ![paas-ta-portal-18-1]
+    ![portal-18-1]
  5. 사용자포탈에서 변경된값이 적용되어있는지 확인한다.
     
-    >![paas-ta-portal-19]
+    >![portal-19]
 
-[paas-ta-portal-01]:./images/Paas-TA-Portal_01.png
-[paas-ta-portal-02]:./images/Paas-TA-Portal_02.png
-[paas-ta-portal-03]:./images/Paas-TA-Portal_03.png
-[paas-ta-portal-04]:./images/Paas-TA-Portal_04.png
-[paas-ta-portal-05]:./images/Paas-TA-Portal_05.png
-[paas-ta-portal-06]:./images/Paas-TA-Portal_06.png
-[paas-ta-portal-07]:./images/Paas-TA-Portal_07.png
-[paas-ta-portal-08]:./images/Paas-TA-Portal_08.png
-[paas-ta-portal-09]:./images/Paas-TA-Portal_09.png
-[paas-ta-portal-10]:./images/Paas-TA-Portal_10.png
-[paas-ta-portal-11]:./images/Paas-TA-Portal_11.png
-[paas-ta-portal-12]:./images/Paas-TA-Portal_12.png
-[paas-ta-portal-13]:./images/Paas-TA-Portal_13.png
-[paas-ta-portal-14]:./images/Paas-TA-Portal_14.png
-[paas-ta-portal-15]:./images/Paas-TA-Portal_15.png
-[paas-ta-portal-16]:./images/Paas-TA-Portal_16.png
-[paas-ta-portal-17]:./images/Paas-TA-Portal_17.png
-[paas-ta-portal-18]:./images/Paas-TA-Portal_18.png
-[paas-ta-portal-18-1]:./images/Paas-TA-Portal_18-1.png
-[paas-ta-portal-19]:./images/Paas-TA-Portal_19.png
-[paas-ta-portal-20]:./images/Paas-TA-Portal_20.png
-[paas-ta-portal-21]:./images/Paas-TA-Portal_21.png
-[paas-ta-portal-22]:./images/Paas-TA-Portal_22.png
-[paas-ta-portal-23]:./images/Paas-TA-Portal_23.png
-[paas-ta-portal-24]:./images/Paas-TA-Portal_24.png
-[paas-ta-portal-25]:./images/Paas-TA-Portal_25.png
-[paas-ta-portal-26]:./images/Paas-TA-Portal_26.png
-[paas-ta-portal-27]:./images/Paas-TA-Portal_27.PNG
-[paas-ta-portal-28]:./images/Paas-TA-Portal_28.PNG
-[paas-ta-portal-29]:./images/Paas-TA-Portal_29.png
-[paas-ta-portal-31]:./images/Paas-TA-Portal_27.jpg
-[paas-ta-portal-32]:./images/Paas-TA-Portal_28.jpg
+[portal-01]:./images/Portal_01.png
+[portal-02]:./images/Portal_02.png
+[portal-03]:./images/Portal_03.png
+[portal-04]:./images/Portal_04.png
+[portal-05]:./images/Portal_05.png
+[portal-06]:./images/Portal_06.png
+[portal-07]:./images/Portal_07.png
+[portal-08]:./images/Portal_08.png
+[portal-09]:./images/Portal_09.png
+[portal-10]:./images/Portal_10.png
+[portal-11]:./images/Portal_11.png
+[portal-12]:./images/Portal_12.png
+[portal-13]:./images/Portal_13.png
+[portal-14]:./images/Portal_14.png
+[portal-15]:./images/Portal_15.png
+[portal-16]:./images/Portal_16.png
+[portal-17]:./images/Portal_17.png
+[portal-18]:./images/Portal_18.png
+[portal-18-1]:./images/Portal_18-1.png
+[portal-19]:./images/Portal_19.png
+[portal-20]:./images/Portal_20.png
+[portal-21]:./images/Portal_21.png
+[portal-22]:./images/Portal_22.png
+[portal-23]:./images/Portal_23.png
+[portal-24]:./images/Portal_24.png
+[portal-25]:./images/Portal_25.png
+[portal-26]:./images/Portal_26.png
+[portal-27]:./images/Portal_27.PNG
+[portal-28]:./images/Portal_28.PNG
+[portal-29]:./images/Portal_29.png
+[portal-31]:./images/Portal_27.jpg
+[portal-32]:./images/Portal_28.jpg
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Portal VM Type API
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Portal VM Type API

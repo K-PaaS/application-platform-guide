@@ -1,15 +1,15 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > AP Architecture
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > AP Architecture
 
 ## Application Platform (AP) - Architecture
 - Application Platform  
   - [BOSH](./application_platform/bosh.md)  
-  - [PaaS-TA AP](./application_platform/paasta_ap.md)  
-  - [PaaS-TA AP - min](./application_platform/paasta_ap_min.md)  
-  - [PaaS-TA Multi CPI](./application_platform/paasta_multi_cpi.md)  
+  - [K-PaaS AP](./application_platform/kpaas_ap.md)  
+  - [K-PaaS AP - min](./application_platform/kpaas_ap_min.md)  
+  - [K-PaaS Multi CPI](./application_platform/kpaas_multi_cpi.md)  
 
 + Portal
   + [BOSH를 이용한 포탈 VM Type](./portal/vm_type.md)   
-  + [PaaS-TA AP를 이용한 포탈 Container Type](./portal/container_type.md)   
+  + [K-PaaS AP를 이용한 포탈 Container Type](./portal/container_type.md)   
 
 - Service
   - [MySQL](./service/mysql.md)
@@ -25,4 +25,4 @@
   - [Gateway](./service/gateway.md)
   - [Lifecycle](./service/lifecycle.md)
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > AP Architecture
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > AP Architecture

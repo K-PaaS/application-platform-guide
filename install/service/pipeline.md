@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Pipeline Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Pipeline Service
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@
 ## <div id='1'/> 1. 문서 개요
 
 ### <div id='1.1'/> 1.1. 목적
-본 문서(배포 파이프라인 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 배포 파이프라인 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
+본 문서(배포 파이프라인 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 배포 파이프라인 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
 
 ### <div id='1.2'/> 1.2. 범위
 설치 범위는 배포 파이프라인 서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.
@@ -84,7 +84,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -92,16 +92,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id='2.4'/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -133,7 +133,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -226,84 +226,6 @@ haproxy_instances: 1                                             # haproxy insta
 haproxy_vm_type: "small"                                         # haproxy vm type
 haproxy_internal_static_ips: "<HAPROXY_PRIVATE_IP>"              # haproxy's private IP (e.g. "10.0.0.11")
 haproxy_public_static_ips: "<HAPROXY_PUBLIC_IP>"                 # haproxy's public IP
-
-# CI_SERVER
-ci_server_azs: [z5]                                                           # ci server(Jenkins) azs
-ci_server_instances: 2                                                        # ci server(Jenkins) instances
-ci_server_persistent_disk_type: "5GB"                                         # ci server(Jenkins) persistent disk type
-ci_server_vm_type: "small"                                                    # ci server(Jenkins) vm type
-ci_server_shared_internal_static_ip: "<CI_SERVER_SHARD_PRIVATE_IP>"           # ci server(Jenkins)'s private IP for shared (e.g. "10.0.161.33")
-ci_server_dedicated_internal_static_ip: "<CI_SERVER_DEDICATED_PRIVATE_IP>"    # ci server(Jenkins)'s public IP for dedicated (e.g. "10.0.161.34")
-ci_server_password: "<CI_SERVER_PASSWORD>"                                    # ci server(Jenkins) password (e.g. "admin!@#")
-ci_server_admin_user_username: "<CI_SERVER_ADMIN_USERNAME>"                   # ci server(Jenkins) admin username (e.g. "admin")
-ci_server_admin_user_password: "<CI_SERVER_ADMIN_PASSWORD>"                   # ci server(Jenkins) admin password (e.g. "admin!@#")
-ci_server_http_url: "<CI_SERVER_HTTP_URL>"                                    # ci server(Jenkins) 내부 IP 앞 두자리 입력 (e.g. 10.110.10.10 의 경우, "10.110" 입력)
-
-# BINARY_STORAGE
-binary_storage_azs: [z5]                                           # binary storage azs
-binary_storage_instances: 1                                        # binary storage instances
-binary_storage_persistent_disk_type: "5GB"                         # binary storage persistent disk type
-binary_storage_vm_type: "small"                                    # binary storage vm type
-binary_storage_internal_static_ips: "<BINARY_STORAGE_PRIVATE_IP>"  # binary storage's private IP (e.g. "10.0.161.35")
-binary_storage_proxy_port: "10008"                                 # binary storage 프록시 서버 Port(Object Storage 접속 Port) (default : 10008)
-binary_storage_auth_port: 15001                                    # binary storage keystone port (e.g. 15001) -- Do Not Use "5000"
-binary_storage_username: "paasta-pipeline"                         # binary storage 최초 생성되는 유저이름(Object Storage 접속 유저이름)
-binary_storage_password: "paasta-pipeline"                         # binary storage 최초 생성되는 유저 비밀번호(Object Storage 접속 유저 비밀번호)
-binary_storage_tenantname: "paasta-pipeline"                       # binary storage 최초 생성되는 테넌트 이름(Object Storage 접속 테넌트 이름)
-binary_storage_email: "email@email.com"                            # binary storage 최소 생성되는 유저의 이메일
-binary_storage_binary_desc: "paasta-pipeline-object service"       # binary storage 설명
-binary_storage_container: "delivery-pipeline-container"            # binary storage 최소 생성되는container 이름
-
-# COMMON_API
-common_api_port: "8081"                                          # common api port 
-common_api_azs: [z5]                                             # common api azs
-common_api_instances: 1                                          # common api instances
-common_api_vm_type: "small"                                      # common api vm type
-common_api_internal_static_ips: "<COMMON_API_PRIVATE_IP>"        # common api's private IP (e.g. "10.0.161.36")
-
-# INSPECTION_API
-inspection_api_port: "8083"                                         # inspection api port
-inspection_api_azs: [z5]                                            # inspection api azs
-inspection_api_instances: 1                                         # inspection api instances
-inspection_api_vm_type: "small"                                     # inspection api vm type
-inspection_api_internal_static_ips: "<INSPECTION_API_PRIVATE_IP>"   # inspection api's private IP (e.g. "10.0.161.37")
-
-# BINARY_STORAGE_API
-storage_api_port: "8080"                                         # storage api port
-storage_api_azs: [z5]                                            # storage api azs
-storage_api_instances: 1                                         # storage api instances
-storage_api_vm_type: "small"                                     # storage api vm type
-storage_api_internal_static_ips: "<STORAGE_API_PRIVATE_IP>"      # storage api's private IP (e.g. "10.0.161.38")
-
-# API
-api_port: "8082"                                                 # api port 
-api_azs: [z5]                                                    # api azs
-api_instances: 1                                                 # api instances
-api_persistent_disk_type: "2GB"                                  # api persistent disk type
-api_vm_type: "small"                                             # api vm type
-api_internal_static_ips: "<API_PRIVATE_IP>"                      # api's private IP (e.g. "10.0.161.39")
-
-# SERVICE_BROKER
-service_broker_port: "8080"                                       # pipeline service broker port
-service_broker_azs: [z5]                                          # pipeline service broker azs
-service_broker_instances: 1                                       # pipeline service broker instances
-service_broker_persistent_disk_type: "2GB"                        # pipeline service broker persistent disk type
-service_broker_vm_type: "small"                                   # pipeline service broker vm type
-service_broker_internal_static_ips: "<SERVICE_BROKER_PRIVATE_IP>" # pipeline service broker's private IP (e.g. "10.0.161.40")
-
-# UI(DASHBOARD)
-ui_port: "8084"                                                  # ui(dahsboard) port
-ui_azs: [z5]                                                     # ui(dahsboard) azs
-ui_instances: 1                                                  # ui(dahsboard) instances
-ui_vm_type: "small"                                              # ui(dahsboard) vm type
-ui_internal_static_ips: "<UI_PRIVATE_IP>"                        # ui(dahsboard)'s private IP (e.g. "10.0.161.41")
-
-# SCHEDULER
-scheduler_port: "8080"                                           # scheduler port
-scheduler_azs: [z5]                                              # scheduler azs
-scheduler_instances: 1                                           # scheduler instances
-scheduler_vm_type: "small"                                       # scheduler vm type
-scheduler_internal_static_ips: "<SCHEDULER_PRIVATE_IP>"          # scheduler's private IP (e.g. "10.0.161.42")
 ```
 
 ### <div id='2.5'/> 2.5. 서비스 설치
@@ -317,8 +239,8 @@ scheduler_internal_static_ips: "<SCHEDULER_PRIVATE_IP>"          # scheduler's p
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"	# common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-CURRENT_IAAS="${CURRENT_IAAS}"			# IaaS Information (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+CURRENT_IAAS="${CURRENT_IAAS}"			# IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d pipeline-service deploy --no-redact pipeline-service.yml \
@@ -417,11 +339,11 @@ $ sh /var/vcap/php-mariadb-script.sh
 ```
 
 ## <div id='3'/> 3. 배포 파이프라인 서비스 관리 및 신청
-PaaS-TA 운영자 포탈을 통해 배포파이프라인 서비스를 등록 및 공개하면, PaaS-TA 사용자 포탈을 통해 서비스를 신청 하여 사용할 수 있다.
+K-PaaS AP 운영자 포탈을 통해 배포파이프라인 서비스를 등록 및 공개하면, K-PaaS AP 사용자 포탈을 통해 서비스를 신청 하여 사용할 수 있다.
 
 ### <div id='3.1'/> 3.1. 서비스 브로커 등록
 
-배포 파이프라인 서비스팩 배포가 완료되었으면 파스-타 포탈에서 서비스 팩을 사용하기 위해서 먼저 배포 파이프라인 서비스 브로커를 등록해 주어야 한다.
+배포 파이프라인 서비스팩 배포가 완료되었으면 K-PaaS AP 포탈에서 서비스 팩을 사용하기 위해서 먼저 배포 파이프라인 서비스 브로커를 등록해 주어야 한다.
 서비스 브로커 등록 시 개방형 클라우드 플랫폼에서 서비스 브로커를 등록할 수 있는 사용자로 로그인이 되어있어야 한다.
 
 - 서비스 브로커 목록을 확인한다.
@@ -536,7 +458,7 @@ $ uaac client add pipeclient -s clientsecret --redirect_uri "http://101.55.50.20
 배포 파이프라인 서비스 사용을 위해 Java Offline Buildpack을 등록한다.
 
 - Java Offline Buildpack 다운로드 
-> wget -O java-buildpack-offline-v4.37.zip https://nextcloud.paas-ta.org/index.php/s/8rGJXEFa8odFDLk/download 
+> wget -O java-buildpack-offline-v4.37.zip https://nextcloud.k-paas.org/index.php/s/8rGJXEFa8odFDLk/download 
 
 **buildpack 등록**  
 
@@ -567,7 +489,7 @@ binary_buildpack         12         true      false    binary_buildpack-cflinuxf
   
 ### <div id='3.4'/> 3.4. 서비스 신청
 #### <div id='3.4.1'/> 3.4.1. 서비스 신청 - 포탈
-1. PaaS-Ta 운영자 포탈에 접속하여 로그인한다.
+1. K-PaaS AP 운영자 포탈에 접속하여 로그인한다.
 ![3-1-1]
 
 2. 로그인 후 서비스 관리 > 서비스 브로커 페이지에서 배포 파이프라인 서비스 브로커를 확인한다.
@@ -586,13 +508,13 @@ binary_buildpack         12         true      false    binary_buildpack-cflinuxf
 > - 분류 :  개발 지원 도구
 > - 서비스 : delivery-pipeline
 > - 썸네일 : [배포 파이프라인 서비스 썸네일]
-> - 문서 URL : https://github.com/PaaS-TA/DELIVERY-PIPELINE-SERVICE-BROKER
+> - 문서 URL : https://github.com/K-PaaS/ap-pipeline-broker
 > - 서비스 생성 파라미터 : owner
 > - 앱 바인드 사용 : N
 > - 공개 : Y
 > - 대시보드 사용 : Y
 > - 온디멘드 : N
-> - 태그 : paasta / tag6, free / tag2
+> - 태그 : k-paas / tag6, free / tag2
 > - 요약 : 개발용으로 만들어진 파이프라인
 > - 설명 :
 > 개발용으로 만들어진 파이프라인
@@ -600,7 +522,7 @@ binary_buildpack         12         true      false    binary_buildpack-cflinuxf
 >  
 > ![3-2-2]
 
-- PaaS-TA 사용자  포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
+- K-PaaS AP 사용자  포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 
 ![003]
 
@@ -621,7 +543,7 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 [SERVICE_INSTANCE] : 생성할 서비스 인스턴스 이름
 ```
 
-- 파이프라인 서비스를 신청한다. (PaaS-TA user_id 설정)
+- 파이프라인 서비스를 신청한다. (K-PaaS AP user_id 설정)
 > cf create-service delivery-pipeline delivery-pipeline-shared pipeline-service -c '{"owner":"{user_id}"}'  
 ```
 Creating service instance pipeline-service in org system / space dev as admin...
@@ -649,4 +571,4 @@ OK
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Pipeline Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Pipeline Service

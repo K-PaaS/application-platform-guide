@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java Service Metering 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java Service Metering 개발
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@
      * [과금 정책](#30)
      * [정책 등록](#31)
     * [배포](#32)
-     * [파스-타 플랫폼 로그인](#33)
+     * [어플리케이션 플랫폼 로그인](#33)
      * [mongo-db 서비스 브로커 생성](#34)
      * [API 서비스 연동 샘플 애플리케이션 배포 및 서비스 연결](#35)
     * [서비스 바인딩 CF-Abacus 연동 테스트](#36)
@@ -48,14 +48,14 @@
 ### <div id='3'/>1.1.1.  목적
 
 
-본 문서(Java 서비스브로커 미터링 애플리케이션 개발 가이드)는 파스-타
+본 문서(Java 서비스브로커 미터링 애플리케이션 개발 가이드)는 어플리케이션
 플랫폼 프로젝트의 서비스 브로커에 미터링 서비스를 추가하여, CF(Cloud
 Foundry) 서비스를 미터링 하는 방법에 대해 기술 한다.
 
 
 ### <div id='4'/>1.1.2.  범위
 
-본 문서의 범위는 파스-타 플랫폼 프로젝트의 Cloud Foundry JAVA 서비스
+본 문서의 범위는 어플리케이션 플랫폼 프로젝트의 Cloud Foundry JAVA 서비스
 브로커 애플리케이션 미터링 개발과 CF-Abacus 연동에 대한 내용으로
 한정되어 있다. 서비스브로커 API 개발에 대해서는 별도 제공 하는
 서비스브로커 API 개발 가이드를 참고 한다.
@@ -281,7 +281,7 @@ token 을 취득하여, SampleMeteringReportService 의 파라메터로 호출 �
 	}
 
 
-### <div id='14'/>2.3.5.  ServiceInstanceBinding 
+### <div id='14'/>2.3.5.  ServiceInstanceBinding
 
 ServiceInstanceBinding 에 미터링 서비스를 구현하기 위해 바인딩 되는
 애플리케이션의 환경 정보 필드를 추가 한다. 추가 된 필드 들은
@@ -455,11 +455,11 @@ mongo-db 서비스 브로커 build.gradle 파일의 dependencies 부분
 ### <div id='22'/>2.4.5.  application-mvc.properties 설정
 
 	# abacus usage collector RESTAPI 의 주소
-	abacus.collector: https://abacus-usage-collector.<파스-타 도메인> /v1/metering/collected/usage
+	abacus.collector: https://abacus-usage-collector.<어플리케이션 플랫폼 도메인> /v1/metering/collected/usage
 	# abacus usage collector 가 secured 모드 true / 아닐 경우 false
 	abacus.secured: true
 	# 개발형 플랫폼의 uaa server 
-	uaa.server: https://uaa.<파스-타 도메인>
+	uaa.server: https://uaa.<어플리케이션 플랫폼 도메인>
 	# abacus usage collector RESTAPI 사용권한 (UAA server 에 미리 등록한다.)
 	uaa.client.id: abacus-linux-container
 	uaa.client.secret: secret
@@ -855,7 +855,7 @@ PLAN_EXTRA_QUANTITY 등은 임의로 정한 수치 이다. 서비스에 맞게 �
 	};
 
 
-### <div id='29'/>2.5.2.  등급 정책 
+### <div id='29'/>2.5.2.  등급 정책
 
 등급 정책이란 각 서비스의 사용 가중치를 정의한 JSON 형식의 오브젝트이다.
 서비스 제공자는 등급 정책 스키마에 맞춰 서비스에 대한 정책을 개발한다.
@@ -890,7 +890,7 @@ PLAN_EXTRA_QUANTITY 등은 임의로 정한 수치 이다. 서비스에 맞게 �
 	}
 
 
-### <div id='30'/>2.5.3. 과금 정책 
+### <div id='30'/>2.5.3. 과금 정책
 
 과금 정책이란 각 서비스에 대한 사용 단가를 정의한 JSON 형식의
 오브젝트이다. 서비스 제공자는 과금 정책 스키마에 맞춰 서비스에 대한
@@ -996,23 +996,23 @@ PLAN_EXTRA_QUANTITY 등은 임의로 정한 수치 이다. 서비스에 맞게 �
 
 
 ## <div id='32'/>2.6  배포
-파스-타 플랫폼에 애플리케이션을 배포하면 배포한 애플리케이션과 파스-타
-플랫폼이 제공하는 서비스를 연결하여 사용할 수 있다. 파스-타 플랫폼상에서
-실행을 해야만 파스-타 플랫폼의 애플리케이션 환경변수에 접근하여 서비스에
+어플리케이션 플랫폼에 애플리케이션을 배포하면 배포한 애플리케이션과 어플리케이션
+플랫폼이 제공하는 서비스를 연결하여 사용할 수 있다. 어플리케이션 플랫폼상에서
+실행을 해야만 어플리케이션 플랫폼의 애플리케이션 환경변수에 접근하여 서비스에
 접속할 수 있다.
 
-### <div id='33'/> 2.6.1. 파스-타 플랫폼 로그인
+### <div id='33'/> 2.6.1. 어플리케이션 플랫폼 로그인
 
-아래의 과정을 수행하기 위해서 파스-타 플랫폼에 로그인
+아래의 과정을 수행하기 위해서 어플리케이션 플랫폼에 로그인
 
-  >$ cf api --skip-ssl-validation **https://api**.<***파스-타 도메인***> # **파스-타 플랫폼 TARGET 지정**
+  >$ cf api --skip-ssl-validation **https://api**.<***어플리케이션 플랫폼 도메인***> # **어플리케이션 플랫폼 TARGET 지정**
 
   >$ cf login -u *<**user name**>* -o *<**org name**>* -s *<**space name**>* **#로그인 요청**
 
 
 ### <div id='34'/>2.6.2.  mongo-db 서비스 브로커 생성
 
-파스-타 플랫폼 환경에 mongo db 서비스가 배포되어 있어야 한다. 애플리케이션과 바인딩 과정을 통해 접속정보를 얻을 수 있다.
+어플리케이션 플랫폼 환경에 mongo db 서비스가 배포되어 있어야 한다. 애플리케이션과 바인딩 과정을 통해 접속정보를 얻을 수 있다.
 
 -   **서비스 생성 (cf marketplace 명령을 통해 서비스 목록과 각 서비스의
     플랜을 조회할 수 있다.)**
@@ -1032,7 +1032,7 @@ PLAN_EXTRA_QUANTITY 등은 임의로 정한 수치 이다. 서비스에 맞게 �
 		Getting service brokers as admin...
 		
 		name                url   
-		openpaas-mongo-broker http://openpaas-mongo-broker.<파스-타 도메인>
+		openpaas-mongo-broker http://openpaas-mongo-broker.<어플리케이션 플랫폼 도메인>
 		
 		## 서비스 카탈로그 확인
 		$ cf service-access
@@ -1089,8 +1089,8 @@ PLAN_EXTRA_QUANTITY 등은 임의로 정한 수치 이다. 서비스에 맞게 �
 		OK
 		
 		name                      requested state   instances   memory   disk   urls   
-		binding-test-app          started           1/1         512M     512M   binding-test-app.<파스-타 도메인>
-		openpaas-mongo-broker     started           1/1         512M     1G     openpaas-mongo-broker.<파스-타 도메인>
+		binding-test-app          started           1/1         512M     512M   binding-test-app.<어플리케이션 플랫폼 도메인>
+		openpaas-mongo-broker     started           1/1         512M     1G     openpaas-mongo-broker.<어플리케이션 플랫폼 도메인>
 
 
 ## <div id='36'/>2.7.  서비스 바인딩 CF-Abacus 연동 테스트
@@ -1106,7 +1106,7 @@ CF-Abacus 연동 확인
 	<<후략>> 
 	
 	## API 사용량 확인
-	$ curl 'http://abacus-usage-reporting.<파스-타 도메인>/v1/metering/organizations/<샘플 애플리케이션을 배포한 조직>/aggregated/usage'
+	$ curl 'http://abacus-usage-reporting.<어플리케이션 플랫폼 도메인>/v1/metering/organizations/<샘플 애플리케이션을 배포한 조직>/aggregated/usage'
 	
 	예)
 	$ curl 'http://abacus-usage-reporting.bosh-lite.com/v1/metering/organizations/testOrgGuid /aggregated/usage'
@@ -1150,7 +1150,7 @@ mock 적용을 위하여, owermock-mockito-release-full:1.6.1 을 사용하였�
 
 샘플 코드는 아래의 사이트에 다운로드 할 수 있다.
 
-[다운로드](https://paas-ta.kr/data/packages/2.0/PaaSTA-Metering.zip)
+[다운로드](https://nextcloud.k-paas.org/index.php/s/mEbGNcJjrEj7GWx/download)
 
 
 [Java_Service_Metering_Image01]:./images/Java_Service_Metering/service_broker_api_architecture.png
@@ -1159,4 +1159,4 @@ mock 적용을 위하여, owermock-mockito-release-full:1.6.1 을 사용하였�
 [Java_Service_Metering_Image04]:./images/Java_Service_Metering/service_broker_library_architecture.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java Service Metering 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java Service Metering 개발

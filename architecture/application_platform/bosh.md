@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > BOSH
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > BOSH
 
 ## 목적
 본 문서는 BOSH의 Architecture를 제공한다.
@@ -19,7 +19,7 @@
 ## 설명
 BOSH는 초기에 Cloud Foundry PaaS를 위해 개발되었지만, 현재는 Jenkins, Hadoop 등 Yaml 파일 형식으로 소프트웨어를 쉽게 배포할 수 있으며, 수백 가지의 VM을 설치할 수 있고, 각각의 VM에 대해 모니터링, 장애 복구 등 라이프 사이클을 관리할 수 있는 통합 프로젝트이다.  
 BOSH가 지원하는 IaaS는 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, Microsoft Azure, OpenStack, Alibaba Cloud가 있다.
-PaaS-TA AP BOSH는 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원한다.
+K-PaaS AP BOSH는 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원한다.
 
 이하는 BOSH 구성요소 설명이다.
 - Command Line Interface (CLI) : CLI는 BOSH에 대한 기본 명령어 인터페이스이다.  
@@ -53,4 +53,4 @@ Agent는 Director로부터 수신받은 Job Specification(설치할 패키지 �
 BOSH Document: [http://bosh.io](http://bosh.io)  
 BOSH Deployment: [https://github.com/cloudfoundry/bosh-deployment](https://github.com/cloudfoundry/bosh-deployment)  
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > BOSH
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > BOSH

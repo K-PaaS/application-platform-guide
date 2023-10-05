@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > MongoDB Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > MongoDB Service
 
 ## Table of Contents
 
@@ -18,14 +18,14 @@
 3. [Mongodb 연동 Sample Web App 설명](#3)  
   3.1. [Mongodb 서비스 브로커 등록](#3.1)  
   3.2. [Sample App 다운로드](#3.2)  
-  3.3. [PaaS-TA에서 서비스 신청](#3.3)  
+  3.3. [K-PaaS에서 서비스 신청](#3.3)  
   3.4. [Sample App에 서비스 바인드 신청 및 App 확인](#3.4)   
 
 
 ## <div id='1'> 1. 문서 개요
 ### <div id='1.1'> 1.1. 목적
 
-본 문서(Mongodb 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 Mongodb 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
+본 문서(Mongodb 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 Mongodb 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
 
 ### <div id='1.2'> 1.2. 범위
 설치 범위는 Mongodb 서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.  
@@ -74,7 +74,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -82,16 +82,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -123,7 +123,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -156,19 +156,19 @@ Succeeded
 ```
 
 - common_vars.yml을 서버 환경에 맞게 수정한다. 
-- MongoDB에서 사용하는 변수는 system_domain, paasta_admin_username, paasta_admin_password, paasta_nats_ip, paasta_nats_port, paasta_nats_user,	paasta_nats_password 이다.
+- MongoDB에서 사용하는 변수는 system_domain, ap_admin_username, ap_admin_password, ap_nats_ip, ap_nats_port, ap_nats_user,	ap_nats_password 이다.
 
 > $ vi ~/workspace/common/common_vars.yml
 ```
 ... ((생략)) ...
 
 system_domain: "61.252.53.246.nip.io"		# Domain (nip.io를 사용하는 경우 HAProxy Public IP와 동일)
-paasta_admin_username: "admin"			# PaaS-TA Admin Username
-paasta_admin_password: "admin"			# PaaS-TA Admin Password
-paasta_nats_ip: "10.0.1.121"
-paasta_nats_port: 4222
-paasta_nats_user: "nats"
-paasta_nats_password: "7EZB5ZkMLMqT73h2Jh3UsqO"	# PaaS-TA Nats Password (CredHub 로그인후 'credhub get -n /micro-bosh/paasta/nats_password' 명령어를 통해 확인 가능)
+ap_admin_username: "admin"			# Application Platform Admin Username
+ap_admin_password: "admin"			# Application Platform Admin Password
+ap_nats_ip: "10.0.1.121"
+ap_nats_port: 4222
+ap_nats_user: "nats"
+ap_nats_password: "7EZB5ZkMLMqT73h2Jh3UsqO"	# Application Platform Nats Password (CredHub 로그인후 'credhub get -n /micro-bosh/ap/nats_password' 명령어를 통해 확인 가능)
 
 ... ((생략)) ...
 
@@ -180,7 +180,7 @@ paasta_nats_password: "7EZB5ZkMLMqT73h2Jh3UsqO"	# PaaS-TA Nats Password (CredHub
 ```
 # STEMCELL
 stemcell_os: "ubuntu-jammy"                                     # stemcell os
-stemcell_version: "1.181"                                         # stemcell version
+stemcell_version: "1.181"                                       # stemcell version
 
 # NETWORK
 private_networks_name: "default"                                 # private network name
@@ -222,47 +222,6 @@ mongodb_master1_replSet_hosts: "<MONGODB_MASTER1_REPLSET_HOSTS>"         # 첫�
 # MONGODB_MASTER2
 mongodb_master2_azs: [z3]                                                # mongodb master2 azs
 mongodb_master2_instances: 1                                             # mongodb master2 instances
-mongodb_master2_vm_type: "medium"                                        # mongodb master2 vm type
-mongodb_master2_persistent_disk_type: "10GB"                             # mongodb master2 persistent disk type
-mongodb_master2_static_ips: "<MONGODB_MASTER2_PRIVATE_IP>"               # mongodb master2's private IP (e.g. "10.0.81.13")
-mongodb_master2_replSet_hosts: "<MONGODB_MASTER2_REPLSET_HOSTS>"         # 첫번째 Host는 replicaSet2 의master2 ip, 차례대로 slave2 의 ips. (e.g. ["10.0.81.13", "10.0.81.14","10.0.81.15"])
-
-# MONGODB_MASTER3 : use to operations/add-replica-set.yml
-mongodb_master3_azs: [z3]                                                # mongodb master3 azs
-mongodb_master3_instances: 1                                             # mongodb master3 instances
-mongodb_master3_vm_type: "medium"                                        # mongodb master3 vm type
-mongodb_master3_persistent_disk_type: "10GB"                             # mongodb master3 persistent disk type
-mongodb_master3_static_ips: "<MONGODB_MASTER3_PRIVATE_IP>"               # mongodb master3's private IP (e.g. "10.0.81.16")
-mongodb_master3_replSet_hosts: "<MONGODB_MASTER3_REPLSET_HOSTS>"         # 첫번째 Host는 replicaSet3 의master3 ip, 차례대로 slave3 의 ips. (e.g. ["10.0.81.16", "10.0.81.17","10.0.81.18"])
-
-# MONGODB_CONFIG
-mongodb_config_azs: [z3]                                                 # mongodb config azs
-mongodb_config_instances: 2                                              # mongodb config instances : less than 3 instances
-mongodb_config_vm_type: "medium"                                         # mongodb config vm type
-mongodb_config_persistent_disk_type: "10GB"                              # mongodb config persistent disk type
-mongodb_config_static_ips: "<MONGODB_CONFIG_PRIVATE_IPS>"                # mongodb config's private IPs (e.g. ["10.0.81.19", "10.0.81.20"])
-
-# MONGODB_SHARD
-mongodb_shard_azs: [z3]                                                  # mongodb shard azs
-mongodb_shard_instances: 1                                               # mongodb shard instances
-mongodb_shard_vm_type: "medium"                                          # mongodb shard vm type
-mongodb_shard_static_ips: "<MONGODB_SHARD_PRIVATE_IP>"                   # mongodb shard's private IP (e.g. "10.0.81.21")
-
-# MONGODB_BROKER
-mongodb_broker_azs: [z3]                                                 # mongodb broker azs
-mongodb_broker_instances: 1                                              # mongodb broker instances
-mongodb_broker_vm_type: "medium"                                         # mongodb broker vm type
-mongodb_broker_static_ips: "<MONGODB_BROKER_PRIVATE_IP>"                 # mongodb broker's private IP (e.g. "10.0.81.22")
-
-# BROKER_REGISTRAR
-broker_registrar_broker_azs: [z3]                                        # broker registrar azs
-broker_registrar_broker_instances: 1                                     # broker registrar instances
-broker_registrar_broker_vm_type: "medium"                                # broker registrar vm type
-
-# BROKER_DEREGISTRAR
-broker_deregistrar_broker_azs: [z3]                                      # broker deregistrar azs
-broker_deregistrar_broker_instances: 1                                   # broker deregistrar instances
-broker_deregistrar_broker_vm_type: "medium"                              # broker deregistrar vm type
 ```
 
 'pem.yml' 은 MongoDB자체 pem을 등록해 쓰기 때문에 내용 수정하지 않는다.
@@ -280,7 +239,7 @@ broker_deregistrar_broker_vm_type: "medium"                              # broke
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"  # common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"      # bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"      # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d mongodb deploy --no-redact mongodb.yml \
@@ -328,7 +287,7 @@ Succeeded
 
 ## <div id='3'> 3. Mongodb 연동 Sample Web App 설명
 
-본 Sample Web App은 PaaS-TA에 배포되며 Mongodb의 서비스를 Provision과 Bind를 한 상태에서 사용이 가능하다.
+본 Sample Web App은 K-PaaS AP에 배포되며 Mongodb의 서비스를 Provision과 Bind를 한 상태에서 사용이 가능하다.
 
 ### <div id='3.1'> 3.1. Mongodb 서비스 브로커 등록
 
@@ -412,25 +371,25 @@ broker: mongodb-shard-service-broker
 
 ### <div id='3.2'> 3.2. Sample App 다운로드
 
-Sample Web App은 PaaS-TA에 App으로 배포가 된다. App을 배포하여 구동시 Bind 된 Mongodb 서비스 연결정보로 접속하여 초기 데이터를 생성하게 된다.  
+Sample Web App은 K-PaaS AP에 App으로 배포가 된다. App을 배포하여 구동시 Bind 된 Mongodb 서비스 연결정보로 접속하여 초기 데이터를 생성하게 된다.  
 배포 완료 후 정상적으로 App 이 구동되면 브라우저나 curl로 해당 App에 접속 하여 Mongodb 환경정보(서비스 연결 정보)와 초기 적재된 데이터를 보여준다.  
 
 - Sample App 묶음 다운로드
 ```
-$ wget https://nextcloud.paas-ta.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
-$ unzip paasta-service-samples-459dad9.zip  
-$ cd paasta-service-samples/mongodb  
+$ wget https://nextcloud.k-paas.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
+$ unzip ap-service-samples-459dad9.zip  
+$ cd ap-service-samples/mongodb  
 ```
 
 <br>
 
-### <div id='3.3'> 3.3. PaaS-TA에서 서비스 신청
+### <div id='3.3'> 3.3. K-PaaS AP에서 서비스 신청
 
 Sample Web App에서 Mongodb 서비스를 사용하기 위해서는 서비스 신청(Provision)을 해야 한다.
 *참고: 서비스 신청시 개방형 클라우드 플랫폼에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
 
-- 먼저 PaaS-TA Marketplace에서 서비스가 있는지 확인을 한다.
+- 먼저 K-PaaS Marketplace에서 서비스가 있는지 확인을 한다.
 
 > $ cf marketplace
 
@@ -499,7 +458,7 @@ applications:
 - --no-start 옵션으로 App을 배포한다.  
 > $ cf push --no-start 
 ```  
-Applying manifest file /home/ubuntu/workspace/samples/paasta-service-samples/mongodb/manifest.yml...
+Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/mongodb/manifest.yml...
 Manifest applied
 Packaging files to upload...
 Uploading files...
@@ -509,7 +468,7 @@ Waiting for API to complete processing files...
 
 name:              hello-spring-mongodb
 requested state:   stopped
-routes:            hello-spring-mongodb.paasta.kr
+routes:            hello-spring-mongodb.ap.kr
 last uploaded:     
 stack:             
 buildpacks:        
@@ -583,7 +542,7 @@ Instances starting...
 
 name:              hello-spring-mongodb
 requested state:   started
-routes:            hello-spring-mongodb.paasta.kr
+routes:            hello-spring-mongodb.ap.kr
 last uploaded:     Mon 22 Nov 05:19:59 UTC 2021
 stack:             cflinuxfs3
 buildpacks:        
@@ -650,4 +609,4 @@ memory usage:   1024M
 [mongodb_image_42]:./images/mongodb/mongodb_image_42.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > MongoDB Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > MongoDB Service

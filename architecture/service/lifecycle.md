@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Lifecycle Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Lifecycle Service
 
 ## 목적
 본 문서는 Application Platform (AP) - Lifecycle Service의 Architecture를 제공한다.
@@ -21,4 +21,4 @@ Lifecycle Service는 오픈소스 TAIGA를 기반으로 구성한다.
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Lifecycle Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Lifecycle Service

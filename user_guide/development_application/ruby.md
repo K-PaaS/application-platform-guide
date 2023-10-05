@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Ruby 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Ruby 개발
 
 
 ## Table of Contents
@@ -128,7 +128,7 @@ Ruby 샘플 애플리케이션을 개발하기 위한 애플리케이션의 생�
 
  완성된 샘플 애플리케이션은 아래 링크의 /OpenPaaSSample/ruby-sample-app 에서 받을 수 있다.
 
-> https://nextcloud.paas-ta.org/index.php/s/x8Tg37WDFiL5ZDi/download
+> https://nextcloud.k-paas.org/index.php/s/x8Tg37WDFiL5ZDi/download
 
 ##### <div id='11'></div> 2.3.1.	애플리케이션 생성
 
@@ -1157,4 +1157,4 @@ Rspec을 이용한 Ruby 애플리케이션 테스트
 [ruby16]:./images/ruby/ruby_16.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Ruby 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Ruby 개발

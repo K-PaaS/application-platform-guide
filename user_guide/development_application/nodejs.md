@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js 개발
 
 ## Table of Contents
 1. [문서 개요](#1)
@@ -172,7 +172,7 @@ Node.js는 javascript기반의 언어로 Notepad++, Sublim Text, EditPlus등 문
 
 - 완성된 샘플 애플리케이션은 아래 링크의 /OpenPaaSSample/node-sample-app 에서 받을 수 있다.
 
-> https://nextcloud.paas-ta.org/index.php/s/x8Tg37WDFiL5ZDi/download
+> https://nextcloud.k-paas.org/index.php/s/x8Tg37WDFiL5ZDi/download
 
 ##### 2. Node.js 샘플 애플리케이션 경로로 이동
 
@@ -1120,4 +1120,4 @@ test:
 [2-4-5-0]:./images/nodejs/2-4-5-0.png
 [2-5-0-0]:./images/nodejs/2-5-0-0.png
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js 개발

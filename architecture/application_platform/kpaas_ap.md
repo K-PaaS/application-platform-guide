@@ -1,11 +1,11 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > PaaS-TA AP
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > K-PaaS AP
 
 ## 목적
-본 문서는 PaaS-TA Application Platform (AP)의 Architecture를 제공한다.
+본 문서는 K-PaaS Application Platform (AP)의 Architecture를 제공한다.
 <br><br>
 
 ## 시스템 구성도
-![PaaS-TA AP Component](image/ap_architecture_component.png)
+![K-PaaS AP Component](image/ap_architecture_component.png)
 
 
 
@@ -28,8 +28,8 @@
 
 
 ## 설명
-PaaS-TA AP는 개발자 프레임워크 및 앱 서비스를 선택할 수 있는 PaaS(Platform as a Service) 플랫폼이다.  
-PaaS-TA AP를 사용하면 어플리케이션을 더 빠르고 쉽게 구축, 테스트 배포 및 확장할 수 있다.
+K-PaaS AP는 개발자 프레임워크 및 앱 서비스를 선택할 수 있는 PaaS(Platform as a Service) 플랫폼이다.  
+K-PaaS AP를 사용하면 어플리케이션을 더 빠르고 쉽게 구축, 테스트 배포 및 확장할 수 있다.
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > PaaS-TA AP
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > K-PaaS AP

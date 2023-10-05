@@ -1,11 +1,11 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > AP Install
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > AP Install
 
 ## Application Platform (AP) - Install
 - Application Platform  
   - [BOSH](./application_platform/bosh.md)  
-  - [PaaS-TA AP](./application_platform/paasta_ap.md)  
-  - [PaaS-TA AP - min](./application_platform/paasta_ap_min.md)  
-  - [PaaS-TA Multi CPI](./application_platform/paasta_multi_cpi.md)  
+  - [K-PaaS AP](./application_platform/kpaas_ap.md)  
+  - [K-PaaS AP - min](./application_platform/kpaas_ap_min.md)  
+  - [K-PaaS Multi CPI](./application_platform/kpaas_multi_cpi.md)  
   - 기타 가이드
     - [Migration 가이드 (3.1 to 4.0)](./application_platform/4.0_migration.md)  
 
@@ -13,7 +13,7 @@
   + BOSH를 이용한 포탈 VM Type
     + [Portal UI](./portal/vm_type_ui.md)   
     + [Portal API](./portal/vm_type_api.md)   
-  + PaaS-TA AP를 이용한 포탈 Container Type
+  + K-PaaS AP를 이용한 포탈 Container Type
     + [Portal infra & Portal APP](./portal/container_type.md)   
 
 - Service
@@ -30,4 +30,4 @@
   - [Gateway](./service/gateway.md)
   - [Lifecycle](./service/lifecycle.md)
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > AP Install
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > AP Install

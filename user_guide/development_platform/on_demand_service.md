@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > On-Demand Service 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > On-Demand Service 개발
 
 ## Table of Contents
 1. [문서 개요](#1)
@@ -146,7 +146,7 @@ bosh:
 
 spring:
   application:
-    name: paas-ta-on-demand-broker
+    name: ap-on-demand-broker
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: "jdbc:mysql://{on_demand_service_broker_database_url}/on-demand?autoReconnect=true&useUnicode=true&characterEncoding=utf8"
@@ -161,7 +161,7 @@ spring:
 serviceDefinition:
   id: 54e2de61-de84-4b9c-afc3-88d08aadfcb6
   name: redis
-  desc: "A paasta source control service for application development.provision parameters : parameters {owner : owner}"
+  desc: "A Application Platform source control service for application development.provision parameters : parameters {owner : owner}"
   bindable: true
   planupdatable: false
   bullet:
@@ -343,7 +343,7 @@ instance_groups:
   instances: 1
   jobs:
   - name: binary_storage
-    release: paasta-portal-api-release
+    release: ap-portal-api-release
   name: binary_storage
   networks:
   - default:
@@ -378,13 +378,13 @@ properties:
     - email@email.com
     - email@email.com
     password:
-    - paasta
+    - kpaas
     proxy_ip:
     proxy_port: 10008
     tenantname:
-    - paasta-marketplace
+    - kpaas-marketplace
     username:
-    - paasta-marketplace
+    - kpaas-marketplace
   haproxy:
     http_port: 8080
   mariadb:
@@ -399,7 +399,7 @@ properties:
     port: 5432
     vcap_password: c1oudc0w
 releases:
-- name: paasta-portal-api-release
+- name: ap-portal-api-release
   version: latest
 - name: common-infra
   version: latest
@@ -421,7 +421,7 @@ update:
 
 ##### <a name="43"/>4.3. On-Demand Service-Broker 구현 소스 개발가이드
 On-Demand 구현에 관련한 서비스 브로커 개발 가이드를 진행한다.
-현재 JAVA 버전만 사용이 가능하다. 예시로 나와있는 소스는 PaaS-TA GitHub의
+현재 JAVA 버전만 사용이 가능하다. 예시로 나와있는 소스는 K-PaaS GitHub의
 On-Demand-broker에서 찾아볼수 있다.
 
 1. On-Demand ServiceInstace
@@ -658,7 +658,7 @@ public class JpaServiceInstance extends ServiceInstance {
 ##### taskId : 서비스에 할당할 VM작업을 진행하는 BOSH의 task Id
 
 ◎ 1.2. JPAInstance(CreateServiceInstanceRequest request) 생성자
-##### PaaS-TA Portal을 이용한 앱 템플릿을 사용하기 위해 임의로 지정한 키에 할당된 서비스 파라미터 값을 받아 appGuid에 할당한다.
+##### K-PaaS AP Portal을 이용한 앱 템플릿을 사용하기 위해 임의로 지정한 키에 할당된 서비스 파라미터 값을 받아 appGuid에 할당한다.
        ```
        예시)
        public JpaServiceInstance(CreateServiceInstanceRequest request) {
@@ -886,7 +886,7 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
     ├── deployments
     │   ├── deploy-vsphere.sh
     │   ├── necessary_on_demand_vars.yml
-    │   ├── paasta_on_demand_service_broker.yml
+    │   ├── ap_on_demand_service_broker.yml
     │   └── unnecessary_on_demand_vars.yml
     ├── jobs
     │   ├── mariadb
@@ -900,7 +900,7 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
     │   │       └── conf
     │   │           ├── init.sql
     │   │           └── mariadb.cnf
-    │   ├── paas-ta-on-demand-broker
+    │   ├── ap-on-demand-broker
     │   │   ├── monit
     │   │   ├── spec
     │   │   └── templates
@@ -920,7 +920,7 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
     │   ├── mariadb
     │   │   ├── packaging
     │   │   └── spec
-    │   ├── paas-ta-on-demand-broker
+    │   ├── ap-on-demand-broker
     │   │   ├── packaging
     │   │   └── spec
     └── src
@@ -928,8 +928,8 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
         │   └── server-jre-8u121-linux-x64.tar.gz
         ├── mariadb
         │   └── mariadb-10.1.22-linux-x86_64.tar.gz
-        └── paas-ta-on-demand-broker
-            └── paas-ta-on-demand-broker.jar
+        └── ap-on-demand-broker
+            └── ap-on-demand-broker.jar
 
     ```
 
@@ -955,7 +955,7 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
     ├── deployments
     │   ├── deploy-vsphere.sh
     │   ├── necessary_on_demand_vars.yml
-    │   ├── paasta_on_demand_service_broker.yml
+    │   ├── ap_on_demand_service_broker.yml
     │   └── unnecessary_on_demand_vars.yml
     ├── jobs
     │   ├── mariadb
@@ -969,7 +969,7 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
     │   │       └── conf
     │   │           ├── init.sql
     │   │           └── mariadb.cnf
-    │   ├── paas-ta-on-demand-broker
+    │   ├── ap-on-demand-broker
     │   │   ├── monit
     │   │   ├── spec
     │   │   └── templates
@@ -1005,7 +1005,7 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
     │   ├── mariadb
     │   │   ├── packaging
     │   │   └── spec
-    │   ├── paas-ta-on-demand-broker
+    │   ├── ap-on-demand-broker
     │   │   ├── packaging
     │   │   └── spec
     │   └── redis-4
@@ -1016,8 +1016,8 @@ service를 Bosh release를 통해 배포 해야 하기 때문에 Bosh release �
         │   └── server-jre-8u121-linux-x64.tar.gz
         ├── mariadb
         │   └── mariadb-10.1.22-linux-x86_64.tar.gz
-        └── paas-ta-on-demand-broker
-            └── paas-ta-on-demand-broker.jar
+        └── ap-on-demand-broker
+            └── ap-on-demand-broker.jar
     ```
 
 3. Release 구성을 완료한 후에 bosh cli 명령어를 통해 tgz파일을 만든후 업로드를 한다.
@@ -1040,13 +1040,13 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
     .
     ├── deploy-vsphere.sh                     bosh deploy 실행파일
     ├── necessary_on_demand_vars.yml          manifest.yml에 들어갈 필수 변경 property파일
-    ├── paasta_on_demand_service_broker.yml   deploy manifest.yml 파일
+    ├── ap_on_demand_service_broker.yml   deploy manifest.yml 파일
     └── unnecessary_on_demand_vars.yml        manifest.yml에 들어갈 property파일
     ```
     deploy-vsphere.sh
 
     ```
-    bosh -d on-demand-service-broker deploy paasta_on_demand_service_broker.yml \
+    bosh -d on-demand-service-broker deploy ap_on_demand_service_broker.yml \
    -l necessary_on_demand_vars.yml\
    -l unnecessary_on_demand_vars.yml
     ```
@@ -1104,7 +1104,7 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
 
     ```
 
-    paasta_on_demand_service_broker.yml : On-demand-Service의 manifest.yml 파일
+    ap_on_demand_service_broker.yml : On-demand-Service의 manifest.yml 파일
 
     ```
     ---
@@ -1148,7 +1148,7 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
 
     ######## BROKER ########
 
-    - name: paas-ta-on-demand-broker
+    - name: ap-on-demand-broker
       azs:
       - z5
       instances: 1
@@ -1157,7 +1157,7 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
       networks:
       - name: "((internal_networks_name))"
       jobs:
-      - name: paas-ta-on-demand-broker
+      - name: ap-on-demand-broker
         release: "((releases_name))"
       syslog_aggregator: null
 
@@ -1247,7 +1247,7 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
 
     ```
 
-    On-Demand-Redis paasta_on_demand_service_broker(예시)
+    On-Demand-Redis ap_on_demand_service_broker(예시)
     ```
     ---
     name: "((deployment_name))"        #서비스 배포이름(필수) bosh deployments 로 확인 가능한 이름
@@ -1300,7 +1300,7 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
 
     ######## BROKER ########
 
-    - name: paas-ta-on-demand-broker
+    - name: ap-on-demand-broker
       azs:
       - z5
       instances: 1
@@ -1309,7 +1309,7 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
       networks:
       - name: "((internal_networks_name))"
       jobs:
-      - name: paas-ta-on-demand-broker
+      - name: ap-on-demand-broker
         release: "((releases_name))"
       syslog_aggregator: null
     - name: redis
@@ -1392,4 +1392,4 @@ Deployment manifest 에는 sotfware를 설치 하기 위해서 어떤 Stemcell (
 [On-Demand_Image_06]:./images/on-demand/6.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > On-Demand Service 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > On-Demand Service 개발

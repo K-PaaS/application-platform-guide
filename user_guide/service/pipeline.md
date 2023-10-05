@@ -1,14 +1,14 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Pipeline Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Pipeline Service
 
 
-# [PaaS-TA 배포 파이프라인 서비스 사용자 가이드]
+# [K-PaaS AP 배포 파이프라인 서비스 사용자 가이드]
 
 ## 목차
 1. [문서 개요](#1)
 	* [1.1. 목적](#1-1)
 	* [1.2. 범위](#1-2)
 2. [배포 파이프라인 서비스 신청](#2)
-	* [2.1. PaaS-TA 사용자 포탈 접속](#2-1)
+	* [2.1. K-PaaS AP 사용자 포탈 접속](#2-1)
 	* [2.2. 배포 파이프라인 서비스 신청](#2-2)
 	* [2.3. 배포 파이프라인 접속](#2-3)
 3. [배포 파이프라인 사용자 매뉴얼](#3)
@@ -98,8 +98,8 @@
 
 # <div id='2'/> 2. 배포 파이프라인 서비스 신청
 
-## <div id='2-1'/> 2.1 PaaS-TA 사용자 포탈 접속
-1. PaaS-Ta 사용자 포탈에 접속하여 “로그인”을 클릭한다.  
+## <div id='2-1'/> 2.1 K-PaaS AP 사용자 포탈 접속
+1. K-PaaS AP 사용자 포탈에 접속하여 “로그인”을 클릭한다.  
 ![002]
 
 2. 사용자 계정과 비밀번호를 입력한 후 “LOGIN” 버튼을 클릭하여 사용자 포탈에 로그인한다.  
@@ -123,7 +123,7 @@
 ![008]
 
 ## <div id='2-3'/> 2.3 배포 파이프라인 접속
-1. PaaS-TA 포탈의 스페이스 페이지에서 신청된 배포 파이프라인의 “대시보드” 버튼을 클릭하여 접속을 진행한다.  
+1. K-PaaS AP 포탈의 스페이스 페이지에서 신청된 배포 파이프라인의 “대시보드” 버튼을 클릭하여 접속을 진행한다.  
 ![009]
 
 2. 배포 파이프라인 접속을 확인한다.  
@@ -563,7 +563,7 @@
 ![114]
 3.	배포 Job 실행이 완료된 것을 확인하고, 히스토리를 확인한다.  
 ![115]
-4.	PaaS-TA 포탈로 Cloud Foundry 계정을 만들어 배포한 결과 PaaS-TA 포탈 대시보드에서 공간의 애플리케이션 부분에 ‘testtest’라는 애플리케이션이 배포되었음을 확인할 수 있다.  
+4.	K-PaaS AP 포탈로 Cloud Foundry 계정을 만들어 배포한 결과 K-PaaS AP 포탈 대시보드에서 공간의 애플리케이션 부분에 ‘testtest’라는 애플리케이션이 배포되었음을 확인할 수 있다.  
 ![116]
 
 ***※	배포 Job 로그/히스토리는 관리자와 모든 파이프라인 참여자가 조회 가능하나 실행 및 정지 버튼은 생성권한과 실행 권한을 가진 참여자만 가능하다.***
@@ -576,7 +576,7 @@
 ![118]
 3.	롤백을 진행한다.  
 ![119]
-4.	롤백 진행 후 PaaS-TA 포탈에서 확인한 결과 ‘test-hrjin’ 이란 이름의 애플리케이션이 배포 완료되었다.  
+4.	롤백 진행 후 K-PaaS AP 포탈에서 확인한 결과 ‘test-hrjin’ 이란 이름의 애플리케이션이 배포 완료되었다.  
 ![120]
 
 ***※	배포 Job 현재 작업으로 롤백은 관리자와 생성권한과 실행 권한을 가진 참여자만 가능하다.***
@@ -946,4 +946,4 @@
 [178]:./images/pipeline/image178.png
 [179]:./images/pipeline/image179.png
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Pipeline Service 
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Pipeline Service

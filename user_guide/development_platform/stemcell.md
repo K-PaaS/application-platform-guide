@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Stemcell 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Stemcell 개발
 
 ## Table of Contents
 1. [문서 개요](#1--문서-개요)
@@ -29,7 +29,7 @@
 
 # 1.  문서 개요
 
-## 1.1.  목적 
+## 1.1.  목적
 
 사용자 정의의 스템셀을 생성하는 것이 목표이다.
 
@@ -336,7 +336,7 @@ Vagrant는 가상 환경을 구축해 주는 오픈 소스이다. 스템셀을 �
 		$ vagrant provision remote
 
 
-# 3.  기본 OS 이미지 생성 
+# 3.  기본 OS 이미지 생성
 
 사용자 환경에 맞는 사용자 정의의 OS로 구성한 스템셀이 필요한 경우, 기본 OS 이미지부터 생성한다. 기본 OS 이미지는 스템셀이 요구하는 최소한의 OS 기능과 Bosh agent 및 bosh 모니터로 구성 되어 있다.
 
@@ -368,7 +368,7 @@ Ubuntu OS 이미지를 생성하는 절차를 기술한다.
 	※ 필수 항목이 아닌 곳에 대해서는 ‘’을 입력한다.
 
 
-## 3.2.  RHEL OS 이미지 생성 
+## 3.2.  RHEL OS 이미지 생성
 
 RHEL OS 이미지를 생성하는 절차를 기술한다.
 
@@ -405,7 +405,7 @@ RHEL OS 이미지를 생성하는 절차를 기술한다.
 	***※ 기본 RHEL OS 이미지 생성 시 오류가 발생할 경우, RHEL에서 기본 RHEL OS 이미지를 제공받아 스템셀을 생성한다.***
 
 
-## 3.3.  생성한 기본 OS 이미지의 보관장소 
+## 3.3.  생성한 기본 OS 이미지의 보관장소
 
 1.  생성한 기본 OS 이미지 확인
 
@@ -420,9 +420,9 @@ RHEL OS 이미지를 생성하는 절차를 기술한다.
 		$ vagrant scp remote:/tmp/<생성한 기본 OS 이미지명> <다운받을 로컬 경로>
 
 
-# 4.  BOSH 스템셀 생성 
+# 4.  BOSH 스템셀 생성
 
-## 4.1.  원격지의 OS 이미지를 사용한 스템셀 생성 
+## 4.1.  원격지의 OS 이미지를 사용한 스템셀 생성
 
 원격지의 OS 이미지를 사용해서 스템셀을 생성하는 절차를 기술한다.
 
@@ -470,7 +470,7 @@ RHEL OS 이미지를 생성하는 절차를 기술한다.
 	※ 위와 다른 옵션을 지정하고 싶은 경우 Bosh source에서 필요한 부분을 수정하거나 개발 한다.
 
 
-## 4.2.  로컬의 OS 이미지를 사용한 스템셀 생성 
+## 4.2.  로컬의 OS 이미지를 사용한 스템셀 생성
 
 로컬의 OS 이미지를 사용해서 스템셀을 생성하는 절차를 기술한다.
 
@@ -527,7 +527,7 @@ RHEL OS 이미지를 생성하는 절차를 기술한다.
 	|vsphere					|Esxi						 |centos|
 
 
-## 4.3.  생성한 스템셀의 보관장소 
+## 4.3.  생성한 스템셀의 보관장소
 
 1.  생성한 스템셀 확인
 
@@ -542,7 +542,7 @@ RHEL OS 이미지를 생성하는 절차를 기술한다.
 		$ vagrant scp remote:/bosh/tmp/<생성한 스템셀명> <다운받을 로컬 경로>
 
 
-# 5.  BOSH Light 스템셀 생성 
+# 5.  BOSH Light 스템셀 생성
 
 ## 5.1.  Bosh Light 스템셀 생성
 
@@ -575,9 +575,9 @@ Bosh light 스템셀은 AWS (N. Virgina region 한정)에서만 사용가능한 
 	※ 필수 항목이 아닌 곳에 대해서는 ‘’을 입력한다.
 
 
-# 6.  스템셀 커스터마이징 
+# 6.  스템셀 커스터마이징
 
-## 6.1.  스템셀 생성 소스 수정 
+## 6.1.  스템셀 생성 소스 수정
 
 사용자의 요구사항에 맞는 스템셀을 생성하기 위해서는 스템셀 생성 소스를 수정 해야 할 경우가 있다. 스템셀 생성을 구성하는 대부분의 파일은 아래의 디렉토리에 있다.
 
@@ -602,4 +602,4 @@ Bosh light 스템셀은 AWS (N. Virgina region 한정)에서만 사용가능한 
 		' remote
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Stemcell 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Stemcell 개발

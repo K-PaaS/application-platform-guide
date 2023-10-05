@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js API Service Metering 개발
+### [Index](https://github.com/K-PaaS AP/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js API Service Metering 개발
 
 ## Table of Contents
 1. [문서 개요](#1)
@@ -24,7 +24,7 @@
 	     * [2.6.3 과금 정책](#21)
 	     * [2.6.4 정책 등록](#22)
      * [2.7 배포](#23)
-	     * [2.7.1 파스-타 플랫폼 로그인](#24)
+	     * [2.7.1 어플리케이션 플랫폼 로그인](#24)
 	     * [2.7.2 API 서비스 브로커 생성](#25)
 	     * [2.7.3 API 서비스 애플리케이션 배포 및 서비스 등록](#26)
 	     * [2.7.4 API 서비스 연동 샘플 애플리케이션 배포 및 서비스 연결](#27)
@@ -38,10 +38,10 @@
 
 ### <div id='2'></div> 1.1 목적
 
-본 문서(node.js API 서비스 미터링 애플리케이션 개발 가이드)는 파스-타 플랫폼 프로젝트의 미터링 플러그인과 Node.js API 애플리케이션을 연동시켜 API 서비스를 미터링하는 방법에 대해 기술 하였다.
+본 문서(node.js API 서비스 미터링 애플리케이션 개발 가이드)는 어플리케이션 플랫폼 프로젝트의 미터링 플러그인과 Node.js API 애플리케이션을 연동시켜 API 서비스를 미터링하는 방법에 대해 기술 하였다.
 
 ### <div id='3'></div> 1.2 범위
-본 문서의 범위는 파스-타 플랫폼 프로젝트의 Node.js API 서비스 애플리케이션 개발과 CF-Abacus 연동에 대한 내용으로 한정되어 있다.
+본 문서의 범위는 어플리케이션 플랫폼 프로젝트의 Node.js API 서비스 애플리케이션 개발과 CF-Abacus 연동에 대한 내용으로 한정되어 있다.
 
 ### <div id='4'></div> 1.3 참고자료
 **<https://docs.cloudfoundry.org/devguide/>**  
@@ -104,7 +104,7 @@ Node.js 애플리케이션 개발을 위해 다음과 같은 환경으로 개발
 
 ### <div id='8'></div> 2.2.1 Node.js 및 npm 설치
 
-#### 1.  Node.js 및 npm 설치  
+#### 1.  Node.js 및 npm 설치
 
 	$ sudo apt-get install curl
 
@@ -166,7 +166,7 @@ Node.js는 javascript기반의 언어로 Notepad++, Sublim Text, EditPlus등 문
   </tr>
   <tr>
     <td>manifest.yml</td>
-    <td>애플리케이션을 파스-타 플랫폼에 배포 시 적용하는 애플리케이션에 대한 환경 설정 정보<br>
+    <td>애플리케이션을 어플리케이션 플랫폼에 배포 시 적용하는 애플리케이션에 대한 환경 설정 정보<br>
     애플리케이션의 이름, 배포 경로, 인스턴스 수 등을 정의할 수 있다.
     </td>
   </tr>
@@ -224,7 +224,7 @@ Node.js는 javascript기반의 언어로 Notepad++, Sublim Text, EditPlus등 문
 	    "cfpack": "cfpack",               						## npm run cfpack: 컴파일한 개발 소스를 패키지화
 	    "cfpush": "cfpush"              						## npm run cfpush: 패키지화 한 개발 소스를 cf에 push
 	  },
-	  "author": "PAASTA", 
+	  "author": "KPaaS", 
 	  "license": "Apache-2.0",                    				## 라이선스 선언
 	  "dependencies": {
 	    "body-parser": "^1.15.2",                 				## json parser 모듈
@@ -301,7 +301,7 @@ applications:
 	  </tr>
 	  <tr>
 	    <td>API</td>
-	    <td>CF API URL<br>https://api.<파스-타 도메인></td>
+	    <td>CF API URL<br>https://api.<어플리케이션 플랫폼 도메인></td>
 	  </tr>
 	  <tr>
 	    <td>COLLECTOR</td>
@@ -316,7 +316,7 @@ applications:
 	  <tr>
 	    <td>AUTH_SERVER</td>
 	    <td>SECURED가 true인 경우 설정한다.<br>
-	    - CF UAA를 Auth_server로 설정할 경우, https://api.<파스-타 도메인><br>
+	    - CF UAA를 Auth_server로 설정할 경우, https://api.<어플리케이션 플랫폼 도메인><br>
 	    - Abacus의 AuthServer를 Auth_server로 설정할 경우, abacus-authserver-plugin
 	    </td>
 	  </tr>
@@ -768,7 +768,7 @@ applications:
   </tr>
   <tr>
     <td>manifest.yml</td>
-    <td>파스-타 플랫폼에 배포시 애플리케이션에 대한 설정이다. 애플리케이션의 이름, 배포 경로, 인스턴스 수 등을 정의할 수 있다.</td>
+    <td>어플리케이션 플랫폼에 배포시 애플리케이션에 대한 설정이다. 애플리케이션의 이름, 배포 경로, 인스턴스 수 등을 정의할 수 있다.</td>
   </tr>
   <tr>
     <td>.npmrc</td>
@@ -804,7 +804,7 @@ applications:
 
 ### <div id='15'></div> 2.5.1 API 서비스 연동 샘플 애플리케이션 코드
 
-#### 1.  Package.json  
+#### 1.  Package.json
 샘플 애플리케이션의 코드 구성에 대해 기술한다.
 
 	{
@@ -834,7 +834,7 @@ applications:
 	    "cfpack": "cfpack",
 	    "cfpush": "./cfpush.sh"
 	  },
-	  "author": "PAASTA",
+	  "author": "KPaaS",
 	  "license": "Apache-2.0",
 	  "dependencies": {
 	    "body-parser": "^1.15.2",
@@ -863,7 +863,7 @@ applications:
 
 
 
-#### 2.  Manifest.yml  
+#### 2.  Manifest.yml
 앱을 CF에 배포할 때 필요한 설정 정보 및 앱 실행 환경에 필요한 설정 정보를 기술한다.
 ```yml
 ---
@@ -906,7 +906,7 @@ applications:
       <tr>
         <td>AUTH_SERVER</td>
         <td>SECURED가 true인 경우 설정한다.
-        - CF UAA를 Auth_server로 설정할 경우, https://api.<파스-타 도메인>
+        - CF UAA를 Auth_server로 설정할 경우, https://api.<어플리케이션 플랫폼 도메인>
         - Abacus의 AuthServer를 Auth_server로 설정할 경우, abacus-authserver-plugin
         </td>
       <tr>
@@ -921,7 +921,7 @@ applications:
 	</table>
 	                   
 	                   
-#### 3.  App.js  
+#### 3.  App.js
 Api 서비스를 요청하는 애플리케이션을 구현한다.
 
 -   의존 모듈 선언
@@ -1133,7 +1133,7 @@ Api 서비스를 요청하는 애플리케이션을 구현한다.
 
 
 
-#### 4.  Views/apiCaller.handlebars  
+#### 4.  Views/apiCaller.handlebars
 Api 서비스를 요청하는 웹 화면
 
 	<!DOCTYPE html>
@@ -1293,9 +1293,9 @@ Api 서비스를 요청하는 웹 화면
 
 ### <div id='17'></div> 2.5.3 VCAP_SERVICES 환경설정 정보
 
-파스-타 플랫폼에 배포되는 애플리케이션이 바인딩된 서비스별 접속 정보를 얻기 위해서는 애플리케이션별로 등록되어있는 VCAP_SERVICES 환경설정 정보를 읽어들여 정보를 획득 할 수 있다.
+어플리케이션 플랫폼에 배포되는 애플리케이션이 바인딩된 서비스별 접속 정보를 얻기 위해서는 애플리케이션별로 등록되어있는 VCAP_SERVICES 환경설정 정보를 읽어들여 정보를 획득 할 수 있다.
 
-#### 1.  파스-타 플랫폼의 애플리케이션 환경정보
+#### 1.  어플리케이션 플랫폼의 애플리케이션 환경정보
 -   서비스를 바인딩하면 JSON 형태로 환경설정 정보가 애플리케이션 별로 등록된다.
 
 		{
@@ -1347,7 +1347,7 @@ Api 서비스를 요청하는 웹 화면
 
 
 
-#### 2.  Node.js에서 파스-타 플랫폼의 애플리케이션 환경정보에 접근하는 방법
+#### 2.  Node.js에서 어플리케이션 플랫폼의 애플리케이션 환경정보에 접근하는 방법
 
 -   시스템 환경변수의 VCAP_SERVICES값을 읽어서 접근 할 수 있다.
 
@@ -1652,7 +1652,7 @@ Api 서비스를 요청하는 웹 화면
 
 정책은 2가지 방식 중 하나의 방법으로 CF-ABACUS에 등록할 수 있다.
 
-#### 1.  js 파일을 등록하는 방식  
+#### 1.  js 파일을 등록하는 방식
 작성한 정책을 다음의 디렉토리에 저장한 후, CF에 CF-ABACUS를 배포 또는 재배포 한다.
 
 -   미터링 정책의 경우
@@ -1668,7 +1668,7 @@ Api 서비스를 요청하는 웹 화면
 	 	cf-abacus/lib/plugins/provisioning/src/plans/rating
 
 
-#### 2.  DB에 등록하는 방식  
+#### 2.  DB에 등록하는 방식
 작성한 정책을 curl 등을 이용해 DB에 저장하는 방식으로 CF-ABACUS를 재배포할 필요는 없다. 정책 등록 시, 정책 ID는 고유해야 한다.
 
 -   미터링 정책의 경우  
@@ -1711,20 +1711,20 @@ Api 서비스를 요청하는 웹 화면
 
 ### <div id='23'></div> 2.7 배포
 
-파스-타 플랫폼에 애플리케이션을 배포하면 배포한 애플리케이션과 파스-타 플랫폼이 제공하는 서비스를 연결하여 사용할 수 있다. 파스-타 플랫폼상에서 실행을 해야만 파스-타 플랫폼의 애플리케이션 환경변수에 접근하여 서비스에 접속할 수 있다.
+어플리케이션 플랫폼에 애플리케이션을 배포하면 배포한 애플리케이션과 어플리케이션 플랫폼이 제공하는 서비스를 연결하여 사용할 수 있다. 어플리케이션 플랫폼상에서 실행을 해야만 어플리케이션 플랫폼의 애플리케이션 환경변수에 접근하여 서비스에 접속할 수 있다.
 
-### <div id='24'></div> 2.7.1 파스-타 플랫폼 로그인
+### <div id='24'></div> 2.7.1 어플리케이션 플랫폼 로그인
 
-아래의 과정을 수행하기 위해서 파스-타 플랫폼에 로그인
+아래의 과정을 수행하기 위해서 어플리케이션 플랫폼에 로그인
 
-	$ cf api --skip-ssl-validation https://api.<파스-타 도메인> # 파스-타 플랫폼 TARGET 지정
+	$ cf api --skip-ssl-validation https://api.<어플리케이션 플랫폼 도메인> # 어플리케이션 플랫폼 TARGET 지정
 	
 	$ cf login -u <user name> -o <org name> -s <space name> # 로그인 요청
 
 
 ### <div id='25'></div> 2.7.2  API 서비스 브로커 생성
 
-애플리케이션에서 사용할 서비스를 파스-타 플랫폼을 통하여 생성한다. 별도의 서비스 설치과정 없이 생성할 수 있으며, 애플리케이션과
+애플리케이션에서 사용할 서비스를 어플리케이션 플랫폼을 통하여 생성한다. 별도의 서비스 설치과정 없이 생성할 수 있으며, 애플리케이션과
 바인딩과정을 통해 접속정보를 얻을 수있다.
 
 -   서비스 생성 (cf marketplace 명령을 통해 서비스 목록과 각 서비스의 플랜을 조회할 수 있다.)
@@ -1734,7 +1734,7 @@ Api 서비스를 요청하는 웹 화면
 		$ cd <샘플 서비스 브로커 경로>/sample_api_java_broker
 		$ gradle build -x test
 		:compileJava
-		Note: ~/PAASTA-API-METERING-SAMPLE/lib/sample_api_java_broker/src/main/java/org/openpaas/servicebroker/api/config/CatalogConfig.java uses unchecked or unsafe operations.
+		Note: ~/KPAAS-API-METERING-SAMPLE/lib/sample_api_java_broker/src/main/java/org/openpaas/servicebroker/api/config/CatalogConfig.java uses unchecked or unsafe operations.
 		Note: Recompile with -Xlint:unchecked for details.
 		:processResources
 		:classes
@@ -1783,7 +1783,7 @@ Api 서비스를 요청하는 웹 화면
 
 ### <div id='26'></div> 2.7.3 API 서비스 애플리케이션 배포 및 서비스 등록
 
-API 서비스 애플리케이션을 파스-타 플랫폼에 배포한다. 서비스 등록한 API는 다른 애플리케이션과 바인드하여 API 서비스를 할 수 있다.
+API 서비스 애플리케이션을 어플리케이션 플랫폼에 배포한다. 서비스 등록한 API는 다른 애플리케이션과 바인드하여 API 서비스를 할 수 있다.
 
 #### 1.  애플리케이션 배포
 
@@ -1996,19 +1996,19 @@ API 서비스 애플리케이션을 파스-타 플랫폼에 배포한다. 서비
 		$ npm install && npm run babel && npm test
 		
 		$ npm install && npm run babel && npm test
-		sample-api-node-service@0.0.1 ~/PAASTA-API-METERING-SAMPLE/lib/sample_api_node_service
+		sample-api-node-service@0.0.1 ~/KPAAS-API-METERING-SAMPLE/lib/sample_api_node_service
 		├─┬ abacus-babel@0.0.6-dev.8 
 		...  설치 패키지 트리 출력 ...
 		
 		npm WARN sample-api-node-service@0.0.1 No repository field.
 		
-		> sample-api-node-service@0.0.1 babel /home/cloud4u/workspace/PAASTA-API-METERING-SAMPLE/lib/sample_api_node_service
+		> sample-api-node-service@0.0.1 babel /home/cloud4u/workspace/KPAAS-API-METERING-SAMPLE/lib/sample_api_node_service
 		> babel
 		
 		src/app.js -> lib/app.js
 		src/test/test.js -> lib/test/test.js
 		
-		> sample-api-node-service@0.0.1 test /home/cloud4u/workspace/PAASTA-API-METERING-SAMPLE/lib/sample_api_node_service
+		> sample-api-node-service@0.0.1 test /home/cloud4u/workspace/KPAAS-API-METERING-SAMPLE/lib/sample_api_node_service
 		> eslint && mocha
 		
 		
@@ -2100,7 +2100,7 @@ API 연동 샘플 애플리케이션의 url을 통해 웹 브라우저에서 접
 	<<후략>> 
 	
 	## API 사용량 확인
-	$ curl 'http://abacus-usage-reporting.<파스-타 도메인>/v1/metering/organizations/<샘플 애플리케이션을 배포한 조직>/aggregated/usage'
+	$ curl 'http://abacus-usage-reporting.<어플리케이션 플랫폼 도메인>/v1/metering/organizations/<샘플 애플리케이션을 배포한 조직>/aggregated/usage'
 	
 	예)
 	$ curl 'http://abacus-usage-reporting.bosh-lite.com/v1/metering/organizations/877d01b2-d177-4209-95b0-00de794d9bba/aggregated/usage'
@@ -2109,10 +2109,10 @@ API 연동 샘플 애플리케이션의 url을 통해 웹 브라우저에서 접
 
 샘플코드는 아래의 사이트에 다운로드 할 수 있다.
 
-[다운로드](https://nextcloud.paas-ta.org/index.php/s/mEbGNcJjrEj7GWx/download)
+[다운로드](https://nextcloud.k-paas.org/index.php/s/mEbGNcJjrEj7GWx/download)
 
 
 [Development_Guide_Nodejs_Image01]:./images/nodejs_Service_Metering/2-0-0.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js API Service Metering 개발
+### [Index](https://github.com/K-PaaS AP/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Node.js API Service Metering 개발

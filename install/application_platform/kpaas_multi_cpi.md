@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > PaaS-TA Multi CPI
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > K-PaaS Multi CPI
 
 ## Table of Contents
 
@@ -34,8 +34,8 @@
 <br>
 
 ## <div id='1.2'/>1.2. 범위
-본 가이드는 BOSH와 PaaS-TA AP에 대한 기본 이해도가 있다는 전제 하에 가이드를 진행하였다.  
-multi-cpi-deployment는 paasta-deployment v5.7.1의 설치를 기준으로 가이드를 작성하였다.  
+본 가이드는 BOSH와 K-PaaS AP에 대한 기본 이해도가 있다는 전제 하에 가이드를 진행하였다.  
+multi-cpi-deployment는 ap-deployment v5.7.1의 설치를 기준으로 가이드를 작성하였다.  
 multi-cpi-deployment는 AWS, OpenStack, vSphere 에서 설정이 가능하다.  
 분류는 크게 Main IaaS AZ와 Second IaaS AZ가 같은 경우 (e.g. A OpenStack ⇔ B OpenStack, 이하 Same IaaS AZ) 와 Main IaaS AZ와 Second IaaS AZ가 다른 경우 (e.g. Openstack ⇔ AWS, 이하 Different IaaS AZ)를 기준으로 작성하였다.
 
@@ -126,13 +126,13 @@ BOSH CLI가 설치 되어 있지 않을 경우 먼저 BOSH 설치 가이드 문�
 
 ## <div id='2.2'/>2.2. 설치 파일 다운로드
 
-- BOSH를 설치하기 위한 paasta-deployment와 Multi CPI 설정을 위한 multi-cpi-deployment가 존재하지 않는다면 다운로드 받는다
+- BOSH를 설치하기 위한 ap-deployment와 Multi CPI 설정을 위한 multi-cpi-deployment가 존재하지 않는다면 다운로드 받는다
 
 ```
 $ mkdir -p ~/workspace
 $ cd ~/workspace
-$ git clone https://github.com/PaaS-TA/paasta-deployment.git -b v5.7.1
-$ git clone https://github.com/PaaS-TA/multi-cpi-deployment.git -b v5.7.1
+$ git clone https://github.com/K-PaaS/ap-deployment.git -b v5.7.1
+$ git clone https://github.com/K-PaaS/multi-cpi-deployment.git -b v5.7.1.1
 ```
 
 <br>
@@ -170,7 +170,7 @@ remote_vpn_ip: "XXX.XXX.XXX.XXX"                  # Used by OpenVPN Server-2 ip
 #secret_access_key: "XXXXXXXXXXXXXXX"              # AWS Secret Key
 #region: "ap-northeast-2"                          # AWS Region
 #availability_zone: "ap-northeast-2a"              # AWS Region
-#subnet_id: "paasta-subnet"                        # AWS Subnet ex) subnet-0ebc.....
+#subnet_id: "ap-subnet"                            # AWS Subnet ex) subnet-0ebc.....
 #default_security_groups: ["bosh-sg"]              # AWS Security-Group
 #bootstrap_ssh_key_name: "bosh-key"                # AWS SSH Private Key Name
 #bootstrap_ssh_key_path: "/.ssh/bosh-key.pem"      # AWS SSH Private Key Path
@@ -185,7 +185,7 @@ remote_vpn_ip: "XXX.XXX.XXX.XXX"                  # Used by OpenVPN Server-2 ip
 #openstack_password: "XXXXXXXXXXXXXXX"             # Openstack User Password
 #openstack_username: "XXXXXXXXXXXXXXX"             # Openstack User Name
 #openstack_domain: "default"                       # Openstack Domain Name
-#openstack_project: "paasta"                       # Openstack Project
+#openstack_project: "ap"                           # Openstack Project
 #private_key: "/.ssh/bosh-key.pem"                 # Openstack SSH Private Key Path
 #region: "RegionOne"                               # Openstack Region
 
@@ -320,8 +320,8 @@ BOSH를 설치하고 Multi CPI를 설정하여 하나의 BOSH로 Main IaaS AZ와
 
 - Multi CPI 파일 BOSH 폴더로 이동
 ```
-$ cp ~/workspace/multi-cpi-deployment/multi-cpi ~/workspace/paasta-deployment/bosh -r
-$ cd ~/workspace/paasta-deployment/bosh
+$ cp ~/workspace/multi-cpi-deployment/multi-cpi ~/workspace/ap-deployment/bosh -r
+$ cd ~/workspace/ap-deployment/bosh
 ```
 
 <br>
@@ -339,7 +339,7 @@ BOSH 설치에 대한 상세 내용은 BOSH 설치 가이드를 참고한다.
 | deploy-cpi-aws-secondary.yml | BOSH를 설치하지 않는 인프라가 AWS 일 경우 사용 |
 | deploy-cpi-openstack-secondary.yml	 | BOSH를 설치하지 않는 인프라가 OpenStack 일 경우 사용 |
 | deploy-cpi-vsphere-secondary.yml	 | BOSH를 설치하지 않는 인프라가 vSphere 일 경우 사용 |
-| deploy-cpi-registry-secondary.yml | BOSH를 설치하는 인프라가 vSphere 일 경우 사용 <br>(paasta-deployment v5.7.0 미만 버전 배포 시 사용, <br>v5.7.0 이상은 사용하지 않는다.) |
+| deploy-cpi-registry-secondary.yml | BOSH를 설치하는 인프라가 vSphere 일 경우 사용 <br>(ap-deployment v5.7.0 미만 버전 배포 시 사용, <br>v5.7.0 이상은 사용하지 않는다.) |
 
 - 예제1. AWS - Openstack BOSH 설치
 > $ vi deploy-aws.sh
@@ -388,7 +388,7 @@ BOSH 설치에 대한 상세 내용은 BOSH 설치 가이드를 참고한다.
  	-l openstack-vars.yml
 ```
 
-- 예제4. vSphere - AWS BOSH 설치 (paasta-deployment v5.7.0 이상 설치 시)
+- 예제4. vSphere - AWS BOSH 설치 (ap-deployment v5.7.0 이상 설치 시)
 > $ vi deploy-vsphere.sh
 ```diff
  bosh create-env bosh.yml \
@@ -403,7 +403,7 @@ BOSH 설치에 대한 상세 내용은 BOSH 설치 가이드를 참고한다.
  	-l vsphere-vars.yml
 ```
 
-- 예제5. vSphere - AWS BOSH 설치 (paasta-deployment v5.7.0 미만 설치 시)
+- 예제5. vSphere - AWS BOSH 설치 (ap-deployment v5.7.0 미만 설치 시)
 > $ vi deploy-vsphere.sh
 ```diff
  bosh create-env bosh.yml \
@@ -447,19 +447,19 @@ CPI에 대한 추가 설정을 진행한다.
 ## MULTI-CPI VARIABLE :: AWS
 aws_access_key_id: "XXXXXXXXXXXXXXX"                    # AWS Access Key
 aws_secret_access_key: "XXXXXXXXXXXXX"                  # AWS Secret Key
-aws_default_key_name: "paasta-key"                      # AWS Key Name
-aws_default_security_groups: ["paasta-security"]        # AWS Security-Group
+aws_default_key_name: "ap-key"                          # AWS Key Name
+aws_default_security_groups: ["ap-security"]            # AWS Security-Group
 aws_region: "ap-northeast-2"                            # AWS Region
 
 ... ((생략)) ...
 
 # IF USE SAME IAAS, CPI MULTI-CPI VARIABLE
 
-## MULTI-CPI VARIABLE :: AWS second
+## MULTI-CPI VARIABLE :: aws second
 aws_second_access_key_id: "XXXXXXXXXXXXXXX"                    # AWS Second Access Key
 aws_second_secret_access_key: "XXXXXXXXXXXXX"                  # AWS Second Secret Key
-aws_second_default_key_name: "paasta-key"                      # AWS Second Key Name
-aws_second_default_security_groups: ["paasta-security"]        # AWS Second Security-Group
+aws_second_default_key_name: "ap-key"                          # AWS Second Key Name
+aws_second_default_security_groups: ["ap-security"]            # AWS Second Security-Group
 aws_second_region: "ap-northeast-2"                            # AWS Second Region
 
 ... ((생략)) ...
@@ -509,8 +509,8 @@ $ bosh update-cpi-config multi-cpi/cpi-config.yml -l multi-cpi/cpi-vars.yml
 ## MULTI-CPI VARIABLE :: AWS
 aws_access_key_id: "XXXXXXXXXXXXXXX"                    # AWS Access Key
 aws_secret_access_key: "XXXXXXXXXXXXX"                  # AWS Secret Key
-aws_default_key_name: "paasta-key"                      # AWS Key Name
-aws_default_security_groups: ["paasta-security"]        # AWS Security-Group
+aws_default_key_name: "ap-key"                          # AWS Key Name
+aws_default_security_groups: ["ap-security"]            # AWS Security-Group
 aws_region: "ap-northeast-2"                            # AWS Region
 
 ## MULTI-CPI VARIABLE :: OpenStack
@@ -518,10 +518,10 @@ openstack_auth_url: "http://XX.XXX.XX.XX:XXXX/v3/"      # OpenStack Keystone URL
 openstack_username: "XXXXXX"                            # OpenStack User Name
 openstack_password: "XXXXXX"                            # OpenStack User Password
 openstack_domain: "XXXXXX"                              # OpenStack Domain Name
-openstack_project: "PaaS-TA"                            # OpenStack Project
+openstack_project: "AP"                                 # OpenStack Project
 openstack_region: "RegionOne"                           # OpenStack Region
-openstack_default_key_name: "paasta-key"                # OpenStack Key Name
-openstack_default_security_groups: ["paasta-security"]  # OpenStack Security Group
+openstack_default_key_name: "ap-key"                    # OpenStack Key Name
+openstack_default_security_groups: ["ap-security"]      # OpenStack Security Group
 
 ... ((생략)) ...
 ```
@@ -565,7 +565,7 @@ $ bosh update-cpi-config multi-cpi/cpi-config.yml -l multi-cpi/cpi-vars.yml
 
 ### <div id='2.4.3'/>2.4.3. Cloud Config 설정
 Cloud Config에 대한 추가 설정을 진행한다.  
-Same IaaS AZ의 경우 paasta-deployment 폴더의 cloud-config 파일을 이용하며, Different IaaS AZ의 경우 bosh/multi-cpi 폴더의 cloud-config 파일을 이용한다.  
+Same IaaS AZ의 경우 ap-deployment 폴더의 cloud-config 파일을 이용하며, Different IaaS AZ의 경우 bosh/multi-cpi 폴더의 cloud-config 파일을 이용한다.  
 
 #### <div id='2.4.3.1'/>2.4.3.1. Same IaaS AZ의 경우
 
@@ -628,7 +628,7 @@ $ bosh update-cloud-config ~/workspace/bosh/multi-cpi/cloud-config-{iaas}-{iaas}
 설치된 BOSH에 로그인 후 사용하는 IaaS의 Stemcell 업로드를 진행한다.   
 (e.g. AWS와 OpenStack의 두개의 환경을 사용 할 경우 해당 명령어를 두개 다 실행한다.)  
 ```
-# paasta-deployment v5.7.1와 동일한 Stemcell인 ubuntu-bionic 1.76를 사용한다.
+# ap-deployment v5.7.1와 동일한 Stemcell인 ubuntu-bionic 1.76를 사용한다.
 # AWS 스템셀의 경우 light Stemcell을 이용한다
 
 # AWS
@@ -645,15 +645,15 @@ $ bosh upload-stemcell https://storage.googleapis.com/bosh-core-stemcells/1.76/b
 
 
 ### <div id='2.4.5'/>2.4.5. Multi CPI를 이용한 AP 설치 테스트
-Multi CPI 설정을 완료한 뒤, PaaS-TA AP를 설치하여 상호간 통신이 원활하게 진행되는지 테스트를 진행한다.  
-PaaS-TA AP에 필요한 runtime-config 설정이나 변수 설정에 관한 설명은 PaaS-TA AP 가이드를 참조한다.  
+Multi CPI 설정을 완료한 뒤, K-PaaS AP를 설치하여 상호간 통신이 원활하게 진행되는지 테스트를 진행한다.  
+K-PaaS AP에 필요한 runtime-config 설정이나 변수 설정에 관한 설명은 K-PaaS AP 가이드를 참조한다.  
 
 본 가이드에서는 여러 케이스중 AWS - OpenStack 기준으로 Diego-cell을 OpenStack에, 나머지 VM을 AWS에 설치하여 진행하였다.  
 Diego-cell뿐 아니라 다른 VM도 분산 배포가 가능하고 Diego-cell을 각각 다른 IaaS에 분산하여 배포도 가능하니 해당되는 설정에 맞게 배포 방식을 변경하여 설치를 진행한다.  
 
-- PaaS-TA AP 설치 폴더 이동
+- K-PaaS AP 설치 폴더 이동
 ```
-$ cd ~/workspace/paasta-deployment/paasta
+$ cd ~/workspace/ap-deployment/paasta
 ```
 
 - diego-cell zone 변경
@@ -668,15 +668,15 @@ diego_cell_instances: 3			# Diego-Cell 인스턴스 수
 ... ((생략)) ...
 ```
 
-- PaaS-TA AP 설치
+- K-PaaS AP 설치
 ```
 $ source deploy-aws.sh
 ```
 
 
-PaaS-TA AP 설치 완료 후 Test APP을 Push하여 App이 정상작동하는지 확인한다.
+K-PaaS AP 설치 완료 후 Test APP을 Push하여 App이 정상작동하는지 확인한다.
 
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > PaaS-TA Multi CPI
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > K-PaaS Multi CPI

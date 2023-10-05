@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > API Platform 도로주소 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > API Platform 도로주소 개발
 
 
 ## Table of Contents
@@ -293,7 +293,7 @@ DoroJusomanagerController는 DoroJusoConroller와 같이 BaseController를 상�
 
 #### <a name="19"/>4.3.2. 소스 리스트 및 설명
 해당 소스의 위치는 “개방형 클라우드 플랫폼”의 Git Hub에 위치하며 일반에게 공개할 위치는 따로 홈페이지를 통해서 공유가 될 예정입니다.
-(개발을 위한 Private 위치는 [**https://github.com/PaaS-TA/SERVICE-EGOV-COMMON-JUSO**](https://github.com/PaaS-TA/SERVICE-EGOV-COMMON-JUSO) 입니다)
+(개발을 위한 Private 위치는 [**https://github.com/K-PaaS/service-egov-common-juso**](https://github.com/K-PaaS/service-egov-common-juso) 입니다)
 
 <table>
   <tr>
@@ -680,7 +680,7 @@ dorojusodb      dorojusodb      Unlimited   service_egov_common_juso_sampleApp  
 
 ### <a name="31"/>7.3. 소스 리스트 및 설명
 해당 소스의 위치는 “개방형 클라우드 플랫폼”의 Git Hub에 위치하며 일반에게 공개할 위치는 따로 홈페이지를 통해서 공유가 될 예정입니다.
-(개발을 위한 Private 위치는 https://github.com/PaaS-TA/SERVICE-EGOV-COMMON-JUSO-SAMPLEAPP 입니다.)
+(개발을 위한 Private 위치는 https://github.com/K-PaaS/service-egov-common-juso-sampleapp 입니다.)
 
 #### <a name="32"/>7.3.1. Spring 서버 영역
 
@@ -1274,4 +1274,4 @@ Accept : application/json
 [api_platform_dorojuso_16]:./images/openpaas-application-apiplatform-dorojuso/api_platform_dorojuso_16.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > API Platform 도로주소 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > API Platform 도로주소 개발

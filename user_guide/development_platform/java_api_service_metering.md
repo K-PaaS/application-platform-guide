@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java API Service Metering 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java API Service Metering 개발
 
 
 ## Table of Contents
@@ -28,7 +28,7 @@
      * [과금 정책](#22)
      * [정책 등록](#23)
     * [배포](#24)
-     * [파스-타 플랫폼 로그인](#25)
+     * [어플리케이션 플랫폼 로그인](#25)
      * [API 서비스 브로커 생성](#26)
      * [API 서비스 애플리케이션 배포 및 서비스 등록](#27)
      * [API 서비스 연동 샘플 애플리케이션 배포 및 서비스 연결](#28)
@@ -41,14 +41,14 @@
 
 ### <div id='3'/>1.1.1. 목적
 
-본 문서(Java API 서비스 미터링 적용개발 가이드)는 파스-타 플랫폼
+본 문서(Java API 서비스 미터링 적용개발 가이드)는 어플리케이션 플랫폼
 프로젝트의 미터링 플러그인과 Java API 미터링 서비스 애플리케이션을
 연동시켜 API 서비스를 미터링 하는 방법에 대해 기술 하였다.
 
 
 
 ### <div id='4'/>1.1.2. 범위
-본 문서의 범위는 파스-타 플랫폼 프로젝트의 JAVA API 서비스
+본 문서의 범위는 어플리케이션 플랫폼 프로젝트의 JAVA API 서비스
 애플리케이션에 대한 미터링 방법에 대한 개발과 CF-Abacus 연동에 대한
 내용으로 한정되어 있다.
 
@@ -137,7 +137,7 @@ Java 애플리케이션 개발을 위해 다음과 같은 환경으로 개발환
 별도 제공하는 Abacus 설치 가이드를 참고하여 CF-Abacus를 설치한다.
 
 
-## <div id='10'/>2.3 샘플 API 서비스 개발 
+## <div id='10'/>2.3 샘플 API 서비스 개발
     
 샘플 api 서비스는 서비스 요청이 있는 경우, 해당 요청에 대한 응답 처리와
 api 서비스 요청에 대한 미터링 정보를 CF-ABACUS에 전송하는 처리를 한다.
@@ -172,7 +172,7 @@ api 서비스 요청에 대한 미터링 정보를 CF-ABACUS에 전송하는 처
 |---------------|-----------------------------|
 |build.gradle   |애플리케이션에 필요한 의존성 정보를 기술    |
 |.gitignore     |Git을 통한 형상 관리 시, 형상 관리를 할 필요가 없는 파일 또는 디렉토리를 설정한다.               |
-|manifest.yml   |애플리케이션을 파스-타 플랫폼에 배포 시 적용하는 애플리케이션에 대한 환경 설정 정보 <br> 애플리케이션의 이름, 배포 경로, 인스턴스 수 등을 정의할 수 있다.        |
+|manifest.yml   |애플리케이션을 어플리케이션 플랫폼에 배포 시 적용하는 애플리케이션에 대한 환경 설정 정보 <br> 애플리케이션의 이름, 배포 경로, 인스턴스 수 등을 정의할 수 있다.        |
 |gradlew        |Linux 환경에서 사용하는 gradlew 빌드 실행 파일 <br> gradle 초기화 시 자동 생성 된다.     |
 |gradlew.bat    |Window 환경에서 사용하는 gradle 빌드 실행 파일 <br> gradle 초기화 시 자동 생성 된다.      |
 |settings.gradle    |gradlew 실행 시 적용하는 환경 설정 파일  <br> gradle 초기화 시 자동 생성 된다.    |
@@ -183,7 +183,7 @@ Java 파일 형상 설명
 | **파일**       |           **목적**          |
 |---------------|-----------------------------|
 |MeteringConfig   |애플리케이션 구동 시 metering.properties를 로드 한다    |
-|MeteringAuthService     |파스-타 플랫폼 상의 UAA 서버에서 abacus-usage-collector 에 대한 접근 권한 토큰을 취득하여 리턴 한다.              |
+|MeteringAuthService     |어플리케이션 플랫폼 상의 UAA 서버에서 abacus-usage-collector 에 대한 접근 권한 토큰을 취득하여 리턴 한다.              |
 |MeteringService   |API 서비스 사용 요청 이 SampleApiJavaServiceController 에서 처리 될 때 API 서비스 처리에 대해 미터링이 적용된 사용량 보고서를 abacus-usage-collector 에 리포팅 한다.       |
 |SampleApiJavaServiceApplication        |SpringBoot이 구동할 때, SpringBoot애플리케이션에 필요한 context 객체 들을 로드 한다.   |
 |SampleApiJavaServiceController   |API 서비스 사용 요청을 처리하는 REST Controller.<br> 본 샘플 애플리케이션에서는 API 서비스 고유의 비즈니스 로직은 구현 하지 않았으며, API 사용량을 abacus-collector에 전송하는 기능만 수행 한다.|
@@ -245,15 +245,15 @@ applications:
 
 		# abacus usage collector RESTAPI 의 주소
 
-		abacus.collector = https://abacus-usage-collector.<CF도메인/v1/metering/collected/usage
+		abacus.collector = https://abacus-usage-collector.<어플리케이션 플랫폼 도메인>/v1/metering/collected/usage
 
 		# abacus usage collector 가 secured 모드 true / 아닐 경우 false
 
 		abacus.secured = true
 
-		# 파스-타 플랫폼의 uaa server
+		# 어플리케이션 플랫폼의 uaa server
 
-		uaa.server = https://uaa.<CF도메인>
+		uaa.server = https://uaa.<어플리케이션 플랫폼 도메인>
 
 		# abacus usage collector RESTAPI 계정 정보 및 사용권한 (UAA server에 미리 설정)
 
@@ -851,24 +851,24 @@ API 미터링 개발 가이드**의 **Api서비스 연동 애플리케이션 개
 
 ## <div id='24'/>2.6. 배포
 
-파스-타 플랫폼에 애플리케이션을 배포하면 배포한 애플리케이션과 파스-타
-플랫폼이 제공하는 서비스를 연결하여 사용할 수 있다. 파스-타 플랫폼상에서
-실행을 해야만 파스-타 플랫폼의 애플리케이션 환경변수에 접근하여 서비스에
+어플리케이션 플랫폼에 애플리케이션을 배포하면 배포한 애플리케이션과 어플리케이션
+플랫폼이 제공하는 서비스를 연결하여 사용할 수 있다. 어플리케이션 플랫폼상에서
+실행을 해야만 어플리케이션 플랫폼의 애플리케이션 환경변수에 접근하여 서비스에
 접속할 수 있다.
 
 
-### <div id='25'/>2.6.1 파스-타 플랫폼 로그인
+### <div id='25'/>2.6.1 어플리케이션 플랫폼 로그인
 
-아래의 과정을 수행하기 위해서 파스-타 플랫폼에 로그인
+아래의 과정을 수행하기 위해서 어플리케이션 플랫폼에 로그인
 	
-`$ cf api --skip-ssl-validation`*`https://api.`**`<파스-타 도메인> `**`#파스-타 플랫폼TARGET지정`*
+`$ cf api --skip-ssl-validation`*`https://api.`**`<어플리케이션 플랫폼 도메인> `**`#어플리케이션 플랫폼TARGET지정`*
 
 `$ cf login -u <user name> -o <org name> -s <space name>#로그인 요청`
 
 
 ### <div id='26'/>2.6.2. API 서비스 브로커 생성
 
-애플리케이션에서 사용할 서비스를 파스-타 플랫폼을 통하여 생성한다.
+애플리케이션에서 사용할 서비스를 어플리케이션 플랫폼을 통하여 생성한다.
 별도의 서비스 설치과정 없이 생성할 수 있으며, 애플리케이션과
 바인딩과정을 통해 접속정보를 얻을 수 있다.
 
@@ -910,7 +910,7 @@ API 미터링 개발 가이드**의 **Api서비스 연동 애플리케이션 개
 
 ### <div id='27'/>2.6.3. API 서비스 애플리케이션 배포 및 서비스 등록
 
-API 서비스 애플리케이션을 파스-타 플랫폼에 배포한다. 서비스 등록한 API는
+API 서비스 애플리케이션을 어플리케이션 플랫폼에 배포한다. 서비스 등록한 API는
 다른 애플리케이션과 바인다 하여 API 서비스를 할 수 있다.
 
 1.  **애플리케이션 배포**
@@ -1045,7 +1045,7 @@ API 연동 샘플 애플리케이션의 url을 통해 웹 브라우저에서 접
 		<<후략>> 
 		
 		## API 사용량 확인
-		$ curl 'http://abacus-usage-reporting.<파스-타 도메인>/v1/metering/organizations/<샘플 애플리케이션을 배포한 조직>/aggregated/usage'
+		$ curl 'http://abacus-usage-reporting.<어플리케이션 플랫폼 도메인>/v1/metering/organizations/<샘플 애플리케이션을 배포한 조직>/aggregated/usage'
 		
 		예)
 		$ curl 'http://abacus-usage-reporting.bosh-lite.com/v1/metering/organizations/877d01b2-d177-4209-95b0-00de794d9bba/aggregated/usage'
@@ -1054,10 +1054,10 @@ API 연동 샘플 애플리케이션의 url을 통해 웹 브라우저에서 접
 
 샘플코드는 아래의 사이트에 다운로드 할 수 있다.
 
-[다운로드](https://nextcloud.paas-ta.org/index.php/s/mEbGNcJjrEj7GWx/download)
+[다운로드](https://nextcloud.k-paas.org/index.php/s/mEbGNcJjrEj7GWx/download)
 
 [Java_Api_Service_Metering_Image01]:./images/Java_Api_Service_Metering/meteringAPI_development_range.png
 [Java_Api_Service_Metering_Image02]:./images/Java_Api_Service_Metering/sampleAPI_Service.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java API Service Metering 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java API Service Metering 개발

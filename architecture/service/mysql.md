@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MySQL Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MySQL Service
 
 ## 목적
 본 문서는 Application Platform (AP) - MySQL Service의 Architecture를 제공한다.
@@ -23,4 +23,4 @@ Galera Cluster Provider 는 Percona Xtradb Cluster 이다.
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MySQL Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MySQL Service

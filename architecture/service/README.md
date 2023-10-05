@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Open Service Broker
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Open Service Broker
 
 ## 목적
 
@@ -24,4 +24,4 @@ Open Service Broker API 는 Cloud Controller와 Service Broker 사이의 규약�
 http://docs.cloudfoundry.org/services/  
 https://github.com/openservicebrokerapi  
 https://github.com/cloudfoundry/pxc-release  
-https://github.com/PaaS-TA/OPENPAAS-SERVICE-JAVA-BROKER-MYSQL
+https://github.com/K-PaaS/ap-service-broker

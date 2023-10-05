@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MongoDB Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MongoDB Service
 
 ## 목적
 본 문서는 Application Platform (AP) - MongoDB Service의 Architecture를 제공한다.
@@ -24,4 +24,4 @@ Config server는 shard cluster에서 필요한 모든 메타 정보들을 저장
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MongoDB Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > MongoDB Service

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Logging Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Logging Service
 
 ## 목적
 본 문서는 Application Platform (AP) - Logging Service의 Architecture를 제공한다.
@@ -18,4 +18,4 @@
 | collector | 1vCPU / 4GB RAM |
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Logging Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > Logging Service

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Python 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Python 개발
 
 ## Table of Contents
 
@@ -49,13 +49,13 @@
 # <div id='1'></div> 1. 개요
 ## <div id='1-1'></div> 1.1. 문서 개요  
 
-##### <div id='1-1-1'></div> 1.1.1 목적  
+##### <div id='1-1-1'></div> 1.1.1 목적
 본 문서(python 애플리케이션 개발 가이드)는 Open PaaS프로젝트의 서비스팩(Mysql, Cubrid, MongoDB, RabbitMQ, Redis, GlusterFS)을 python 애플리케이션과 연동하여서비스를 사용하고 애플리케이션을 배포하는 방법에 대해 제시하는 문서이다.
 
-##### <div id='1-1-2'></div> 1.1.2 범위  
+##### <div id='1-1-2'></div> 1.1.2 범위
 본 문서의 범위는 Open PaaS 프로젝트의 python 애플리케이션 개발과 서비스팩 연동에 대한 내용으로 한정한다.
 
-##### <div id='1-1-3'></div>  1.1.3 참고 자료  
+##### <div id='1-1-3'></div>  1.1.3 참고 자료
 [**http://docs.run.pivotal.io/buildpacks/python/index.html**](http://docs.run.pivotal.io/buildpacks/python/index.html) <br>
 [**http://www.cubrid.com/manual/93/api/python.html**](http://www.cubrid.com/manual/93/api/python.html) <br>
 [**https://docs.djangoproject.com/en/1.9/intro/tutorial01**](https://docs.djangoproject.com/en/1.9/intro/tutorial01) <br>
@@ -179,7 +179,7 @@ Windows x86-64 MSI installer
 ※샘플 애플리케이션 다운로드
 완성된 샘플 애플리케이션은 하단 링크의 /OpenPaas-Sample/python-sample-app 에서 다운로드 할 수 있다.
 <br>
-Sample-App: [https://nextcloud.paas-ta.org/index.php/s/x8Tg37WDFiL5ZDi/download](https://nextcloud.paas-ta.org/index.php/s/x8Tg37WDFiL5ZDi/download)
+Sample-App: [https://nextcloud.k-paas.org/index.php/s/x8Tg37WDFiL5ZDi/download](https://nextcloud.k-paas.org/index.php/s/x8Tg37WDFiL5ZDi/download)
 
 
 ##### <div id='2-3-1'></div> 2.3.1. django 애플리케이션 생성
@@ -626,7 +626,7 @@ def make_connection():
 
 ##### <div id='2-4-1'></div> 2.4.1. 완성된 샘플 애플리케이션 다운로드
 [2.3. 개발]에서 설명한 애플리케이션 개발 과정을 거쳐 완성된 샘플 애플리케이션을 다음의 위치에서 다운로드 할 수 있다. 하단의 링크에서 python-sample-app 디렉토리 전체를 다운로드하면 이미 완성된 샘플 애플리케이션을 이용하여 [2.4. 배포] 과정을 진행 할 수 있다.  
-Sample-App: [https://nextcloud.paas-ta.org/index.php/s/x8Tg37WDFiL5ZDi/download](https://nextcloud.paas-ta.org/index.php/s/x8Tg37WDFiL5ZDi/download)
+Sample-App: [https://nextcloud.k-paas.org/index.php/s/x8Tg37WDFiL5ZDi/download](https://nextcloud.k-paas.org/index.php/s/x8Tg37WDFiL5ZDi/download)
 
 ##### <div id='2-4-2'></div> 2.4.2. 개방형 클라우드 플랫폼 로그인
 
@@ -969,4 +969,4 @@ $ cf bind-service python-sample-app python-rabbitmq
 [python-36]:./images/python/image36.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Python 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Python 개발
