@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Redis Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Redis Service
 
 ## Table of Contents
 
@@ -16,9 +16,9 @@
   2.6. [서비스 설치 확인](#2.6)  
 
 3. [CF CLI를 이용한 On-Demand-Redis 서비스 브로커 등록](#3)  
-  3.1. [PaaS-TA에서 서비스 신청](#3.1)  
+  3.1. [K-PaaS에서 서비스 신청](#3.1)  
   3.2. [Sample App 다운로드](#3.2)  
-  3.3. [PaaS-TA에서 서비스 신청](#3.3)  
+  3.3. [K-PaaS에서 서비스 신청](#3.3)  
   3.4. [Sample App에 서비스 바인드 신청 및 App 확인](#3.4)  
 
 4. [Portal을 이용한 Redis Service Test](#4)  
@@ -29,7 +29,7 @@
 ## <div id='1'> 1. 문서 개요
 
 ### <div id='1.1'> 1.1. 목적
-본 문서(Redis 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 Redis 서비스팩을 Bosh를 이용하여 설치하는 방법을 기술하였다.
+본 문서(Redis 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 Redis 서비스팩을 Bosh를 이용하여 설치하는 방법을 기술하였다.
 
 ### <div id='1.2'> 1.2. 범위
 설치 범위는 Redis서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.
@@ -72,7 +72,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -80,16 +80,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -121,7 +121,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -154,20 +154,20 @@ Succeeded
 ```
 
 - common_vars.yml을 서버 환경에 맞게 수정한다. 
-- redis에서 사용하는 변수는 bosh_url, bosh_client_admin_id, bosh_client_admin_secret, bosh_director_port, bosh_oauth_port, system_domain, paasta_admin_username, paasta_admin_password, bosh_version 이다.
+- redis에서 사용하는 변수는 bosh_url, bosh_client_admin_id, bosh_client_admin_secret, bosh_director_port, bosh_oauth_port, system_domain, ap_admin_username, ap_admin_password, bosh_version 이다.
 
 > $ vi ~/workspace/common/common_vars.yml
 ```
 ... ((생략)) ...
 bosh_url: "https://10.0.1.6"			# BOSH URL (e.g. "https://00.000.0.0")
 bosh_client_admin_id: "admin"			# BOSH Client Admin ID
-bosh_client_admin_secret: "ert7na4jpew48"	# BOSH Client Admin Secret('echo $(bosh int ~/workspace/paasta-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
+bosh_client_admin_secret: "ert7na4jpew48"	# BOSH Client Admin Secret('echo $(bosh int ~/workspace/ap-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
 bosh_director_port: 25555			# BOSH director port
 bosh_oauth_port: 8443				# BOSH oauth port
 bosh_version: 271.2				# BOSH version('bosh env' 명령어를 통해 확인 가능, on-demand service용, e.g. "271.2")
 system_domain: "61.252.53.246.nip.io"		# Domain (nip.io를 사용하는 경우 HAProxy Public IP와 동일)
-paasta_admin_username: "admin"			# PaaS-TA Admin Username
-paasta_admin_password: "admin"			# PaaS-TA Admin Password
+ap_admin_username: "admin"			# Application Platform Admin Username
+ap_admin_password: "admin"			# Application Platform Admin Password
 ... ((생략)) ...
 ```
 
@@ -201,12 +201,17 @@ redis_azs: [z5]                                                   # redis azs
 redis_vm_type: "medium"                                           # redis vm type
 redis_persistent_disk_type: "1GB"                                 # redis persistent disk type
 
+# SANITY-TEST
+sanity_tests_azs: [z5]
+sanity_tests_instances: 1
+sanity_tests_vm_type: medium
+
 # PROPERTIES
 broker_server_port: 8080                                          # broker server port
 
 ### On-Demand Dedicated Service Instance Properties ###
 on_demand_service_instance_name: "redis"                          # On-Demand Service Instance Name
-service_password: "PaaS-TA#2021!"                                 # On-Demand Redis Service password
+service_password: "K-PaaS#2021!"                                 # On-Demand Redis Service password
 service_port: 6379                                                # On-Demand Redis Service port
 
 # SERVICE PLAN INFO
@@ -215,10 +220,6 @@ service_instance_name: "redis"                                           # Servi
 service_instance_bullet_name: "Redis Dedicated Server Use"               # Service Instance bullet Name
 service_instance_bullet_desc: "Redis Service Using a Dedicated Server"   # Service Instance bullet에 대한 설명을 입력
 service_instance_plan_guid: "2a26b717-b8b5-489c-8ef1-02bcdc445720"       # Service Instance Plan Guid
-service_instance_plan_name: "dedicated-vm"                               # Service Instance Plan Name
-service_instance_plan_desc: "Redis service to provide a key-value store" # Service Instance Plan에 대한 설명을 입력
-service_instance_org_limitation: "-1"                                    # Org에 설치할수 있는 Service Instance 개수를 제한한다. (-1일경우 제한없음)
-service_instance_space_limitation: "-1"                                  # Space에 설치할수 있는 Service Instance 개수를 제한한다. (-1일경우 제한없음)
 ```
 
 ### <div id="2.5"/> 2.5. 서비스 설치
@@ -233,7 +234,7 @@ service_instance_space_limitation: "-1"                                  # Space
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"	# common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d redis deploy --no-redact redis.yml \
@@ -264,7 +265,7 @@ Deployment 'redis'
 
 Instance                                                       Process State  AZ  IPs           VM CID                                   VM Type         Active  
 mariadb/e35f3ece-9c34-41f4-a88e-d8365e9b8c70                   running        z5  10.30.255.25  vm-5168ec8d-f42f-40fa-9c3a-8635bf138b0a  medium          true  
-paas-ta-on-demand-broker/13c11522-10dd-485c-bb86-3ac5337223d0  running        z5  10.30.255.26  vm-eab6e832-8b7c-49bc-ac04-80258896880d  service_medium  true  
+ap-on-demand-broker/13c11522-10dd-485c-bb86-3ac5337223d0       running        z5  10.30.255.26  vm-eab6e832-8b7c-49bc-ac04-80258896880d  service_medium  true  
 
 2 vms
 
@@ -274,7 +275,7 @@ Succeeded
 ## <div id='3'> 3. CF CLI를 이용한 On-Demand-Redis 서비스 
 ### <div id='3.1'> 3.1. On-Demand-Redis 서비스 브로커 등록
 Redis 서비스팩 배포가 완료 되었으면 Application에서 서비스 팩을 사용하기 위해서 먼저 On-Demand-Redis 서비스 브로커를 등록해 주어야 한다.
-서비스 브로커 등록시에는 PaaS-TA에서 서비스 브로커를 등록할 수 있는 사용자로 로그인하여야 한다
+서비스 브로커 등록시에는 K-PaaS AP에서 서비스 브로커를 등록할 수 있는 사용자로 로그인하여야 한다
 
 
 - 서비스 브로커 목록을 확인한다.
@@ -299,7 +300,7 @@ cf create-service-broker [SERVICE_BROKER] [USERNAME] [PASSWORD] [SERVICE_BROKER_
 	
 - On-Demand-Redis 서비스 브로커를 등록한다.
 
-> $ cf create-service-broker on-demand-redis-service admin cloudfoundry http://<paas-ta-on-demand-broker_ip>:8080 
+> $ cf create-service-broker on-demand-redis-service admin cloudfoundry http://<ap-on-demand-broker_ip>:8080 
 
 ```
 $ cf create-service-broker on-demand-redis-service admin cloudfoundry http://10.30.255.26:8080
@@ -351,25 +352,25 @@ broker: on-demand-redis-service
 
 - Sample App 묶음 다운로드
 ```
-$ wget https://nextcloud.paas-ta.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
-$ unzip paasta-service-samples-459dad9.zip  
-$ cd paasta-service-samples/redis  
+$ wget https://nextcloud.k-paas.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
+$ unzip ap-service-samples-459dad9.zip  
+$ cd ap-service-samples/redis  
 ```
 
 <br>
 
-### <div id='3.3'> 3.3. PaaS-TA에서 서비스 신청
+### <div id='3.3'> 3.3. K-PaaS에서 서비스 신청
 Sample App에서 Redis 서비스를 사용하기 위해서는 서비스 신청(Provision)을 해야 한다.
-*참고: 서비스 신청시 PaaS-TA에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
+*참고: 서비스 신청시 K-PaaS AP에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
-- 먼저 PaaS-TA Marketplace에서 서비스가 있는지 확인을 한다.
+- 먼저 K-PaaS AP Marketplace에서 서비스가 있는지 확인을 한다.
 
 > $ cf marketplace
 
 ```
 OK
 service   plans          description
-redis     dedicated-vm   A paasta source control service for application development.provision parameters : parameters {owner : owner}
+redis     dedicated-vm   A Application Platform source control service for application development.provision parameters : parameters {owner : owner}
 ```
 
 <br>
@@ -408,8 +409,8 @@ name:            redis
 service:         redis
 tags:            
 plan:            dedicated-vm
-description:     A paasta source control service for application development.provision parameters : parameters {owner : owner}
-documentation:   https://paas-ta.kr
+description:     A Application Platform source control service for application development.provision parameters : parameters {owner : owner}
+documentation:   https://k-paas.or.kr
 dashboard:       10.30.255.26
 
 Showing status of last operation from service redis...
@@ -429,8 +430,8 @@ name:            redis
 service:         redis
 tags:            
 plan:            dedicated-vm
-description:     A paasta source control service for application development.provision parameters : parameters {owner : owner}
-documentation:   https://paas-ta.kr
+description:     A Application Platform source control service for application development.provision parameters : parameters {owner : owner}
+documentation:   https://k-paas.or.kr
 dashboard:       10.30.255.26
 
 Showing status of last operation from service redis...
@@ -470,7 +471,7 @@ OK
 
 ### <div id='3.4'> 3.4. Sample App에 서비스 바인드 신청 및 App 확인
 서비스 신청이 완료되었으면 Sample App 에서는 생성된 서비스 인스턴스를 Bind 하여 App에서 Redis 서비스를 이용한다.
-*참고: 서비스 Bind 신청시 PaaS-TA에서 서비스 Bind신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
+*참고: 서비스 Bind 신청시 K-PaaS AP에서 서비스 Bind신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
 - manifest 파일을 확인한다.  
 
@@ -491,7 +492,7 @@ applications:
 > $ cf push --no-start 
 ```  
 Pushing app redis-example-app to org system / space dev as admin...
-Applying manifest file /home/ubuntu/workspace/samples/paasta-service-samples/redis/manifest.yml...
+Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/redis/manifest.yml...
 Manifest applied
 Packaging files to upload...
 Uploading files...
@@ -501,7 +502,7 @@ Waiting for API to complete processing files...
 
 name:              redis-example-app
 requested state:   stopped
-routes:            redis-example-app.paastacloud.shop
+routes:            redis-example-app.apcloud.shop
 last uploaded:     
 stack:             
 buildpacks:        
@@ -546,7 +547,7 @@ Instances starting...
 
 name:              redis-example-app
 requested state:   started
-routes:            redis-example-app.paastacloud.shop
+routes:            redis-example-app.apcloud.shop
 last uploaded:     Mon 22 Nov 05:40:50 UTC 2021
 stack:             cflinuxfs3
 buildpacks:        
@@ -660,4 +661,4 @@ Service status : created succeed
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Redis Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Redis Service

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > BOSH
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > BOSH
 
 ## Table of Contents
 
@@ -51,22 +51,22 @@ Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundr
 # <div id='2'/>2. BOSH 설치 환경 구성 및 설치
 
 ## <div id='2.1'/>2.1. BOSH 설치 절차
-Inception(PaaS-TA 설치 환경)은 BOSH 및 PaaS-TA를 설치하기 위한 설치 환경으로, VM 또는 서버 장비이다.  
+Inception(K-PaaS 설치 환경)은 BOSH 및 K-PaaS를 설치하기 위한 설치 환경으로, VM 또는 서버 장비이다.  
 OS Version은 Ubuntu 18.04를 기준으로 한다. IaaS에서 수동으로 Inception VM을 생성해야 한다.
 
 Inception VM은 Ubuntu 18.04, vCPU 2 Core, Memory 4G, Disk 100G 이상을 권고한다.
 
 ## <div id='2.2'/>2.2.  Inception 서버 구성
 
-Inception 서버는 BOSH 및 PaaS-TA를 설치하기 위해 필요한 패키지 및 라이브러리, Manifest 파일 등의 환경을 가지고 있는 배포 작업 실행 서버이다.  
+Inception 서버는 BOSH 및 K-PaaS를 설치하기 위해 필요한 패키지 및 라이브러리, Manifest 파일 등의 환경을 가지고 있는 배포 작업 실행 서버이다.  
 Inception 서버는 외부 통신이 가능해야 한다.
 
-BOSH 및 PaaS-TA 설치를 위해 Inception 서버에 구성해야 할 컴포넌트는 다음과 같다.
+BOSH 및 Application Platform (이하 AP) 설치를 위해 Inception 서버에 구성해야 할 컴포넌트는 다음과 같다.
 
 - BOSH CLI 6.1.x 이상
 - BOSH Dependency : ruby, ruby-dev, openssl 등
 - BOSH Deployment: BOSH 설치를 위한 manifest deployment  
-- PaaS-TA Deployment : PaaS-TA 설치를 위한 manifest deployment
+- AP Deployment : Application Platform 설치를 위한 manifest deployment
 
 ## <div id='2.3'/>2.3.  BOSH 설치
 
@@ -81,11 +81,11 @@ BOSH 및 PaaS-TA 설치를 위해 Inception 서버에 구성해야 할 컴포넌
 |22|BOSH 사용|
 |6868|BOSH 사용|
 |25555|BOSH 사용|
-|53|PaaS-TA 사용|
-|68|PaaS-TA 사용|
-|80|PaaS-TA 사용|
-|443|PaaS-TA 사용|
-|4443|PaaS-TA 사용|
+|53|AP 사용|
+|68|AP 사용|
+|80|AP 사용|
+|443|AP 사용|
+|4443|AP 사용|
 
 
 - IaaS Security Group의 inbound 의 ICMP types 13 (timestamp request), types 14 (timestamp response) Rule을 비활성화 한다. (CVE-1999-0524 ICMP timestamp response 보안 이슈 적용)  
@@ -134,15 +134,15 @@ BOSH 인증서는 BOSH 내부 Component 간의 통신 시 필요한 certificate�
 ```
 $ mkdir -p ~/workspace
 $ cd ~/workspace
-$ git clone https://github.com/PaaS-TA/paasta-deployment.git -b v5.8.8
+$ git clone https://github.com/K-PaaS/ap-deployment.git -b v5.8.8
 ```
 
-- paasta/deployment/paasta-deployment 이하 폴더 확인
+- ap-deployment 이하 폴더 확인
 
 ```
-$ cd ~/workspace/paasta-deployment
+$ cd ~/workspace/ap-deployment
 $ ls
-README.md  bosh  cloud-config  paasta
+README.md  bosh  cloud-config  ap
 ```
 
 <table>
@@ -155,15 +155,15 @@ README.md  bosh  cloud-config  paasta
 <td>VM 배포를 위한 IaaS network, storage, vm 관련 설정 파일이 존재하는 폴더</td>
 </tr>
 <tr>
-<td>paasta</td>
-<td>PaaS-TA AP 설치를 위한 manifest 및 설치 파일이 존재하는 폴더</td>
+<td>ap</td>
+<td>AP 설치를 위한 manifest 및 설치 파일이 존재하는 폴더</td>
 </tr>
 </table>
 
 
 ### <div id='2.3.4'/>2.3.4.    BOSH 설치 파일
 
-~/workspace/paasta-deployment/bosh 폴더에는 BOSH 설치를 위한 IaaS별 Shell Script 파일이 존재한다.  
+~/workspace/ap-deployment/bosh 폴더에는 BOSH 설치를 위한 IaaS별 Shell Script 파일이 존재한다.  
 
 Shell Script 파일을 이용하여 BOSH를 설치한다.
 파일명은 deploy-{IaaS}.sh 로 만들어졌다.  
@@ -223,50 +223,50 @@ BOSH를 설치하는 IaaS환경에 맞춰서 Variable File을 설정한다.
 
 - AWS 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/aws-vars.yml
+> $ vi ~/workspace/ap-deployment/bosh/aws-vars.yml
 ```
 # BOSH VARIABLE
 bosh_client_admin_id: "admin"				# Bosh Client Admin ID
-private_cidr: "10.0.1.0/24"				# Private IP Range
-private_gw: "10.0.1.1"					# Private IP Gateway
-bosh_url: "10.0.1.6"					# Private IP
-director_name: "micro-bosh"				# BOSH Director Name
-access_key_id: "XXXXXXXXXXXXXXX"			# AWS Access Key
-secret_access_key: "XXXXXXXXXXXXX"			# AWS Secret Key
-region: "ap-northeast-2"				# AWS Region
-az: "ap-northeast-2a"					# AWS AZ Zone
-default_key_name: "aws-paasta.pem"			# AWS Key Name
-default_security_groups: ["bosh"]			# AWS Security-Group
-subnet_id: "paasta-subnet"				# AWS Subnet
-private_key: "~/.ssh/aws-paasta.pem"			# SSH Private Key Path (해당 IaaS에 접근권한을 가진 Private key의 경로)
+private_cidr: "10.0.1.0/24"					# Private IP Range
+private_gw: "10.0.1.1"							# Private IP Gateway
+bosh_ip: "10.0.1.6"									# Private IP 	
+director_name: "micro-bosh"					# BOSH Director Name
+access_key_id: "XXXXXXXXXXXXXXX"		# AWS Access Key
+secret_access_key: "XXXXXXXXXXXXX"	# AWS Secret Key
+region: "ap-northeast-2"						# AWS Region
+az: "ap-northeast-2a"								# AWS AZ Zone
+default_key_name: "aws-ap"					# AWS Key Name
+default_security_groups: ["bosh"]		# AWS Security-Group
+subnet_id: "ap-subnet"							# AWS Subnet
+private_key: "~/.ssh/aws-ap.pem"		# SSH Private Key Path
 
-# MONITORING VARIABLE(PaaS-TA Monitoring을 설치할 경우 향후 설치할 VM의 값으로 미리 수정)
-metric_url: "xx.xx.xxx.xxx"				# PaaS-TA Monitoring InfluxDB IP
-syslog_address: "xx.xx.xxx.xxx"				# Logsearch의 ls-router IP
-syslog_port: "2514"					# Logsearch의 ls-router Port
-syslog_transport: "relp"				# Logsearch Protocol
+# MONITORING VARIABLE(K-PaaS Monitoring을 설치할 경우 수정)
+metric_url: "10.0.161.101"          # influxdb IP
+syslog_address: "10.0.121.100"      # td-agent IP
+syslog_port: "2514"                 # td-agent Port
+syslog_transport: "udp"             # td-agent Logging Protocol
 ```
 - Azure 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/azure-vars.yml
+> $ vi ~/workspace/ap-deployment/bosh/azure-vars.yml
 ```
 # BOSH VARIABLE
-bosh_client_admin_id: "admin"				# Bosh Client Admin ID
-private_cidr: "10.0.1.0/24"				# Private IP Range
-private_gw: "10.0.1.1"					# Private IP Gateway
-bosh_ip: "10.0.1.6"					# Private IP
-director_name: "micro-bosh"				# BOSH Director Name
-vnet_name: "paasta-bosh-net"				# Azure VNet Name
-subnet_name: "paasta-subnet"				# Azure VNet Subnet Name
+bosh_client_admin_id: "admin"														# Bosh Client Admin ID
+private_cidr: "10.0.1.0/24"															# Private IP Range
+private_gw: "10.0.1.1"																	# Private IP Gateway
+bosh_ip: "10.0.1.6"																			# Private IP
+director_name: "micro-bosh"															# BOSH Director Name
+vnet_name: "ap-bosh-net"																# Azure VNet Name
+subnet_name: "ap-subnet"																# Azure VNet Subnet Name
 subscription_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"	# Azure Subscription ID
-tenant_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"	# Azure Tenant ID
-client_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"	# Azure Client ID
-client_secret: "client-secret"				# Azure Client Secret
-resource_group_name: "paasta-bosh-group"		# Azure Resource Group
-storage_account_name: "paasta-store"			# Azure Storage Account
-default_security_group: "paasta-security"		# Azure Security Group
+tenant_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"				# Azure Tenant ID
+client_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"				# Azure Client ID
+client_secret: "client-secret"													# Azure Client Secret
+resource_group_name: "ap-bosh-group"										# Azure Resource Group
+storage_account_name: "ap-store"												# Azure Storage Account
+default_security_group: "ap-security"										# Azure Security Group
 
-# MONITORING VARIABLE(PaaS-TA Monitoring을 설치할 경우 수정)
+# MONITORING VARIABLE(K-PaaS Monitoring을 설치할 경우 수정)
 metric_url: "10.0.161.101"          # influxdb IP
 syslog_address: "10.0.121.100"      # td-agent IP
 syslog_port: "2514"                 # td-agent Port
@@ -275,21 +275,21 @@ syslog_transport: "udp"             # td-agent Logging Protocol
 
 - GCP 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/gcp-vars.yml
+> $ vi ~/workspace/ap-deployment/bosh/gcp-vars.yml
 ```
 # BOSH VARIABLE
-bosh_client_admin_id: "admin"		# Bosh Client Admin ID
-director_name: "micro-bosh"		# BOSH Director Name
-private_cidr: "10.0.1.0/24"		# Private IP Range
-private_gw: "10.0.1.1"			# Private IP Gateway
-bosh_ip: "10.0.1.6"			# Private IP
-network: "public-bosh"			# GCP Network Name
-subnetwork: "public-bosh-subnet"	# GCP Subnet Name
-tags: ["paasta-security"]		# GCP Tags
-project_id: "paasta-project"		# GCP Project ID
-zone: "asia-northeast1-a"		# GCP Zone
+bosh_client_admin_id: "admin"				# Bosh Client Admin ID
+director_name: "micro-bosh"					# BOSH Director Name
+private_cidr: "10.0.1.0/24"					# Private IP Range
+private_gw: "10.0.1.1"							# Private IP Gateway
+bosh_ip: "10.0.1.6"									# Private IP
+network: "public-bosh"							# GCP Network Name
+subnetwork: "public-bosh-subnet"		# GCP Subnet Name
+tags: ["ap-security"]		        		# GCP Tags
+project_id: "ap-project"						# GCP Project ID
+zone: "asia-northeast1-a"						# GCP Zone
 
-# MONITORING VARIABLE(PaaS-TA Monitoring을 설치할 경우 수정)
+# MONITORING VARIABLE(K-PaaS Monitoring을 설치할 경우 수정)
 metric_url: "10.0.161.101"          # influxdb IP
 syslog_address: "10.0.121.100"      # td-agent IP
 syslog_port: "2514"                 # td-agent Port
@@ -298,60 +298,60 @@ syslog_transport: "udp"             # td-agent Logging Protocol
 
 - OpenStack 환경 설치 시
 
-> $ vi ~/workspace/paasta-deployment/bosh/openstack-vars.yml
+> $ vi ~/workspace/ap-deployment/bosh/openstack-vars.yml
 ```
 # BOSH VARIABLE
 bosh_client_admin_id: "admin"				# Bosh Client Admin ID
-director_name: "micro-bosh"				# BOSH Director Name
-private_cidr: "10.0.1.0/24"				# Private IP Range
-private_gw: "10.0.1.1"					# Private IP Gateway
-bosh_url: "10.0.1.6"					# Private IP
-auth_url: "http://XX.XXX.XX.XX:XXXX/v3/"		# Openstack Keystone URL
-az: "nova"						# Openstack AZ Zone
-default_key_name: "paasta"				# Openstack Key Name
-default_security_groups: ["paasta"]			# Openstack Security Group
-net_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"		# Openstack Network ID
+director_name: "micro-bosh"					# BOSH Director Name
+private_cidr: "10.0.1.0/24"					# Private IP Range
+private_gw: "10.0.1.1"							# Private IP Gateway
+bosh_ip: "10.0.1.6"									# Private IP 
+auth_url: "http://XX.XXX.XX.XX:XXXX/v3/"	# Openstack Keystone URL
+az: "nova"													# Openstack AZ Zone
+default_key_name: "ap"							# Openstack Key Name
+default_security_groups: ["ap"]			# Openstack Security Group
+net_id: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"	# Openstack Network ID
 openstack_password: "XXXXXX"				# Openstack User Password
 openstack_username: "XXXXXX"				# Openstack User Name
-openstack_domain: "XXXXXXX"				# Openstack Domain Name
-openstack_project: "PaaSTA"				# Openstack Project
-private_key: "~/.ssh/id_rsa.pem"			# SSH Private Key Path (해당 IaaS에 접근권한을 가진 Private key의 경로)
-region: "RegionOne"					# Openstack Region
+openstack_domain: "XXXXXXX"					# Openstack Domain Name
+openstack_project: "ap"							# Openstack Project
+private_key: "~/.ssh/id_rsa.pem"		# Openstack Region
+region: "RegionOne"									# SSH Private Key Path
 
-# MONITORING VARIABLE(PaaS-TA Monitoring을 설치할 경우 향후 설치할 VM의 값으로 미리 수정)
-metric_url: "10.0.161.101"				# PaaS-TA Monitoring InfluxDB IP
-syslog_address: "10.0.121.100"				# Logsearch의 ls-router IP
-syslog_port: "2514"					# Logsearch의 ls-router Port
-syslog_transport: "relp"				# Logsearch Protocol
+# MONITORING VARIABLE(K-PaaS Monitoring을 설치할 경우 수정)
+metric_url: "10.0.161.101"          # influxdb IP
+syslog_address: "10.0.121.100"      # td-agent IP
+syslog_port: "2514"                 # td-agent Port
+syslog_transport: "udp"             # td-agent Logging Protocol
 ```
 
 - vSphere 환경 설치 시
 
-> $ vi ~/workspace/paasta-deployment/bosh/vsphere-vars.yml
+> $ vi ~/workspace/ap-deployment/bosh/vsphere-vars.yml
 ```
 # BOSH VARIABLE
-bosh_client_admin_id: "admin"			# Bosh Client Admin ID
-director_name: "micro-bosh"			# BOSH Director Name
-private_cidr: "10.0.1.0/24"			# Private IP Range
-private_gw: "10.0.1.1"				# Private IP Gateway
-bosh_ip: "10.0.1.6"				# Private IP
-network_name: "PaaS-TA"				# Private Network Name (vCenter)
-vcenter_dc: "PaaS-TA-DC"			# vCenter Data Center Name
-vcenter_ds: "PaaS-TA-Storage"			# vCenter Data Storage Name
-vcenter_ip: "XX.XX.XXX.XX"			# vCenter Private IP
-vcenter_user: "XXXXX"				# vCenter User Name
-vcenter_password: "XXXXXX"			# vCenter User Password
-vcenter_templates: "PaaS-TA_Templates"		# vCenter Templates Name
-vcenter_vms: "PaaS-TA_VMs"			# vCenter VMS Name
-vcenter_disks: "PaaS-TA_Disks"			# vCenter Disk Name
-vcenter_cluster: "PaaS-TA"			# vCenter Cluster Name
-vcenter_rp: "PaaS-TA_Pool"			# vCenter Resource Pool Name
+bosh_client_admin_id: "admin"				# Bosh Client Admin ID
+director_name: "micro-bosh"					# BOSH Director Name
+private_cidr: "10.0.1.0/24"					# Private IP Range
+private_gw: "10.0.1.1"							# Private IP Gateway
+bosh_ip: "10.0.1.6"									# Private IP 
+network_name: "AP"									# Private Network Name (vCenter)	
+vcenter_dc: "AP-DC"									# vCenter Data Center Name
+vcenter_ds: "AP-Storage"						# vCenter Data Storage Name
+vcenter_ip: "XX.XX.XXX.XX"					# vCenter Private IP
+vcenter_user: "XXXXX"								# vCenter User Name
+vcenter_password: "XXXXXX"					# vCenter User Password
+vcenter_templates: "AP_Templates"		# vCenter Templates Name
+vcenter_vms: "AP_VMs"								# vCenter VMS Name
+vcenter_disks: "AP_Disks"						# vCenter Disk Name
+vcenter_cluster: "AP"								# vCenter Cluster Name
+vcenter_rp: "AP_Pool"								# vCenter Resource Pool Name
 
-# MONITORING VARIABLE(PaaS-TA Monitoring을 설치할 경우 수정)
-metric_url: "10.0.161.101"			# PaaS-TA Monitoring InfluxDB IP
-syslog_address: "10.0.121.100"			# Logsearch의 ls-router IP
-syslog_port: "2514"				# Logsearch의 ls-router Port
-syslog_transport: "relp"			# Logsearch Protocol
+# MONITORING VARIABLE(K-PaaS Monitoring을 설치할 경우 수정)
+metric_url: "10.0.161.101"          # influxdb IP
+syslog_address: "10.0.121.100"      # td-agent IP
+syslog_port: "2514"                 # td-agent Port
+syslog_transport: "udp"             # td-agent Logging Protocol
 ```
 
 
@@ -420,7 +420,7 @@ BOSH 설치 Option은 아래와 같다.
 
 - AWS 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/deploy-aws.sh
+> $ vi ~/workspace/ap-deployment/bosh/deploy-aws.sh
 ```
 bosh create-env bosh.yml \                         
 	--state=aws/state.json \			# BOSH Latest Running State, 설치 시 생성, Backup 필요
@@ -435,7 +435,7 @@ bosh create-env bosh.yml \
 
 - Azure 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/deploy-azure.sh
+> $ vi ~/workspace/ap-deployment/bosh/deploy-azure.sh
 ```
 bosh create-env bosh.yml \                         
 	--state=azure/state.json \			# BOSH Latest Running State, 설치 시 생성, Backup 필요
@@ -450,7 +450,7 @@ bosh create-env bosh.yml \
 
 - GCP 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/deploy-gcp.sh
+> $ vi ~/workspace/ap-deployment/bosh/deploy-gcp.sh
 ```
 bosh create-env bosh.yml \                         
 	--state=gcp/state.json \					# BOSH Latest Running State, 설치 시 생성, Backup 필요
@@ -460,13 +460,13 @@ bosh create-env bosh.yml \
 	-o credhub.yml \						# CredHub 적용    
 	-o jumpbox-user.yml \						# Jumpbox-user 적용  
 	-o cce.yml \							# CCE 조치 적용
-	--var-file gcp_credentials_json=~/.ssh/paasta-project.json \	# GCP credentials
+	--var-file gcp_credentials_json=~/.ssh/ap-project.json \	# GCP credentials
  	-l gcp-vars.yml							# GCP 환경에 BOSH 설치 시 적용하는 변수 설정 파일
 ```
 
 - OpenStack 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/deploy-openstack.sh
+> $ vi ~/workspace/ap-deployment/bosh/deploy-openstack.sh
 ```
 bosh create-env bosh.yml \                       
 	--state=openstack/state.json \			# BOSH Latest Running State, 설치 시 생성, Backup 필요
@@ -482,7 +482,7 @@ bosh create-env bosh.yml \
 
 - vSphere 환경 설치 시 
 
-> $ vi ~/workspace/paasta-deployment/bosh/deploy-vsphere.sh
+> $ vi ~/workspace/ap-deployment/bosh/deploy-vsphere.sh
 ```
 bosh create-env bosh.yml \
 	--state=vsphere/state.json \			# BOSH Latest Running State, 설치 시 생성, Backup 필요
@@ -500,7 +500,7 @@ bosh create-env bosh.yml \
 - Shell Script 파일에 실행 권한 부여
 
 ```
-$ chmod +x ~/workspace/paasta-deployment/bosh/*.sh  
+$ chmod +x ~/workspace/ap-deployment/bosh/*.sh  
 ```
 
 
@@ -511,7 +511,7 @@ Variable File과 설치 Shell Script의 설정이 완료되었으면 다음 명�
 - BOSH 설치 Shell Script 파일 실행
 
 ```
-$ cd ~/workspace/paasta-deployment/bosh
+$ cd ~/workspace/ap-deployment/bosh
 $ ./deploy-{iaas}.sh
 ```
 
@@ -535,12 +535,12 @@ Succeeded
 ### <div id='2.3.6'/>2.3.6. BOSH 로그인
 BOSH가 설치되면, BOSH 설치 폴더 이하에 {iaas}/creds.yml 파일이 생성된다.  
 creds.yml은 BOSH 인증정보를 가지고 있으며, creds.yml을 활용하여 BOSH에 로그인한다.  
-BOSH 로그인 후, BOSH CLI 명령어를 이용하여 PaaS-TA를 설치할 수 있다.  
+BOSH 로그인 후, BOSH CLI 명령어를 이용하여 AP를 설치할 수 있다.  
 **BOSH를 이용하여 VM를 배포하려면 반드시 BOSH에 로그인을 해야한다.**  
 BOSH 로그인 명령어는 다음과 같다.  
 
 ```
-$ cd ~/workspace/paasta-deployment/bosh
+$ cd ~/workspace/ap-deployment/bosh
 $ export BOSH_CA_CERT=$(bosh int ./{iaas}/creds.yml --path /director_ssl/ca)
 $ export BOSH_CLIENT=admin
 $ export BOSH_CLIENT_SECRET=$(bosh int ./{iaas}/creds.yml --path /admin_password)
@@ -568,7 +568,7 @@ $ credhub --version
 CredHub에 로그인하기 위해 BOSH를 설치한 bosh-deployment 디렉터리의 creds.yml을 활용하여 로그인한다.
 
 ```
-$ cd ~/workspace/paasta-deployment/bosh
+$ cd ~/workspace/ap-deployment/bosh
 $ export CREDHUB_CLIENT=credhub-admin
 $ export CREDHUB_SECRET=$(bosh int --path /credhub_admin_client_secret {iaas}/creds.yml)
 $ export CREDHUB_CA_CERT=$(bosh int --path /credhub_tls/ca {iaas}/creds.yml)
@@ -584,14 +584,14 @@ BOSH VM에 이상이 있거나 상태를 체크할 때 Jumpbox를 활용하여 B
 **비밀번호 만료전에 BOSH에 재 접속하여 비밀번호를 변경하여 관리해야 한다. (미 변경시 Jumpbox 계정 잠금)**
 
 ```
-$ cd ~/workspace/paasta-deployment/bosh
+$ cd ~/workspace/ap-deployment/bosh
 $ bosh int {iaas}/creds.yml --path /jumpbox_ssh/private_key > jumpbox.key
 $ chmod 600 jumpbox.key
 $ ssh jumpbox@{bosh_url} -i jumpbox.key
 ```
 
 ```
-ubuntu@inception:~/workspace/paasta-deployment/bosh$ ssh jumpbox@10.0.1.6 -i jumpbox.key
+ubuntu@inception:~/workspace/ap-deployment/bosh$ ssh jumpbox@10.0.1.6 -i jumpbox.key
 Unauthorized use is strictly prohibited. All access and activity
 is subject to logging and monitoring.
 Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-54-generic x86_64)
@@ -609,16 +609,16 @@ bosh/0:~$
 ## <div id='4'/>4. 기타
 ### <div id='4.1'/>4.1. BOSH 로그인 생성 스크립트
 
-PaaS-TA 5.5부터 BOSH 로그인을 하는 스크립트의 생성을 지원한다.
+AP 5.5부터 BOSH 로그인을 하는 스크립트의 생성을 지원한다.
 해당 스크립트의 BOSH_DEPLOYMENT_PATH, CURRENT_IAAS, BOSH_IP, BOSH_CLIENT_ADMIN_ID, BOSH_ENVIRONMENT, BOSH_LOGIN_FILE_PATH, BOSH_LOGIN_FILE_NAME를 BOSH 환경과 스크립트를 저장하고 싶은 위치로 변경 후 실행한다.
 
 - BOSH Login 생성 Script의 설정 수정
 
-> $ vi ~/workspace/paasta-deployment/bosh/create-bosh-login.sh
+> $ vi ~/workspace/ap-deployment/bosh/create-bosh-login.sh
 ```
 #!/bin/bash
 
-BOSH_DEPLOYMENT_PATH="<BOSH_DEPLOYMENT_PATH>" 	# (e.g. ~/workspace/paasta-deployment/bosh)
+BOSH_DEPLOYMENT_PATH="<BOSH_DEPLOYMENT_PATH>" 	# (e.g. ~/workspace/ap-deployment/bosh)
 CURRENT_IAAS="aws"				# (e.g. aws/azure/gcp/openstack/vsphere/bosh-lite)
 BOSH_IP="10.0.1.6"				# (e.g. 10.0.1.6)
 BOSH_CLIENT_ADMIN_ID="admin"			# (e.g. admin)
@@ -646,7 +646,7 @@ credhub login -s https://'${BOSH_IP}':8844 --skip-tls-validation --client-name=c
 - BOSH Login 생성 Script 실행
 
 ```
-$ cd ~/workspace/paasta-deployment/bosh
+$ cd ~/workspace/ap-deployment/bosh
 $ source create-bosh-login.sh
 ```
 
@@ -658,4 +658,4 @@ $ source {BOSH_LOGIN_FILE_PATH}/{BOSH_LOGIN_FILE_NAME}
 ```
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > BOSH
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > BOSH

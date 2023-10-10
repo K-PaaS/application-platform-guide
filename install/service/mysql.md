@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > MySQL Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > MySQL Service
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@
 3. [MySQL 연동 Sample Web App 설명](#3)  
   3.1. [서비스 브로커 등록](#3.1)  
   3.2. [Sample Web App 다운로드](#3.2)  
-  3.3. [PaaS-TA에서 서비스 신청](#3.3)  
+  3.3. [K-PaaS에서 서비스 신청](#3.3)  
   3.4. [Sample Web App 배포 및 MySQL바인드 확인](#3.4)  
 
 4. [MySQL Client 툴 접속](#4)  
@@ -32,7 +32,7 @@
 ## <div id='1'> 1. 문서 개요
 ### <div id='1.1'> 1.1. 목적
 
-본 문서(MySQL 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 MySQL 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
+본 문서(MySQL 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 MySQL 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
 	
 	
 ### <div id='1.2'> 1.2. 범위
@@ -81,7 +81,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -89,13 +89,13 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -127,7 +127,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -208,7 +208,7 @@ mysql_broker_services_plan_b_connection: 100                     # mysql broker 
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"    # common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"        # bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"        # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d mysql deploy --no-redact mysql.yml \
@@ -251,11 +251,11 @@ Succeeded
 
 ## <div id='3'> 3. MySQL 연동 Sample Web App 설명
 
-본 Sample App은 MySQL의 서비스를 Provision한 상태에서 PaaS-TA에 배포하면 MySQL서비스와 bind되어 사용할 수 있다.  
+본 Sample App은 MySQL의 서비스를 Provision한 상태에서 K-PaaS AP에 배포하면 MySQL서비스와 bind되어 사용할 수 있다.  
 
 ### <div id='3.1'> 3.1. MySQL 서비스 브로커 등록
 Mysql 서비스팩 배포가 완료 되었으면 Application에서 서비스 팩을 사용하기 위해서 먼저 MySQL 서비스 브로커를 등록해 주어야 한다.  
-서비스 브로커 등록시 PaaS-TA에서 서비스브로커를 등록할 수 있는 사용자로 로그인이 되어 있어야 한다.
+서비스 브로커 등록시 K-PaaS AP에서 서비스브로커를 등록할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
 - 서비스 브로커 목록을 확인한다.
 
@@ -327,22 +327,22 @@ broker: mysql-service-broker
 
 ### <div id='3.2'> 3.2. Sample Web App 다운로드
 
-Sample App은 PaaS-TA에 App으로 배포되며 App구동시 Bind 된 MySQL 서비스 연결 정보로 접속하여 초기 데이터를 생성하게 된다.    
+Sample App은 K-PaaS AP에 App으로 배포되며 App구동시 Bind 된 MySQL 서비스 연결 정보로 접속하여 초기 데이터를 생성하게 된다.    
 브라우져를 통해 App에 접속 후 "MYSQL 데이터 가져오기"를 통해 초기 생성된 데이터를 조회 할 수 있다.  
 
 - Sample App 묶음 다운로드
 ```
-$ wget https://nextcloud.paas-ta.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
-$ unzip paasta-service-samples-459dad9.zip  
-$ cd paasta-service-samples/mysql  
+$ wget https://nextcloud.k-paas.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
+$ unzip ap-service-samples-459dad9.zip  
+$ cd ap-service-samples/mysql  
 ```
 
-### <div id='3.3'> 3.3. PaaS-TA에서 서비스 신청
+### <div id='3.3'> 3.3. K-PaaS에서 서비스 신청
 Sample App에서 MySQL 서비스를 사용하기 위해서는 서비스 신청(Provision)을 해야 한다.  
 
-*참고: 서비스 신청시 PaaS-TA에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.  
+*참고: 서비스 신청시 K-PaaS AP에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.  
 
-- 먼저 PaaS-TA Marketplace에서 서비스가 있는지 확인을 한다.  
+- 먼저 K-PaaS AP Marketplace에서 서비스가 있는지 확인을 한다.  
 
 > $ cf marketplace   
 ```  
@@ -387,7 +387,7 @@ mysql-service-instance    Mysql-DB   Mysql-Plan2-100con                         
 
 ### <div id='3.4'> 3.4. Sample Web App 배포 및 MySQL바인드 확인
 서비스 신청이 완료되었으면 Sample Web App 에서는 생성된 서비스 인스턴스를 Bind 하여 App에서 MySQL 서비스를 이용한다.  
-*참고: 서비스 Bind 신청시 PaaS-TA에서 서비스 Bind신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.  
+*참고: 서비스 Bind 신청시 K-PaaS AP에서 서비스 Bind신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.  
 
 - manifest 파일을 확인한다.  
 
@@ -412,7 +412,7 @@ applications:
 - --no-start 옵션으로 App을 배포한다.  
 > $ cf push --no-start  
 ```  
-Applying manifest file /home/ubuntu/workspace/samples/paasta-service-samples/mysql/manifest.yml...
+Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/mysql/manifest.yml...
 Manifest applied
 Packaging files to upload...
 Uploading files...
@@ -422,7 +422,7 @@ Waiting for API to complete processing files...
 
 name:              mysql-sample-app
 requested state:   stopped
-routes:            mysql-sample-app.paasta.kr
+routes:            mysql-sample-app.ap.kr
 last uploaded:     
 stack:             
 buildpacks:        
@@ -501,7 +501,7 @@ Instances starting...
 
 name:              mysql-sample-app
 requested state:   started
-routes:            mysql-sample-app.paasta.kr
+routes:            mysql-sample-app.ap.kr
 last uploaded:     Mon 22 Nov 05:23:48 UTC 2021
 stack:             cflinuxfs3
 buildpacks:        
@@ -731,4 +731,4 @@ HeidiSQL 프로그램은 무료로 사용할 수 있는 오픈소스 소프트�
 [update_mysql_vsphere_49]:./images/mysql/update_mysql_vsphere_49.png
 [update_mysql_vsphere_50]:./images/mysql/update_mysql_vsphere_50.png
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > MySQL Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > MySQL Service

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > BOSH CLI
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > BOSH CLI
 
 ## Table Contents
 1. [개요](#1)
@@ -124,14 +124,14 @@
 
 ## <div id='1'/>문서 개요
 
-### <div id='2'/>문서 목적 
+### <div id='2'/>문서 목적
 본 문서는 BOSH에 대한 설치 및 운영 관리를 위한 도구인 BOSH CLI v2에 대해 기본 사용법 및 사용 예시를 통해 BOSH를 이해하는데 목적이 있다. 
 
-### <div id='3'/>문서 범위 
+### <div id='3'/>문서 범위
 
 본 문서에서는 BOSH CLI V2 사용법에 대해서 작성하였다.
 
-### <div id='4'/>참고 자료 
+### <div id='4'/>참고 자료
 
 본 문서는 Cloud Foundry의 BOSH Document([http://bosh.io](http://bosh.io))를 참고로 작성하였다.
 
@@ -168,7 +168,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 	|13         |--parallel=                |병렬 작업의 최대 수|
 	|14         |--client-secret=                |암호 또는 UAA 클라이언트 암호 재정의|
 
-##  <div id='6'/>BOSH CLI - Environments
+## <div id='6'/>BOSH CLI - Environments
 
 ### <div id='7'/>***bosh environments***
 
@@ -229,7 +229,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
   		-v outbound_network_name=NatNetwork
 
 
-### <div id='9'/>***bosh alias-env*** 
+### <div id='9'/>***bosh alias-env***
 
 - **기본 Syntax**
 
@@ -248,7 +248,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 	|location|디렉터 위치 지정|O|
 	|--ca-cert=path|CA 인증서를 지정|X|
 
-### <div id='10'/>***bosh environment*** 
+### <div id='10'/>***bosh environment***
 
 - **기본 Syntax**
 
@@ -475,7 +475,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 		$ bosh repack-stemcell --name=acme-ubuntu-encrypted --cloud-properties='{"encrypted": true, "kms_key_arn": "arn:aws:kms:us-east-1:088444384256:key/4ffbe966-d138-4f4d-a077-4c234d05b3b1"}' bosh-stemcell-3363.9-aws-xen-hvm-ubuntu-trusty-go_agent.tgz acme-encrypted-stemcell.tgz
 
 
-## <div id='20'/>BOSH CLI - Release creation 
+## <div id='20'/>BOSH CLI - Release creation
 
 ### <div id='21'/>***bosh init-release***
 
@@ -641,7 +641,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 
 ## <div id='28'/>BOSH CLI - Release blobs
 
-### <div id='29'/>***bosh blob*** 
+### <div id='29'/>***bosh blob***
 
 - **기본 Syntax**
 
@@ -799,7 +799,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 		$ bosh -e my-env ur git+https://github.com/concourse/concourse --version 2.7.3
 
 
-### <div id='36'/>***bosh delete-release*** 
+### <div id='36'/>***bosh delete-release***
 
 - **기본 Syntax**
 
@@ -1005,7 +1005,7 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 
 		$ bosh -e my-env cloud-config
 
-###  <div id='45'/>***bosh update-cloud-config***
+### <div id='45'/>***bosh update-cloud-config***
 
 - **기본 Syntax**
 
@@ -2126,4 +2126,4 @@ CLI는 BOSH 배포와 Release를 관리하기 위해 도움을 주는 커맨드 
 		-----BEGIN CERTIFICATE-----
 
   
-  ### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > BOSH CLI
+  ### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > BOSH CLI

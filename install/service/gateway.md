@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Gateway Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Gateway Service
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@
 
 ### <div id="1.1"/> 1.1. 목적
 
-본 문서(애플리케이션 Gateway 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 애플리케이션 Gateway 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
+본 문서(애플리케이션 Gateway 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 애플리케이션 Gateway 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
 
 ### <div id="1.2"/> 1.2. 범위
 
@@ -77,7 +77,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -85,16 +85,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -126,7 +126,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -169,7 +169,7 @@ Succeeded
 
 bosh_url: "https://10.0.1.6"			# BOSH URL (e.g. "https://00.000.0.0")
 bosh_client_admin_id: "admin"			# BOSH Client Admin ID
-bosh_client_admin_secret: "ert7na4jpew48"	# BOSH Client Admin Secret('echo $(bosh int ~/workspace/paasta-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
+bosh_client_admin_secret: "ert7na4jpew48"	# BOSH Client Admin Secret('echo $(bosh int ~/workspace/ap-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
 bosh_director_port: 25555			# BOSH director port
 bosh_oauth_port: 8443				# BOSH oauth port
 
@@ -182,6 +182,8 @@ bosh_oauth_port: 8443				# BOSH oauth port
 > $ vi ~/workspace/service-deployment/gateway-service/vars.yml
 
 ```
+deployment_name: "gateway-service"
+
 # STEMCELL
 stemcell_os: "ubuntu-jammy"                                         # stemcell os
 stemcell_version: "1.181"                                           # stemcell version
@@ -199,7 +201,7 @@ mariadb_azs: [z3]                                                    # mariadb :
 mariadb_instances: 1                                                 # mariadb : instances (1) 
 mariadb_persistent_disk_type: "10GB"                                 # mariadb : persistent disk type 
 mariadb_port: "<MARIADB_PORT>"                                       # mariadb : database port (e.g. 31306) -- Do Not Use "3306"
-mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"                   # mariadb : database admin password (e.g. "paas-ta!admin")
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"                   # mariadb : database admin password (e.g. "k-paas!admin")
 mariadb_broker_username: "<MARIADB_BROKER_USERNAME>"                 # mariadb : service-broker-user id (e.g. "apigateway")
 mariadb_broker_password: "<MARIADB_BROKER_PASSWORD>"                 # mariadb : service-broker-user password (e.g. "broker!admin")
 
@@ -218,6 +220,7 @@ api_gateway_instances: 2                                             # api-gatew
 api_gateway_persistent_disk_type: "20GB"                             # api-gateway : persistent disk type
 api_gateway_public_ips: "<API_GATEWAY_PUBLIC_IPS>"                   # api-gateway : public ips (e.g. ["00.00.00.00" , "11.11.11.11"])
 api_gateway_admin_password: "<API_GATEWAY_ADMIN_PASSWORD>"           # api-gateway : api-gateway super admin password (e.g. "admin!Service") special characters Only(-!^*)
+
 ```
 
 ### <div id="2.5"/> 2.5. 서비스 설치
@@ -232,8 +235,8 @@ api_gateway_admin_password: "<API_GATEWAY_ADMIN_PASSWORD>"           # api-gatew
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"  # common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-CURRENT_IAAS="${CURRENT_IAAS}"              # IaaS Information (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"      # bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+CURRENT_IAAS="${CURRENT_IAAS}"              # IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"      # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d gateway-service deploy --no-redact gateway-service.yml \
@@ -278,11 +281,11 @@ Succeeded
 
 ## <div id="3"/>3.  애플리케이션 Gateway 서비스 관리 및 신청
 
-PaaS-TA 운영자 포탈을 통해 서비스를 등록하고 공개하면, PaaS-TA 사용자 포탈을 통해 서비스를 신청 하여 사용할 수 있다.
+K-PaaS AP 운영자 포탈을 통해 서비스를 등록하고 공개하면, K-PaaS AP 사용자 포탈을 통해 서비스를 신청 하여 사용할 수 있다.
 
 ### <div id="3.1"/> 3.1. 서비스 브로커 등록
 
-서비스의 설치가 완료 되면, PaaS-TA 포탈에서 서비스를 사용하기 위해 애플리케이션 Gateway 서비스 브로커를 등록해 주어야 한다.  
+서비스의 설치가 완료 되면, K-PaaS 포탈에서 서비스를 사용하기 위해 애플리케이션 Gateway 서비스 브로커를 등록해 주어야 한다.  
 서비스 브로커 등록 시에는 개방형 클라우드 플랫폼에서 서비스 브로커를 등록 할 수 있는 권한을 가진 사용자로 로그인 되어 있어야 한다.  
 
 - 서비스 브로커 목록을 확인한다  
@@ -352,20 +355,20 @@ broker: api-gateway-service-broker
 ### <div id='3.2'/> 3.2. 서비스 신청
 #### <div id='3.2.1'/> 3.2.1. 서비스 신청 - 포탈
 
-PaaS-TA 운영자 포탈에 접속하여 서비스를 등록한다.  
+K-PaaS AP 운영자 포탈에 접속하여 서비스를 등록한다.  
 
 > ※ 운영관리 > 카탈로그 > 앱서비스 등록
 > - 이름 : 애플리케이션 Gateway 서비스
 > - 분류 :  개발 지원 도구
 > - 서비스 : api-gateway
 > - 썸네일 : [애플리케이션 Gateway 서비스 썸네일]
-> - 문서 URL : https://github.com/PaaS-TA/PAAS-TA-API-GATEWAY-SERVICE-BROKER
+> - 문서 URL : https://github.com/K-PaaS/ap-api-gateway-broker
 > - 서비스 생성 파라미터 : password / 패스워드
 > - 앱 바인드 사용 : N
 > - 공개 : Y
 > - 대시보드 사용 : Y
 > - 온디멘드 : N
-> - 태그 : paasta / tag1, free / tag2
+> - 태그 : k-paas / tag1, free / tag2
 > - 요약 : 애플리케이션 Gateway 서비스
 > - 설명 :
 > API 등록 및 API 라이프 사이클 관리등의 기능을 제공하는 애플리케이션 Gateway 서비스인 WSO2 서비스를 dedicated 방식으로 제공합니다.  
@@ -373,7 +376,7 @@ PaaS-TA 운영자 포탈에 접속하여 서비스를 등록한다.
 >  
 > ![002]
 
--	PaaS-TA 사용자  포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
+-	K-PaaS AP 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 
 ![003]
 
@@ -424,4 +427,4 @@ service broker:   api-gateway-service-broker
 [013]:./images/apigateway-service/image013.jpeg
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Gateway Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Gateway Service

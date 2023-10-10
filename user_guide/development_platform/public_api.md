@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Public API 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Public API 개발
 
 
 ## Table of Contents
@@ -72,7 +72,7 @@
 ### <div id='2'></div> 1.1. 목적
 개방형 클라우드 플랫폼(OpenPaas)에 배포되는 어플리케이션은 서비스 브로커를 통해 외부에서 제공하는 서비스들을 사용할 수 있게 된다. 본 문서는 외부 API 서비스들을 개방형 클라우드 플랫폼에서 사용할 수 있도록 서비스 브로커를 구현하고 검증한다. 이를 통해 플랫폼 운영자는 개발자에게 필요한 API 서비스를 개방형 클라우드 플랫폼의 마켓 플레이스에 등록할 수 있고, 이 과정에 대한 이해를 돕는 것이 본 문서의 목적이다.
 
-### <div id='3'></div> 1.2. 범위 
+### <div id='3'></div> 1.2. 범위
 플랫폼 운영자는 개발자들이 사용하게 될 서비스를 개방형 클라우드 플랫폼의 마켓 플레이스에 노출시킨다. 따라서 본 문서는 API 서비스 브로커의 구현과 배포, API 서비스를 추가하는 방법을 기술한다.(2장~6장) 또한, 어플리케이션에서 API 서비스를 사용하는 방법을 안내하는데(7장), 이는 플랫폼 운영자가 아닌 어플리케이션 개발자의 영역이지만, 검증을 위해 필요하므로 함께 기술한다.
 본 문서의 [4장 API 서비스 브로커 구현]을 이해하기 위해서 서비스팩 개발 가이드 문서의 [2장 Service Broker API 개발가이드]를 숙지하여야 하며, 본 문서는 그 중 JAVA 방식 구현에 대해서만 기술하였다.
 
@@ -1125,4 +1125,4 @@ VCAP_SERVICES 정보를 확인하면 그림과 같이 각각의 서비스 별로
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Public API 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Public API 개발

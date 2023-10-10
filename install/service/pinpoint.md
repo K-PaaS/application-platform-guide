@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Pinpoint APM Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Pinpoint APM Service
 
 ## Table of Contents
 
@@ -18,13 +18,13 @@
 3. [Sample Web App 연동 Pinpoint 연동](#3)    
   3.1. [Pinpoint 서비스 브로커 등록](#3.1)  
   3.2. [Sample Web App 구조](#3.2)   
-  3.3. [PaaS-TA에서 서비스 신청](#3.3)  
+  3.3. [K-PaaS에서 서비스 신청](#3.3)  
   3.4. [Sample Web App에 서비스 바인드 신청 및 App 확인](#3.4)  
 
 ## <div id='1'> 1. 문서 개요
 ### <div id='1.1'> 1.1. 목적
 
-본 문서(Pinpoint 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 Pinpoint 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
+본 문서(Pinpoint 서비스팩 설치 가이드)는 K-PaaS AP에서 제공되는 서비스팩인 Pinpoint 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
 
 ### <div id='1.2'> 1.2. 범위
 설치 범위는 Pinpoint 서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.
@@ -43,7 +43,7 @@ Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundr
 BOSH CLI v2 가 설치 되어 있지 않을 경우 먼저 BOSH2.0 설치 가이드 문서를 참고 하여 BOSH CLI v2를 설치를 하고 사용법을 숙지 해야 한다.  
 
 - bosh runtime-config를 확인하여 bosh-dns include deployments 에 pinpoint가 있는지 확인한다.  
- ※ bosh-dns include deployments에 pinpoint가 없다면 ~/workspace/paasta-deployment/bosh/runtime-configs 의 dns.yml 을 열어서 pinpoint를 추가하고, bosh runtime-config를 업데이트 해준다.    
+ ※ bosh-dns include deployments에 pinpoint가 없다면 ~/workspace/ap-deployment/bosh/runtime-configs 의 dns.yml 을 열어서 pinpoint를 추가하고, bosh runtime-config를 업데이트 해준다.    
 
 > $ bosh -e micro-bosh runtime-config
 ```
@@ -53,7 +53,7 @@ Using environment '10.0.1.6' as client 'admin'
 addons:
 - include:
     deployments:
-    - paasta
+    - ap
     - pinpoint
     - pinpoint-monitoring
     - rabbitmq
@@ -116,7 +116,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -124,13 +124,13 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -162,7 +162,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -254,8 +254,8 @@ webui_haproxy_public_ip: "<WEB_UI_PUBLIC_IP>"                    # webui haproxy
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"	# common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-CURRENT_IAAS="${CURRENT_IAAS}"			# IaaS Information (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+CURRENT_IAAS="${CURRENT_IAAS}"			# IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d pinpoint deploy --no-redact pinpoint.yml \
@@ -305,7 +305,7 @@ Succeeded
 ### <div id='3.1'> 3.1. Pinpoint 서비스 브로커 등록
 
 Pinpoint 서비스팩 배포가 완료 되었으면 Application에서 서비스 팩을 사용하기 위해서 먼저 Pinpoint 서비스 브로커를 등록해 주어야 한다.  
-서비스 브로커 등록시 PaaS-TA에서 서비스브로커를 등록 할 수 있는 사용자로 로그인이 되어 있어야 한다.
+서비스 브로커 등록시 K-PaaS AP에서 서비스브로커를 등록 할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
 - 서비스 브로커 목록을 확인한다.
 
@@ -374,24 +374,24 @@ broker: pinpoint-service-broker
 
 ### <div id='3.2'> 3.2. Sample Web App 다운로드
 
-Sample Web App은 PaaS-TA에 App으로 배포가 된다. 배포된 App에 Pinpoint 서비스 Bind 를 통하여 초기 데이터를 생성하게 된다.  
+Sample Web App은 K-PaaS AP에 App으로 배포가 된다. 배포된 App에 Pinpoint 서비스 Bind 를 통하여 초기 데이터를 생성하게 된다.  
 바인드 완료 후 연결 url을 통하여 브라우저로 해당 App에 대한 Pinpoint 서비스 모니터링을 할 수 있다.
 
 - Sample App 묶음 다운로드
 ```
-$ wget https://nextcloud.paas-ta.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
-$ unzip paasta-service-samples-459dad9.zip  
-$ cd paasta-service-samples/pinpoint  
+$ wget https://nextcloud.k-paas.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
+$ unzip ap-service-samples-459dad9.zip  
+$ cd ap-service-samples/pinpoint  
 ```
 
 <br>
 
-### <div id='3.3'> 3.3. PaaS-TA에서 서비스 신청
+### <div id='3.3'> 3.3. K-PaaS에서 서비스 신청
 
 Sample Web App에서 Pinpoint 서비스를 사용하기 위해서는 서비스 신청(Provision)을 해야 한다.  
-*참고: 서비스 신청시 PaaS-TA에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.  
+*참고: 서비스 신청시 K-PaaS AP에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.  
 
-- 먼저 PaaS-TA Marketplace에서 서비스가 있는지 확인을 한다.
+- 먼저 K-PaaS AP Marketplace에서 서비스가 있는지 확인을 한다.
 
 > $ cf marketplace
 
@@ -435,7 +435,7 @@ PS1    Pinpoint     Pinpoint_standard                 create succeeded
 ### <div id='3.4'> 3.4. Sample Web App에 서비스 바인드 신청 및 App 확인
 
 서비스 신청이 완료되었으면 Sample Web App 에서는 생성된 서비스 인스턴스를 Bind 하여 App에서 Pinpoint 서비스를 이용한다.  
-*참고: 서비스 Bind 신청시 PaaS-TA 플랫폼에서 서비스 Bind신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
+*참고: 서비스 Bind 신청시 K-PaaS AP 플랫폼에서 서비스 Bind신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
 - manifest 파일을 확인한다. 
 	
@@ -474,7 +474,7 @@ OK
 
 > $ cf push --no-start 
 ```  
-Applying manifest file /home/ubuntu/workspace/samples/paasta-service-samples/pinpoint/manifest.yml...
+Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/pinpoint/manifest.yml...
 Manifest applied
 Packaging files to upload...
 Uploading files...
@@ -484,7 +484,7 @@ Waiting for API to complete processing files...
 
 name:              spring-music-pinpoint
 requested state:   stopped
-routes:            spring-music-pinpoint.paastacloud.shop
+routes:            spring-music-pinpoint.apcloud.shop
 last uploaded:     
 stack:             
 buildpacks:        
@@ -559,7 +559,7 @@ Instances starting...
 
 name:              spring-music-pinpoint
 requested state:   started
-routes:            spring-music-pinpoint.paasta.kr
+routes:            spring-music-pinpoint.ap.kr
 last uploaded:     Mon 22 Nov 05:28:14 UTC 2021
 stack:             cflinuxfs3
 buildpacks:        
@@ -610,4 +610,4 @@ e.g. http://3.12.24.53/#/main/spring-music-pinpoint@SPRING_BOOT/realtime
 [pinpoint_image_04]:./images/pinpoint/pinpoint-image4.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Pinpoint APM Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Pinpoint APM Service

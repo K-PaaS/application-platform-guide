@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java 개발
 
 ## Table of Contents
 
@@ -599,4 +599,4 @@ admin/admin 입력후 로그인 합니다.
 <img src="./images/java/image19.png" width="350" height="150" />
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Java 개발

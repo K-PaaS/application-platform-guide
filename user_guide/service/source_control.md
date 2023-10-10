@@ -1,13 +1,13 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Source Control Service 
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Source Control Service
 
-# [PaaS-TA 형상관리 서비스 사용자 가이드]
+# [K-PaaS AP 형상관리 서비스 사용자 가이드]
 
 ## 목차
 1. [문서 개요](#1)
-     * [1.1. PaaS-TA 포탈 계정 생성](#2)
+     * [1.1. K-PaaS AP 포탈 계정 생성](#2)
      * [1.2. 범위](#3)
-2. [PaaS-TA 사용자 포탈 서비스](#4)
-     * [2.1. PaaS-TA 포탈 계정 생성](#5)
+2. [K-PaaS AP 사용자 포탈 서비스](#4)
+     * [2.1. K-PaaS AP 포탈 계정 생성](#5)
 3. [형상관리 사용자 포탈 서비스](#6)
      * [3.1. 형상관리 서비스 사용자 생성](#7)
      * [3.1.1 로그인](#8)
@@ -43,27 +43,27 @@
 
 # <div id='1'/> 1. 문서 개요
 
-### <div id='2'/> 1.1. PaaS-TA 포탈 계정 생성
+### <div id='2'/> 1.1. K-PaaS AP 포탈 계정 생성
 본 문서는 형상관리 사용자 사용 방법에 대해 기술하였다.
 
 ### <div id='3'/> 1.2. 범위
 본 문서는 Windows 환경을 기준으로 형상관리 사용자 포탈을 사용하는 방법에 대해 작성하였다.
 
-# <div id='4'/> 2. PaaS-TA 사용자 포탈 서비스
+# <div id='4'/> 2. K-PaaS AP 사용자 포탈 서비스
 
-### <div id='5'/> 2.1. PaaS-TA 포탈 계정 생성
-형상관리 서비스를 생성하기에 전, PaaS-TA 사용자 포탈 사용자 계정이 필수이다. PaaS-TA 계정 생성 및 비밀번호 재설정에 관련된 자세한 내용은 PaaS-TA 사용자 포탈 가이드를 참고한다.
+### <div id='5'/> 2.1. K-PaaS AP 포탈 계정 생성
+형상관리 서비스를 생성하기에 전, K-PaaS AP 사용자 포탈 사용자 계정이 필수이다. K-PaaS AP 계정 생성 및 비밀번호 재설정에 관련된 자세한 내용은 K-PaaS AP 사용자 포탈 가이드를 참고한다.
 
 
 # <div id='6'/> 3. 형상관리 사용자 포탈 서비스
 
 
 ### <div id='7'/> 3.1. 형상관리 서비스
-형상관리 서비스는 조직 별 한 개의 서비스를 생성할 수 있다. 형상관리 서비스 생성 관련된 자세한 내용은 PaaS-TA 사용자 포탈 가이드를 참고한다.
+형상관리 서비스는 조직 별 한 개의 서비스를 생성할 수 있다. 형상관리 서비스 생성 관련된 자세한 내용은 K-PaaS AP 사용자 포탈 가이드를 참고한다.
 
 
 ### <div id='8'/>  3.1.1. 로그인
-1.	PaaS-TA 사용자 포탈에 접속한다.  
+1.	K-PaaS AP 사용자 포탈에 접속한다.  
 ![002]
 
 2. "로그인" 버튼을 클릭한다.  
@@ -169,7 +169,7 @@
 
 
 ### <div id='16'/> 3.1.3. 레파지토리 생성
-1.	PaaS-TA 개발자 포탈에 접속한다. (로그인 되어 있으면 생략한다.)
+1.	K-PaaS AP 개발자 포탈에 접속한다. (로그인 되어 있으면 생략한다.)
 
 2.	로그인 완료 후, 조직 생성 페이지에서 메뉴 상단에 “대시보드”를 클릭하여 조직 대시보드 페이지로 이동하고 화면 중앙의 “dev”공간 명을 클릭하여 공간 대시보드로 이동한다.  
 ![026]
@@ -256,7 +256,7 @@
 
 ### <div id='27'/> 3.1.4. 사용자 관리
 ### <div id='28'/> 3.1.4.1.1.	모든 사용자 조회
-본 장에서는 PaaS-TA 사용자 포탈의 7개 메뉴에 대한 설명을 기술한다.
+본 장에서는 K-PaaS AP 사용자 포탈의 7개 메뉴에 대한 설명을 기술한다.
 1.	형상관리 레파지토리 목록 페이지 상단에 있는 나의 아이디를 클릭한다. 클릭 후 보이는 목록 두 번째의 “사용자 관리”를 클릭한다.  
 ![040]
 
@@ -305,7 +305,7 @@
 
 
 ### <div id='34'/> 3.1.4.1.7. 인스턴스 사용자 삭제
-본 장에서는 PaaS-TA 사용자 포탈의 7개 메뉴에 대한 설명을 기술한다.
+본 장에서는 K-PaaS AP 사용자 포탈의 7개 메뉴에 대한 설명을 기술한다.
 1.	사용자 목록에서 참여자 권한 삭제할 사용자를 클릭한다.
 
 2.	형상관리 레파지토리 목록 페이지 있는 레파지토리 명을 클릭한다.  
@@ -367,4 +367,4 @@
 [045]:./images/source-control/image045.png
 [046]:./images/source-control/image046.png
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Source Control Service 
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > Source Control Service

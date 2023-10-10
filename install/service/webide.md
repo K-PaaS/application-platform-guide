@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > WEB IDE Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > WEB IDE Service
 
 ## Table of Contents
 1. [문서 개요](#1)  
@@ -14,7 +14,7 @@
   2.5. [서비스 설치](#2.5)    
   2.6. [서비스 설치 확인](#2.6)  
 
-3. [WEB-IDE의 PaaS-TA 포털사이트 연동](#3)  
+3. [WEB-IDE의 K-PaaS 포털사이트 연동](#3)  
  3.1. [WEB-IDE 서비스 브로커 등록](#3.1)  
  3.2. [서비스 신청](#3.2)  
 　3.2.1. [서비스 신청 - 포탈](#3.2.1)   
@@ -36,7 +36,7 @@
 
 ### <div id='1.1'/>1.1. 목적
 
-본 문서(WEB-IDE 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 WEB-IDE 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
+본 문서(WEB-IDE 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 WEB-IDE 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
 
 ### <div id='1.2'/> 1.2. 범위
 설치 범위는 WEB-IDE 사용을 검증하기 위한 기본 설치를 기준으로 작성하였다.
@@ -67,7 +67,7 @@ Stemcell 목록을 확인하여 서비스 설치에 필요한 Stemcell이 업로
 Using environment '10.0.1.6' as client 'admin'
 
 Name                                       Version   OS             CPI  CID  
-bosh-openstack-kvm-ubuntu-jammy-go_agent  1.181      ubuntu-jammy  -    ce507ae4-aca6-4a6d-b7c7-220e3f4aaa7d
+bosh-openstack-kvm-ubuntu-jammy-go_agent   1.181     ubuntu-jammy   -    ce507ae4-aca6-4a6d-b7c7-220e3f4aaa7d
 
 (*) Currently deployed
 
@@ -87,7 +87,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -95,16 +95,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -136,7 +136,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -169,7 +169,7 @@ Succeeded
 ```
 
 - common_vars.yml을 서버 환경에 맞게 수정한다. 
-- WEB IDE에서 사용하는 변수는 bosh_url, bosh_client_admin_id, bosh_client_admin_secret, bosh_director_port,  bosh_oauth_port, bosh_version, system_domain, paasta_admin_username, paasta_admin_password 이다.
+- WEB IDE에서 사용하는 변수는 bosh_url, bosh_client_admin_id, bosh_client_admin_secret, bosh_director_port,  bosh_oauth_port, bosh_version, system_domain, ap_admin_username, ap_admin_password 이다.
 
 > $ vi ~/workspace/common/common_vars.yml
 ```
@@ -177,13 +177,13 @@ Succeeded
 
 bosh_url: "https://10.0.1.6"			# BOSH URL (e.g. "https://00.000.0.0")
 bosh_client_admin_id: "admin"			# BOSH Client Admin ID
-bosh_client_admin_secret: "ert7na4jpew"		# BOSH Client Admin Secret('echo $(bosh int ~/workspace/paasta-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
+bosh_client_admin_secret: "ert7na4jpew"		# BOSH Client Admin Secret('echo $(bosh int ~/workspace/ap-deployment/bosh/{iaas}/creds.yml --path /admin_password)' 명령어를 통해 확인 가능)
 bosh_director_port: 25555			# BOSH director port
 bosh_oauth_port: 8443				# BOSH oauth port
 bosh_version: 271.2				# BOSH version('bosh env' 명령어를 통해 확인 가능, on-demand service용, e.g. "271.2")
 system_domain: "61.252.53.246.nip.io"		# Domain (nip.io를 사용하는 경우 HAProxy Public IP와 동일)
-paasta_admin_username: "admin"			# PaaS-TA Admin Username
-paasta_admin_password: "admin"			# PaaS-TA Admin Password
+ap_admin_username: "admin"			# Application Platform Admin Username
+ap_admin_password: "admin"			# Application Platform Admin Password
 
 ... ((생략)) ...
 
@@ -221,7 +221,7 @@ mariadb_instances: 1                                                      # mari
 mariadb_vm_type: "small"                                                  # mariadb : vm type
 mariadb_persistent_disk_type: "10GB"                                      # mariadb : persistent disk type
 mariadb_port: "<MARIADB_PORT>"                                            # mariadb : database port (e.g. 31306) -- Do Not Use "3306"
-mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"                        # mariadb : database admin password (e.g. "Paasta@2021")
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"                        # mariadb : database admin password (e.g. "KPaaS@2021")
 
 # SERVICE-BROKER
 broker_azs: [z4]                                                          # service-broker : azs
@@ -254,8 +254,8 @@ cloudfoundry_sslSkipValidation: "true"
   
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"       # common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-CURRENT_IAAS="${CURRENT_IAAS}"					 # IaaS Information (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"			 # bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+CURRENT_IAAS="${CURRENT_IAAS}"					 # IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"			 # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_NAME} -n -d web-ide deploy --no-redact web-ide.yml \
@@ -296,7 +296,7 @@ Succeeded
 
 
 
-## <div id='3'/> 3. WEB-IDE의 PaaS-TA 포털사이트 연동
+## <div id='3'/> 3. WEB-IDE의 K-PaaS 포털사이트 연동
 
 ### <div id='3.1'/> 3.1. WEB-IDE 서비스 브로커 등록
 
@@ -367,19 +367,19 @@ broker: webide-service-broker
 > - 분류 :  개발 지원 도구
 > - 서비스 : webide
 > - 썸네일 : [WEB IDE 서비스 썸네일]
-> - 문서 URL : https://github.com/PaaS-TA/PAAS-TA-WEB-IDE-BROKER
+> - 문서 URL : https://github.com/K-PaaS/ap-web-ide-broker
 > - 앱 바인드 사용 : N
 > - 공개 : Y
 > - 대시보드 사용 : Y
 > - 온디멘드 : N
-> - 태그 : paasta / tag6, free / tag2
+> - 태그 : k-paas / tag6, free / tag2
 > - 요약 : WEB IDE
 > - 설명 :
 > 웹 프로그래밍을 위한 WEB IDE - eclipse-che
 >  
 > ![3-2-2]
 
-- PaaS-TA 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
+- K-PaaS AP 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 
 ![003]
 
@@ -391,15 +391,15 @@ broker: webide-service-broker
 #### <div id="3.2.2"/>  3.2.2. 서비스 신청 - CLI
 CLI 를 통한 WEB-IDE 서비스 신청 방법을 설명한다.
 
-- PaaS-TA Marketplace에서 서비스가 있는지 확인을 한다.
+- K-PaaS AP Marketplace에서 서비스가 있는지 확인을 한다.
 
 > $ cf marketplace
 ```
 Getting services from marketplace in org system / space dev as admin...
 OK
 
-offering   plans          description                                                                 broker
-webide     dedicated-vm   A paasta web ide service for application development.provision parameters   webide-service-broker
+offering   plans          description                                                                               broker
+webide     dedicated-vm   A Application Platform web ide service for application development.provision parameters   webide-service-broker
 ```
 <br>
 
@@ -416,7 +416,7 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 
 > $ cf create-service webide dedicated-vm webide-service  
 ```
-Creating service instance paasta-webide-service in org system / space dev as admin...
+Creating service instance webide-service in org system / space dev as admin...
 OK
 
 Create in progress. Use 'cf services' or 'cf service webide' to check operation status.
@@ -467,7 +467,7 @@ Succeeded
 ## <div id='4'/> 4. WEB-IDE 에서 CF CLI 사용법
 
 ### <div id='4.1'/> 4.1. WEB-IDE New Project 화면
-***※ [PaaS-TA 운영자 포탈 4.3.3 카탈로그 관리 서비스 가이드](/use-guide/portal/PAAS-TA_ADMIN_PORTAL_USE_GUIDE_V1.1.md#4.3.3) 참고***  
+***※ [AP 운영자 포탈 4.3.3 카탈로그 관리 서비스 가이드](/use-guide/portal/admin.md#4.3.3) 참고***  
 
 - 사용할 언어를 선택하고 Create workspace and project 로 새로운 프로젝트를 시작한다.
 
@@ -566,7 +566,7 @@ Using environment '10.0.1.6' as client 'admin'
 
 Using deployment 'web-ide'
 
-Release 'paas-ta-webide-release/2.0' already exists.
+Release 'ap-webide-release/2.0' already exists.
 
   instance_groups:
   - name: webide-broker
@@ -617,4 +617,4 @@ Succeeded
 [004]:./images/webide/userportal_dashboard.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > WEB IDE Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > WEB IDE Service

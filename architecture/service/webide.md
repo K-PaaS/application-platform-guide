@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > WEB IDE Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > WEB IDE Service
 
 ## 목적
 본 문서는 Application Platform (AP) - WEB IDE Service의 Architecture를 제공한다.
@@ -21,4 +21,4 @@ eclipse che 서버가 기본적으로 제공하는 stack 을 기반으로 하고
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > WEB IDE Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > WEB IDE Service

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > PHP 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > PHP 개발
 
 ## Table of Contents
 1. [개요](#1)
@@ -34,7 +34,7 @@
   
 ## <div id='1.1'> 1.1.  문서 개요
  
-### <div id='1.1.1'> 1.1.1.  목적 
+### <div id='1.1.1'> 1.1.1.  목적
 
 본 문서(PHP 애플리케이션 개발 가이드)는 개발형 플랫폼 프로젝트의 서비스를PHP 애플리케이션과 연동하는 방법을 제공하는데 있습니다.
   
@@ -245,7 +245,7 @@ XAMP에서 mongo 드라이브를 추가하였듯이 개방형 플랫폼에도 �
  	amqp :rabbitmq와 연결을 위한 extension (현재 SSL연동이 안되서 사용을 못하고 있음)
 
   
-### <div id='2.3.4'> 2.3.4.  VCAP_SERVICES 환경설정 정보 
+### <div id='2.3.4'> 2.3.4.  VCAP_SERVICES 환경설정 정보
 
 개방형 플랫폼에서는 서비스를 사용하기 위해 서비스 생성/바인딩을 합니다. 그리고 연결된 서비스를 사용하기 위해 VCAP_SERVICES 환경설정 정보를 가져와야 합니다. 이 정보는 연결할 Host 주소/포트, 사용자명, 비밀번호 등 서비스 접속에 필요한 모든 정보를 포함하고 있습니다. 
 
@@ -612,4 +612,4 @@ PHP 단위테스트는 phpunit를 이용해서 합니다. 테스트 케이스는
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > PHP 개발
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > PHP 개발

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > GlusterFS Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > GlusterFS Service
 
 ## Table of Contents
 
@@ -18,14 +18,14 @@
 3. [GlusterFS 연동 Sample App 설명](#3)    
   3.1. [서비스 브로커 등록](#3.1)   
   3.2. [Sample App 다운로드](#3.2)    
-  3.3. [PaaS-TA에서 서비스 신청](#3.3)   
+  3.3. [K-PaaS에서 서비스 신청](#3.3)   
   3.4. [Sample App에 서비스 바인드 신청 및 App 확인](#3.4)   
 
 
 ## <div id="1"/> 1. 문서 개요
 
 ### <div id="1.1"/>1.1. 목적
-본 문서(GlusterFS 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 GlusterFS 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
+본 문서(GlusterFS 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 GlusterFS 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
 
 ### <div id="1.2"/> 1.2. 범위
 설치 범위는 GlusterFS 서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.
@@ -76,7 +76,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -84,16 +84,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -125,7 +125,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -158,15 +158,15 @@ Succeeded
 ```
 
 - common_vars.yml을 서버 환경에 맞게 수정한다. 
-- glusterfs에서 사용하는 변수는 system_domain, paasta_admin_username, paasta_admin_password 이다.
+- glusterfs에서 사용하는 변수는 system_domain, ap_admin_username, ap_admin_password 이다.
 
 > $ vi ~/workspace/common/common_vars.yml
 ```
 ... ((생략)) ...
 
 system_domain: "61.252.53.246.nip.io"		# Domain (nip.io를 사용하는 경우 HAProxy Public IP와 동일)
-paasta_admin_username: "admin"			# PaaS-TA Admin Username
-paasta_admin_password: "admin"			# PaaS-TA Admin Password
+ap_admin_username: "admin"			# Application Platform Admin Username
+ap_admin_password: "admin"			# Application Platform Admin Password
 
 ... ((생략)) ...
 
@@ -223,8 +223,6 @@ broker_registrar_vm_type: "small"                                # broker regist
 
 # GLUSTERFS_BROKER_DEREGISTRAR
 broker_deregistrar_azs: [z4]                                     # broker deregistrar azs
-broker_deregistrar_instances: 1                                  # broker deregistrar instances 
-broker_deregistrar_vm_type: "small"                              # broker deregistrar vm type
 ```
 
 ### <div id="2.5"/> 2.5. 서비스 설치
@@ -239,7 +237,7 @@ broker_deregistrar_vm_type: "small"                              # broker deregi
 
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"    # common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"        # bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"        # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 bosh -e ${BOSH_ENVIRONMENT} -n -d glusterfs deploy --no-redact glusterfs.yml \
     -o operations/cce.yml \
@@ -269,7 +267,7 @@ Deployment 'glusterfs'
 
 Instance                                                      Process State  AZ  IPs          VM CID                                   VM Type  Active  
 mysql/8770bc70-8681-4079-8360-086219d6231b                    running        z3  10.30.52.10  vm-96697221-0ff9-4520-8a68-2314c62057a5  medium   true  
-paasta-glusterfs-broker/229fb890-645b-4213-89a1-fc2116de3f54  running        z3  10.30.52.11  vm-ace55b8f-3ce0-4482-b03b-96fbc567592e  medium   true  
+service-broker/229fb890-645b-4213-89a1-fc2116de3f54           running        z3  10.30.52.11  vm-ace55b8f-3ce0-4482-b03b-96fbc567592e  medium   true  
 
 2 vms
 
@@ -277,12 +275,12 @@ Succeeded
 ```
 
 ## <div id="3"/>3. GlusterFS 연동 Sample App 설명
-본 Sample Web App은 PaaS-TA에 배포되며 GlusterFS의 서비스를 Provision과 Bind를 한 상태에서 사용이 가능하다.
+본 Sample Web App은 K-PaaS AP에 배포되며 GlusterFS의 서비스를 Provision과 Bind를 한 상태에서 사용이 가능하다.
 
 ### <div id="3.1"/> 3.1. 서비스 브로커 등록
 
 GlusterFS 서비스팩 배포가 완료 되었으면 Application에서 서비스 팩을 사용하기 위해서 먼저 GlusterFS 서비스 브로커를 등록해 주어야 한다.
-서비스 브로커 등록시에는 PaaS-TA에서 서비스 브로커를 등록할 수 있는 사용자로 로그인 하여야 한다
+서비스 브로커 등록시에는 K-PaaS AP에서 서비스 브로커를 등록할 수 있는 사용자로 로그인 하여야 한다
 
 - 서비스 브로커 목록을 확인한다.
 
@@ -305,7 +303,7 @@ cf create-service-broker [SERVICE_BROKER] [USERNAME] [PASSWORD] [SERVICE_BROKER_
 
 - GlusterFS 서비스 브로커를 등록한다.  
   
-> $ cf create-service-broker glusterfs-service admin cloudfoundry http://<paasta-glusterfs-broker_ip>:8080
+> $ cf create-service-broker glusterfs-service admin cloudfoundry http://<glusterfs-broker_ip>:8080
 ```  
 $ cf create-service-broker glusterfs-service admin cloudfoundry http://10.30.52.11:8080
 Creating service broker glusterfs-service as admin...
@@ -357,18 +355,18 @@ broker: glusterfs-service
 
 - Sample App 묶음 다운로드
 ```
-$ wget https://nextcloud.paas-ta.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
-$ unzip paasta-service-samples-459dad9.zip  
-$ cd paasta-service-samples/glusterfs  
+$ wget https://nextcloud.k-paas.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
+$ unzip ap-service-samples-459dad9.zip  
+$ cd ap-service-samples/glusterfs  
 ```
 
 <br>
 
-### <div id="3.3"/> 3.3. PaaS-TA에서 서비스 신청
+### <div id="3.3"/> 3.3. K-PaaS에서 서비스 신청
 Sample App에서 GlusterFS 서비스를 사용하기 위해서는 서비스 신청(Provision)을 해야 한다.
-*참고: 서비스 신청시 PaaS-TA에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
+*참고: 서비스 신청시 K-PaaS AP에서 서비스를 신청 할 수 있는 사용자로 로그인이 되어 있어야 한다.
 
-- 먼저 PaaS-TA Marketplace에서 서비스가 있는지 확인을 한다.
+- 먼저 K-PaaS AP Marketplace에서 서비스가 있는지 확인을 한다.
 
 > $ cf marketplace
 
@@ -436,14 +434,14 @@ applications:
   buildpacks:
   - java_buildpack
   env:
-    swift_region: paasta
+    swift_region: kpaas
 ```
 
 - --no-start 옵션으로 App을 배포한다.
 
 > $ cf push --no-start 
 ```  
-Applying manifest file /home/ubuntu/workspace/samples/paasta-service-samples/gluserfs/manifest.yml...
+Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/gluserfs/manifest.yml...
 Manifest applied
 Packaging files to upload...
 Uploading files...
@@ -453,7 +451,7 @@ Waiting for API to complete processing files...
 
 name:              hello-spring-glusterfs
 requested state:   stopped
-routes:            hello-spring-glusterfs.paasta.kr
+routes:            hello-spring-glusterfs.ap.kr
 last uploaded:     
 stack:             
 buildpacks:        
@@ -531,7 +529,7 @@ Instances starting...
 
 name:              hello-spring-glusterfs
 requested state:   started
-routes:            hello-spring-glusterfs.paasta.kr
+routes:            hello-spring-glusterfs.ap.kr
 last uploaded:     Mon 22 Nov 05:19:59 UTC 2021
 stack:             cflinuxfs3
 buildpacks:        
@@ -572,4 +570,4 @@ memory usage:   1024M
 [glusterfs_image_19]:./images/glusterfs/glusterfs_image_19.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > GlusterFS Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > GlusterFS Service

@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > RabbitMQ Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > RabbitMQ Service
 
 ## 목적
 본 문서는 Application Platform (AP) - RabbitMQ Service의 Architecture를 제공한다.
@@ -20,4 +20,4 @@ RabbitMQ Service는 오픈소스 메세지 브로커 서버를 Shared 방식으�
 
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Architecture](../README.md) > RabbitMQ Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Architecture](../README.md) > RabbitMQ Service

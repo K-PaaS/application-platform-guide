@@ -1,4 +1,4 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Source Control Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Source Control Service
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@
 ## <div id='1'/> 1. 문서 개요
 
 ### <div id='1.1'/> 1.1. 목적
-본 문서(형상관리 서비스팩 설치 가이드)는 PaaS-TA에서 제공되는 서비스팩인 형상관리 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
+본 문서(형상관리 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 형상관리 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.  
 
 ### <div id='1.2'/> 1.2. 범위
 설치 범위는 형상관리 서비스팩 검증하기 위한 기본 설치를 기준으로 작성하였다.
@@ -81,7 +81,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/PaaS-TA/service-deployment/tree/v5.1.25
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -89,16 +89,16 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/PaaS-TA/service-deployment.git -b v5.1.25
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 
 # common_vars.yml 파일 다운로드(common_vars.yml가 존재하지 않는다면 다운로드)
-$ git clone https://github.com/PaaS-TA/common.git
+$ git clone https://github.com/K-PaaS/common.git
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 PaaS-TA AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
 
 - Cloud config 설정 내용을 확인한다.   
 
@@ -130,7 +130,7 @@ networks:
   subnets:
   - az: z1
     cloud_properties:
-      security_groups: paasta-security-group
+      security_groups: ap-security-group
       subnet: subnet-00000000000000000
     dns:
     - 8.8.8.8
@@ -197,6 +197,7 @@ scm_azs: [z3]                                                  # scm : azs
 scm_instances: 1                                               # scm : instances (1)
 scm_persistent_disk_type: "30GB"                               # scm : persistent disk type
 scm_private_ips: "<SCM_PRIVATE_IPS>"                           # scm : private ips (e.g. "10.0.81.41")
+scm_admin_password: "<SCM_ADMIN_PASSWORD>"                     # scm : scm-sever admin password -- Do Not Use "scmadmin"
 
 # MARIA-DB# MARIA_DB
 mariadb_azs: [z3]                                              # mariadb : azs
@@ -224,18 +225,6 @@ web_ui_private_ips: "<WEB_UI_PRIVATE_IPS>"                     # web-ui : privat
 # SCM-API
 api_azs: [z3]                                                  # scm-api : azs
 api_instances: 1                                               # scm-api : instances (1)
-api_persistent_disk_type: "2GB"                                # scm-api : persistent disk type
-api_private_ips: "<API_PRIVATE_IPS>"                           # scm-api : private ips (e.g. "10.0.81.45")
-
-# SERVICE-BROKER
-broker_azs: [z3]                                               # service-broker : azs
-broker_instances: 1                                            # service-broker : instances (1)
-broker_persistent_disk_type: "2GB"                             # service-broker : persistent disk type
-broker_private_ips: "<BROKER_PRIVATE_IPS>"                     # service-broker : private ips (e.g. "10.0.81.46")
-
-# UAAC
-uaa_client_sc_id: "scclient"                                   # source-control-service uaa client id
-uaa_client_sc_secret: "clientsecret"                           # source-control-service uaa client secret
 ```
 
 ### <div id="2.5"/> 2.5. 서비스 설치
@@ -250,8 +239,8 @@ uaa_client_sc_secret: "clientsecret"                           # source-control-
   
 # VARIABLES
 COMMON_VARS_PATH="<COMMON_VARS_FILE_PATH>"	# common_vars.yml File Path (e.g. ../../common/common_vars.yml)
-CURRENT_IAAS="${CURRENT_IAAS}"			# IaaS Information (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
-BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (PaaS-TA에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
+CURRENT_IAAS="${CURRENT_IAAS}"			# IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere 입력)
+BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"		# bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d source-control-service deploy --no-redact source-control-service.yml \
@@ -299,7 +288,7 @@ Succeeded
 
 ### <div id="3.1"/> 3.1. 서비스 브로커 등록
 
-서비스의 설치가 완료 되면, PaaS-TA 포탈에서 서비스를 사용하기 위해 형상관리 서비스 브로커를 등록해 주어야 한다.  
+서비스의 설치가 완료 되면, K-PaaS AP 포탈에서 서비스를 사용하기 위해 형상관리 서비스 브로커를 등록해 주어야 한다.  
 서비스 브로커 등록 시에는 개방형 클라우드 플랫폼에서 서비스 브로커를 등록 할 수 있는 권한을 가진 사용자로 로그인 되어 있어야 한다. 
 
 - 서비스 브로커 목록을 확인한다  
@@ -323,10 +312,10 @@ cf create-service-broker [SERVICE_BROKER] [USERNAME] [PASSWORD] [SERVICE_BROKER_
 
 - 형상관리 서비스 브로커를 등록한다.
 
-> $ cf create-service-broker paasta-sourcecontrol-broker admin cloudfoundry http://<sourcecontrol-broker_ip>:8080
+> $ cf create-service-broker ap-sourcecontrol-broker admin cloudfoundry http://<sourcecontrol-broker_ip>:8080
 ```
-$ cf create-service-broker paasta-sourcecontrol-broker admin cloudfoundry http://10.30.107.126:8080
-Creating service broker paasta-sourcecontrol-broker as admin...   
+$ cf create-service-broker ap-sourcecontrol-broker admin cloudfoundry http://10.30.107.126:8080
+Creating service broker ap-sourcecontrol-broker as admin...   
 OK       
 ```
 
@@ -337,31 +326,31 @@ OK
 Getting service brokers as admin...
 
 name                         url
-paasta-sourcecontrol-broker   http://10.30.107.126:8080
+ap-sourcecontrol-broker   http://10.30.107.126:8080
 ```
 
 - 형상관리 서비스의 서비스 접근 정보를 확인한다.  
-> $ cf service-access -b paasta-sourcecontrol-broker  
+> $ cf service-access -b ap-sourcecontrol-broker  
 
 ```
-Getting service access for broker paasta-sourcecontrol-broker as admin...
-broker: paasta-sourcecontrol-broker
+Getting service access for broker ap-sourcecontrol-broker as admin...
+broker: ap-sourcecontrol-broker
    service                  plan      access   orgs
-   p-paasta-sourcecontrol   Default   none
+   p-ap-sourcecontrol       Default   none
 ```
 
 - 형상관리 서비스의 서비스 접근 허용을 설정(전체)하고 서비스 접근 정보를 재확인 한다.  
-> $ cf enable-service-access p-paasta-sourcecontrol    
+> $ cf enable-service-access p-ap-sourcecontrol    
 ```
-Enabling access to all plans of service p-paasta-sourcecontrol for all orgs as admin...
+Enabling access to all plans of service p-ap-sourcecontrol for all orgs as admin...
 OK
 ```
-> $ cf service-access -b paasta-sourcecontrol-broker   
+> $ cf service-access -b ap-sourcecontrol-broker   
 ```
-Getting service access for broker paasta-sourcecontrol-broker as admin...
-broker: paasta-sourcecontrol-broker
+Getting service access for broker ap-sourcecontrol-broker as admin...
+broker: ap-sourcecontrol-broker
    service                  plan      access   orgs
-   p-paasta-sourcecontrol   Default   all  
+   p-ap-sourcecontrol       Default   all  
 ```
 
 ### <div id="3.2"/> 3.2. UAA Client 등록
@@ -430,7 +419,7 @@ scclient
 
 ### <div id='3.3'/> 3.3. 서비스 신청
 #### <div id='3.3.1'/> 3.3.1. 서비스 신청 - 포탈
-1. PaaS-Ta 운영자 포탈에 접속하여 로그인한다.
+1. K-PaaS AP 운영자 포탈에 접속하여 로그인한다.
 ![3-1-1]
 
 2. 로그인 후 서비스 관리 > 서비스 브로커 페이지에서 형상관리 서비스 브로커를 확인한다.
@@ -447,16 +436,16 @@ scclient
 > ※ 카탈로그 관리 > 앱 서비스
 > - 이름 : 형상관리
 > - 분류 :  개발 지원 도구
-> - 서비스 : p-paasta-sourcecontrol
+> - 서비스 : p-ap-sourcecontrol
 > - 썸네일 : [형상관리 서비스 썸네일]
-> - 문서 URL : https://github.com/PaaS-TA/SOURCE-CONTROL-SERVICE-BROKER
+> - 문서 URL : https://github.com/K-PaaS/ap-source-control-broker
 > - 서비스 생성 파라미터 : owner
 > - 서비스 생성 파라미터 : org_name
 > - 앱 바인드 사용 : N
 > - 공개 : Y
 > - 대시보드 사용 : Y
 > - 온디멘드 : N
-> - 태그 : paasta / tag6, free / tag2
+> - 태그 : k-paas / tag6, free / tag2
 > - 요약 : 형상관리
 > - 설명 :
 > 형상관리 서비스로써 GIT 과 SVN 레파지토리를 제공합니다.
@@ -464,7 +453,7 @@ scclient
 >  
 > ![3-2-2]
 
-- PaaS-TA 사용자  포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
+- K-PaaS AP 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 
 ![003]
 
@@ -485,19 +474,19 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 [SERVICE_INSTANCE] : 생성할 서비스 인스턴스 이름
 ```
 
-- 형상관리 서비스 사용을 위해 서비스를 신청 한다. (PaaS-TA user_id, org 이름 설정)
-> $ cf create-service p-paasta-sourcecontrol Default paasta-sourcecontrol -c '{"owner":"{user_id}", "org_name":"{org_name}"}'  
+- 형상관리 서비스 사용을 위해 서비스를 신청 한다. (K-PaaS AP user_id, org 이름 설정)
+> $ cf create-service p-ap-sourcecontrol Default ap-sourcecontrol -c '{"owner":"{user_id}", "org_name":"{org_name}"}'  
 ```
-Creating service instance paasta-sourcecontrol in org system / space dev as admin...
+Creating service instance ap-sourcecontrol in org system / space dev as admin...
 OK
 ```
 
 - 서비스 상세의 대시보드 URL 정보를 확인하여 서비스에 접근한다.
-> $ cf service paasta-sourcecontrol
+> $ cf service ap-sourcecontrol
  ```
  ... (생략) ...
  Dashboard:        http://115.68.47.179:8080/repositories/user/b840ecb4-15fb-4b35-a9fc-185f42f0de37
- Service broker:   paasta-sourcecontrol-broker
+ Service broker:   ap-sourcecontrol-broker
  ... (생략) ...
  ```
  
@@ -511,4 +500,4 @@ OK
 [004]:./images/source-control/userportal_dashboard.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP Install](../README.md) > Source Control Service
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > Source Control Service

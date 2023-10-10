@@ -1,16 +1,16 @@
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > 사용자 포털
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > 사용자 포털
 
 ## Table of Contents
 1. [문서 개요](#1)
      * [1.1. 목적](#2)
      * [1.2. 범위](#3)
-2. [PaaS-TA 사용자 포탈 계정 생성](#4)
-     * [2.1.  PaaS-TA 사용자 포탈 계정 생성](#5)
-     * [2.2.  PaaS-TA 사용자 포탈 비밀번호 재설정](#6)
-     * [2.3.  PaaS-TA 사용자 포탈 로그인 후 조직 생성](#7)
-3. [PaaS-TA 사용자 포탈 매뉴얼](#8)
-     * [3.1.  PaaS-TA 사용자 포탈 메뉴 구성](#9)
-     * [3.2.  PaaS-TA 사용자 포탈 메뉴 설명](#10)
+2. [K-PaaS AP 사용자 포탈 계정 생성](#4)
+     * [2.1.  K-PaaS AP 사용자 포탈 계정 생성](#5)
+     * [2.2.  K-PaaS AP 사용자 포탈 비밀번호 재설정](#6)
+     * [2.3.  K-PaaS AP 사용자 포탈 로그인 후 조직 생성](#7)
+3. [K-PaaS AP 사용자 포탈 매뉴얼](#8)
+     * [3.1.  K-PaaS AP 사용자 포탈 메뉴 구성](#9)
+     * [3.2.  K-PaaS AP 사용자 포탈 메뉴 설명](#10)
      * [3.2.1.  대시보드](#11)
      * [3.2.1.1.  조직 및 공간](#12)
      * [3.2.1.1.1.  조직 관리](#13)
@@ -95,22 +95,22 @@
 
 ### <div id='2'/> 1.1. 목적
       
-본 문서는 PaaS-TA 사용자 포탈 사용 방법에 대해 기술하였다.
+본 문서는 K-PaaS AP 사용자 포탈 사용 방법에 대해 기술하였다.
 
 
 ### <div id='3'/> 1.2. 범위
       
-본 문서는 Windows 환경을 기준으로 PaaS-TA 사용자 포탈을 사용하는 방법에 대해 작성되었다.
+본 문서는 Windows 환경을 기준으로 K-PaaS AP 사용자 포탈을 사용하는 방법에 대해 작성되었다.
 
 
-# <div id='4'/> 2.  PaaS-TA 사용자 포탈 계정 생성
+# <div id='4'/> 2.  K-PaaS AP 사용자 포탈 계정 생성
 
-본 장에서는 PaaS-TA 사용자 포탈을 사용하기 위한 계정 생성 및 비밀번호 재설정 화면 설명에 대해서 기술하였다.
+본 장에서는 K-PaaS AP 사용자 포탈을 사용하기 위한 계정 생성 및 비밀번호 재설정 화면 설명에 대해서 기술하였다.
 
 
-### <div id='5'/> 2.1.  PaaS-TA 사용자 포탈 계정 생성
+### <div id='5'/> 2.1.  K-PaaS AP 사용자 포탈 계정 생성
 
-1.  PaaS-TA 사용자 포탈에 접속한다.
+1.  K-PaaS AP 사용자 포탈에 접속한다.
 ![2-1-0]
 
 2.  “로그인” 버튼을 클릭한다. 
@@ -132,7 +132,7 @@
 ![2-1-4]
 
 
-### <div id='6'/> 2.2.  PaaS-TA 사용자 포탈 비밀번호 재설정
+### <div id='6'/> 2.2.  K-PaaS AP 사용자 포탈 비밀번호 재설정
 1.  “Reset password”링크를 클릭한다.
 ![2-2-0]
 
@@ -148,7 +148,7 @@
 ![2-2-2]
 
 
-### <div id='7'/> 2.3.  PaaS-TA 사용자 포탈 로그인 후 조직 생성
+### <div id='7'/> 2.3.  K-PaaS AP 사용자 포탈 로그인 후 조직 생성
 1.  사용자 계정과 비밀번호를 입력한다. “SIGN IN” 버튼을 클릭하여 사용자 포탈에 로그인한다.
 ![2-3-0]
 
@@ -159,14 +159,14 @@
 ![2-3-1]
 
 
-# <div id='8'/> 3. PaaS-TA 사용자 포탈 매뉴얼
+# <div id='8'/> 3. K-PaaS AP 사용자 포탈 매뉴얼
 
-본 장에서는 PaaS-TA 사용자 포탈의 메뉴 구성 및 화면 설명에 대해서 기술하였다.
+본 장에서는 K-PaaS AP 사용자 포탈의 메뉴 구성 및 화면 설명에 대해서 기술하였다.
 
 
-### <div id='9'/> 3.1.  PaaS-TA 사용자 포탈 메뉴 구성
+### <div id='9'/> 3.1.  K-PaaS AP 사용자 포탈 메뉴 구성
 
-PaaS-TA 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 부분과 개발환경 및 서비스를 생성하는 부분, 문서와 나의메뉴 등을 조회하는 정보 조회 부분으로 구성되어 있다.
+K-PaaS AP 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 부분과 개발환경 및 서비스를 생성하는 부분, 문서와 나의메뉴 등을 조회하는 정보 조회 부분으로 구성되어 있다.
 
 <table>
   <tr>
@@ -198,9 +198,9 @@ PaaS-TA 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 �
 </table>
 
 
-### <div id='10'/> 3.2.  PaaS-TA 사용자 포탈 메뉴 설명
+### <div id='10'/> 3.2.  K-PaaS AP 사용자 포탈 메뉴 설명
 
-본 장에서는 PaaS-TA 사용자 포탈의 크게 3가지 분류에 대한 설명을 기술한다.
+본 장에서는 K-PaaS AP 사용자 포탈의 크게 3가지 분류에 대한 설명을 기술한다.
 
 
 ### <div id='11'/> 3.2.1.   대시보드
@@ -220,7 +220,7 @@ PaaS-TA 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 �
 2.  “새 조직 추가” 버튼을 클릭하여 조직 생성 페이지로 이동한다.
 ![2-3-1-1]
 
-     > **"새 조직 추가"** 버튼 활성화는 [PaaS-TA Portal 배포 가이드 문서](https://github.com/PaaS-TA/Guide-3.0-Penne-/blob/master/Use-Guide/portal/PaaS-TA%20Portal%20%EB%B0%B0%ED%8F%AC%20%EA%B0%80%EC%9D%B4%EB%93%9C_v1.1.md#7-1) **2.2. 사용자의 조직 생성 Flag 활성화** 를 참고한다.
+     > **"새 조직 추가"** 버튼 활성화는 [AP Portal 배포 가이드 문서](https://github.com/K-PaaS/Guide-3.0-Penne-/blob/master/Use-Guide/portal/PaaS-TA%20Portal%20%EB%B0%B0%ED%8F%AC%20%EA%B0%80%EC%9D%B4%EB%93%9C_v1.1.md#7-1) **2.2. 사용자의 조직 생성 Flag 활성화** 를 참고한다.
 
 3.  조직명을 입력한다. "조직생성" 버튼을 클릭하여 조직생성을 완료한다. 
 ![2-3-1-2]
@@ -588,7 +588,7 @@ PaaS-TA 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 �
 
 ### <div id='91'/> 3.2.1.3.7.3. 오토 스케일링
 ```diff
-#### PaaS-TA 에서 제공하고있는 모니터링을 미리 설치를 한 후에 진행해야 한다.
+#### K-PaaS AP 에서 제공하고있는 모니터링을 미리 설치를 한 후에 진행해야 한다.
 ```
 ![3-2-1-3-7-1-3]
 1.  ① 앱 레이아웃의 모니터링을 클릭한다. ② 설정 탭 버튼을 클릭한다.
@@ -705,7 +705,7 @@ PaaS-TA 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 �
 1.  좌측 메뉴의 “로그아웃”을 클릭한다.
 ![3-2-7-4-0]
 
-### <div id='82'/> 3.3.6.1.  CAAS Deployments 
+### <div id='82'/> 3.3.6.1.  CAAS Deployments
 1.  CAAS 서비스 설치한 조직의 Deployment 탭을 클릭한다.
 ![cass-dashboard1]
 
@@ -880,4 +880,4 @@ PaaS-TA 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는 �
 [cass-dashboard4]:./images/user-portal/cass-dashboard4.png
 
 
-### [Index](https://github.com/PaaS-TA/Guide/blob/master/README.md) > [AP User Guide](../README.md) > 사용자 포털
+### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP User Guide](../README.md) > 사용자 포털
