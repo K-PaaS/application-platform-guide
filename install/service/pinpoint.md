@@ -379,8 +379,8 @@ Sample Web App은 K-PaaS AP에 App으로 배포가 된다. 배포된 App에 Pinp
 
 - Sample App 묶음 다운로드
 ```
-$ wget https://nextcloud.k-paas.org/index.php/s/BoSbKrcXMmTztSa/download --content-disposition  
-$ unzip ap-service-samples-459dad9.zip  
+$ wget https://nextcloud.k-paas.org/index.php/s/scFDGk9iZBg8apZ/download --content-disposition  
+$ unzip ap-service-samples-db49d1e.zip  
 $ cd ap-service-samples/pinpoint  
 ```
 
