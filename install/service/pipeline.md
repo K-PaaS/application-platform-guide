@@ -351,8 +351,6 @@ K-PaaS AP 운영자 포탈을 통해 배포파이프라인 서비스를 등록 �
 > $ cf service-brokers   
 ```  
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```  
 
@@ -389,26 +387,28 @@ delivery-pipeline-broker       http://10.0.161.22:8080
 
 ```
 Getting service access as admin...
-broker: delivery-pipeline-broker
-   service             plan                          access   orgs
-   delivery-pipeline   delivery-pipeline-shared      none
-   delivery-pipeline   delivery-pipeline-dedicated   none
+
+broker: delivery-pipeline
+   offering   plan                 access   orgs
+   pipeline   pipeline-dedicated   none     
+   pipeline   pipeline-shared      none     
 ```
 서비스 브로커 생성시 디폴트로 접근을 허용하지 않는다.
 
 - 특정 조직에 해당 서비스 접근 허용을 할당하고 접근 서비스 목록을 다시 확인한다. (전체 조직)  
-> $ cf enable-service-access delivery-pipeline   
+> $ cf enable-service-access pipeline   
 ```
-Enabling access to all plans of service delivery-pipeline for all orgs as admin...   
+Enabling access to all plans of service offering pipeline for all orgs as admin...
 OK
 ```
 > $ cf service-access   
 ```                          
 Getting service access as admin...
-broker: delivery-pipeline-broker
-   service             plan                          access   orgs
-   delivery-pipeline   delivery-pipeline-shared      all
-   delivery-pipeline   delivery-pipeline-dedicated   all
+
+broker: delivery-pipeline
+   offering   plan                 access   orgs
+   pipeline   pipeline-dedicated   all      
+   pipeline   pipeline-shared      all  
 ```
 
 ### <div id='3.2'/> 3.2. UAAC Client 등록
@@ -417,7 +417,7 @@ UAAC Client 계정 등록 절차에 대한 순서를 확인한다.
 - 배포 파이프라인 UAAC Client를 등록한다.
 ```
 ### uaac client add 설명
-uaac client add {클라이언트 명} -s {클라이언트 비밀번호} --redirect_URL{대시보드 URL} --scope {퍼미션 범위} --authorized_grant_types {권한 타입} --authorities={권한 퍼미션} --autoapprove={자동승인권한}  
+uaac client add {클라이언트 명} -s {클라이언트 비밀번호} --redirect_uri{대시보드 URL} --scope {퍼미션 범위} --authorized_grant_types {권한 타입} --authorities={권한 퍼미션} --autoapprove={자동승인권한}  
 클라이언트 명 : uaac 클라이언트 명 (pipeclient)  
 클라이언트 비밀번호 : uaac 클라이언트 비밀번호  
 대시보드 URL: 성공적으로 리다이렉션 할 대시보드 URL   
@@ -462,27 +462,38 @@ $ uaac client add pipeclient -s clientsecret --redirect_uri "http://101.55.50.20
 
 **buildpack 등록**  
 
-> $ cf create-buildpack java_buildpack_offline ..\buildpack\java-buildpack-offline-v4.37.zip 3   
+> $ cf create-buildpack java_buildpack_offline java-buildpack-offline-v4.37.zip 3   
+```
+Creating buildpack java_buildpack_offline as admin...
+OK
+
+Uploading buildpack java_buildpack_offline as admin...
+ 794.99 MiB / 794.99 MiB [===================================================================================] 100.00% 7s
+OK
+
+Processing uploaded buildpack java_buildpack_offline...
+OK
+```
 
 **buildpack 등록 확인**  
 
 > $ cf buildpacks 
 ```
-Getting buildpacks...
+Getting buildpacks as admin...
 
-buildpack                position   enabled   locked   filename
-staticfile_buildpack     1          true      false    staticfile_buildpack-cflinuxfs3-v1.4.43.zip
-java_buildpack           2          true      false    java-buildpack-cflinuxfs3-v4.19.1.zip
-java_buildpack_offline   3          true      false    java-buildpack-offline-v4.37.zip
-ruby_buildpack           4          true      false    ruby_buildpack-cflinuxfs3-v1.7.40.zip
-dotnet_core_buildpack    5          true      false    dotnet-core_buildpack-cflinuxfs3-v2.2.12.zip
-nodejs_buildpack         6          true      false    nodejs_buildpack-cflinuxfs3-v1.6.51.zip
-go_buildpack             7          true      false    go_buildpack-cflinuxfs3-v1.8.40.zip
-python_buildpack         8          true      false    python_buildpack-cflinuxfs3-v1.6.34.zip
-php_buildpack            9          true      false    php_buildpack-cflinuxfs3-v4.3.77.zip
-nginx_buildpack          10         true      false    nginx_buildpack-cflinuxfs3-v1.0.13.zip
-r_buildpack              11         true      false    r_buildpack-cflinuxfs3-v1.0.10.zip
-binary_buildpack         12         true      false    binary_buildpack-cflinuxfs3-v1.0.32.zip
+position   name                     stack        enabled   locked   filename
+1          java_buildpack           cflinuxfs3   true      false    java-buildpack-cflinuxfs3-v4.50.zip
+2          staticfile_buildpack     cflinuxfs3   true      false    staticfile_buildpack-cflinuxfs3-v1.5.32.zip
+3          java_buildpack_offline                true      false    java-buildpack-offline-v4.37.zip
+4          ruby_buildpack           cflinuxfs3   true      false    ruby_buildpack-cflinuxfs3-v1.8.56.zip
+5          dotnet_core_buildpack    cflinuxfs3   true      false    dotnet-core_buildpack-cflinuxfs3-v2.3.44.zip
+6          nodejs_buildpack         cflinuxfs3   true      false    nodejs_buildpack-cflinuxfs3-v1.7.72.zip
+7          go_buildpack             cflinuxfs3   true      false    go_buildpack-cflinuxfs3-v1.9.48.zip
+8          python_buildpack         cflinuxfs3   true      false    python_buildpack-cflinuxfs3-v1.7.56.zip
+9          php_buildpack            cflinuxfs3   true      false    php_buildpack-cflinuxfs3-v4.4.64.zip
+10         nginx_buildpack          cflinuxfs3   true      false    nginx_buildpack-cflinuxfs3-v1.1.41.zip
+11         r_buildpack              cflinuxfs3   true      false    r_buildpack-cflinuxfs3-v1.1.31.zip
+12         binary_buildpack         cflinuxfs3   true      false    binary_buildpack-cflinuxfs3-v1.0.45.zip
 ```
 ※ 참고 URL : https://github.com/cloudfoundry/java-buildpack  
 
@@ -544,9 +555,11 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 ```
 
 - 파이프라인 서비스를 신청한다. (K-PaaS AP user_id 설정)
-> cf create-service delivery-pipeline delivery-pipeline-shared pipeline-service -c '{"owner":"{user_id}"}'  
+> cf create-service pipeline pipeline-shared pipeline-service -c '{"owner":"{user_id}"}'  
 ```
 Creating service instance pipeline-service in org system / space dev as admin...
+
+Service instance pipeline-service created.
 OK
 ```
 

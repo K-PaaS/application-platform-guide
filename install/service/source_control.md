@@ -296,8 +296,6 @@ Succeeded
 
 ```
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```
 
@@ -334,23 +332,25 @@ ap-sourcecontrol-broker   http://10.30.107.126:8080
 
 ```
 Getting service access for broker ap-sourcecontrol-broker as admin...
+
 broker: ap-sourcecontrol-broker
-   service                  plan      access   orgs
-   p-ap-sourcecontrol       Default   none
+   offering             plan      access   orgs
+   p-ap-sourcecontrol   Default   none     
 ```
 
 - 형상관리 서비스의 서비스 접근 허용을 설정(전체)하고 서비스 접근 정보를 재확인 한다.  
 > $ cf enable-service-access p-ap-sourcecontrol    
 ```
-Enabling access to all plans of service p-ap-sourcecontrol for all orgs as admin...
+Enabling access to all plans of service offering p-ap-sourcecontrol for all orgs as admin...
 OK
 ```
 > $ cf service-access -b ap-sourcecontrol-broker   
 ```
 Getting service access for broker ap-sourcecontrol-broker as admin...
+
 broker: ap-sourcecontrol-broker
-   service                  plan      access   orgs
-   p-ap-sourcecontrol       Default   all  
+   offering             plan      access   orgs
+   p-ap-sourcecontrol   Default   all
 ```
 
 ### <div id="3.2"/> 3.2. UAA Client 등록

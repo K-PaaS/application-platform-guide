@@ -3,26 +3,26 @@
 ## Table of Contents
 
 1. [문서 개요](#1)  
-  1.1. [목적](#1.1)  
-  1.2. [범위](#1.2)  
-  1.3. [참고자료](#1.3)  
-  
+   1.1. [목적](#1.1)  
+   1.2. [범위](#1.2)  
+   1.3. [참고자료](#1.3)
+
 2. [MySQL 서비스 설치](#2)  
-  2.1. [Prerequisite](#2.1)   
-  2.2. [Stemcell 확인](#2.2)    
-  2.3. [Deployment 다운로드](#2.3)   
-  2.4. [Deployment 파일 수정](#2.4)  
-  2.5. [서비스 설치](#2.5)    
-  2.6. [서비스 설치 확인](#2.6)   
-  
+   2.1. [Prerequisite](#2.1)   
+   2.2. [Stemcell 확인](#2.2)    
+   2.3. [Deployment 다운로드](#2.3)   
+   2.4. [Deployment 파일 수정](#2.4)  
+   2.5. [서비스 설치](#2.5)    
+   2.6. [서비스 설치 확인](#2.6)
+
 3. [MySQL 연동 Sample Web App 설명](#3)  
-  3.1. [서비스 브로커 등록](#3.1)  
-  3.2. [Sample Web App 다운로드](#3.2)  
-  3.3. [K-PaaS에서 서비스 신청](#3.3)  
-  3.4. [Sample Web App 배포 및 MySQL바인드 확인](#3.4)  
+   3.1. [서비스 브로커 등록](#3.1)  
+   3.2. [Sample Web App 다운로드](#3.2)  
+   3.3. [K-PaaS에서 서비스 신청](#3.3)  
+   3.4. [Sample Web App 배포 및 MySQL바인드 확인](#3.4)
 
 4. [MySQL Client 툴 접속](#4)  
-  4.1. [HeidiSQL 설치 및 연결](#4.1)  
+   4.1. [HeidiSQL 설치 및 연결](#4.1)
 
 
 
@@ -33,14 +33,14 @@
 ### <div id='1.1'> 1.1. 목적
 
 본 문서(MySQL 서비스팩 설치 가이드)는 K-PaaS에서 제공되는 서비스팩인 MySQL 서비스팩을 Bosh를 이용하여 설치 하는 방법을 기술하였다.
-	
-	
+
+
 ### <div id='1.2'> 1.2. 범위
 설치 범위는 MySQL 서비스팩을 검증하기 위한 기본 설치를 기준으로 작성하였다.
 
 ### <div id='1.3'> 1.3. 참고자료
 BOSH Document: [http://bosh.io](http://bosh.io)  
-Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundry.org)  
+Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundry.org)
 
 ## <div id='2'> 2. MySQL 서비스 설치
 
@@ -48,12 +48,12 @@ Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundr
 
 본 설치 가이드는 Linux 환경에서 설치하는 것을 기준으로 하였다.  
 서비스팩 설치를 위해서는 먼저 BOSH CLI v2 가 설치 되어 있어야 하고 BOSH 에 로그인이 되어 있어야 한다.  
-BOSH CLI v2 가 설치 되어 있지 않을 경우 먼저 BOSH2.0 설치 가이드 문서를 참고 하여 BOSH CLI v2를 설치를 하고 사용법을 숙지 해야 한다.  
+BOSH CLI v2 가 설치 되어 있지 않을 경우 먼저 BOSH2.0 설치 가이드 문서를 참고 하여 BOSH CLI v2를 설치를 하고 사용법을 숙지 해야 한다.
 
 ### <div id="2.2"/> 2.2. Stemcell 확인
 
 Stemcell 목록을 확인하여 서비스 설치에 필요한 Stemcell이 업로드 되어 있는 것을 확인한다.  
-본 가이드의 Stemcell은 ubuntu-jammy 1.181를 사용한다.  
+본 가이드의 Stemcell은 ubuntu-jammy 1.181를 사용한다.
 
 > $ bosh -e ${BOSH_ENVIRONMENT} stemcells
 
@@ -79,7 +79,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 ### <div id="2.3"/> 2.3. Deployment 다운로드
 
-서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
+서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.
 
 - Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
 
@@ -95,11 +95,11 @@ $ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
-Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
+Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.
 
-- Cloud config 설정 내용을 확인한다.   
+- Cloud config 설정 내용을 확인한다.
 
-> $ bosh -e ${BOSH_ENVIRONMENT} cloud-config   
+> $ bosh -e ${BOSH_ENVIRONMENT} cloud-config
 
 ```
 Using environment '10.0.1.6' as client 'admin'
@@ -161,7 +161,7 @@ Succeeded
 
 - Deployment YAML에서 사용하는 변수 파일을 서버 환경에 맞게 수정한다.
 
-> $ vi ~/workspace/service-deployment/mysql/vars.yml	
+> $ vi ~/workspace/service-deployment/mysql/vars.yml
 ```
 # STEMCELL
 stemcell_os: "ubuntu-jammy"                                     # stemcell os
@@ -198,7 +198,7 @@ mysql_broker_services_plan_b_connection: 100                     # mysql broker 
 ### <div id="2.5"/> 2.5. 서비스 설치
 
 - 서버 환경에 맞추어 Deploy 스크립트 파일의 VARIABLES 설정을 수정하고, Option file을 추가할지 선택한다.  
-     (선택) -o operations/cce.yml (CCE 조치를 적용하여 설치)
+  (선택) -o operations/cce.yml (CCE 조치를 적용하여 설치)
 
 
 > $ vi ~/workspace/service-deployment/mysql/deploy.sh
@@ -217,7 +217,7 @@ bosh -e ${BOSH_ENVIRONMENT} -n -d mysql deploy --no-redact mysql.yml \
     -l vars.yml
 ```
 
-- 서비스를 설치한다.  
+- 서비스를 설치한다.
 ```
 $ cd ~/workspace/service-deployment/mysql  
 $ sh ./deploy.sh  
@@ -226,9 +226,9 @@ $ sh ./deploy.sh
 
 ### <div id="2.6"/> 2.6. 서비스 설치 확인
 
-설치 완료된 서비스를 확인한다.  
+설치 완료된 서비스를 확인한다.
 
-> $ bosh -e ${BOSH_ENVIRONMENT} -d mysql vms  
+> $ bosh -e ${BOSH_ENVIRONMENT} -d mysql vms
 
 ```
 Using environment '10.0.1.6' as client 'admin'
@@ -247,7 +247,7 @@ proxy/2adc060d-a30b-46bc-b5f7-a4c09db1b189                     running        z5
 5 vms
 
 Succeeded
-```	
+```
 
 ## <div id='3'> 3. MySQL 연동 Sample Web App 설명
 
@@ -260,12 +260,10 @@ Mysql 서비스팩 배포가 완료 되었으면 Application에서 서비스 팩
 - 서비스 브로커 목록을 확인한다.
 
 > $ cf service-brokers  
-```  
+```
 Getting service brokers as admin...
-
-name   url
 No service brokers found
-```   
+```
 
 - 서비스 브로커 등록 명령어
 ```
@@ -302,10 +300,11 @@ mysql-service-broker      http://10.30.107.167:8080
 ```  
 $ cf service-access
 Getting service access as admin...
+
 broker: mysql-service-broker
-   service    plan                 access   orgs
-   Mysql-DB   Mysql-Plan1-10con    none
-   Mysql-DB   Mysql-Plan2-100con   none
+   offering   plan                 access   orgs
+   Mysql-DB   Mysql-Plan1-10con    none     
+   Mysql-DB   Mysql-Plan2-100con   none     
 ```  
 서비스 브로커 생성시 디폴트로 접근을 허용하지 않는다.
 
@@ -313,16 +312,17 @@ broker: mysql-service-broker
 
 > $ cf enable-service-access Mysql-DB  
 ```
-Enabling access to all plans of service Mysql-DB for all orgs as admin...
+Enabling access to all plans of service offering Mysql-DB for all orgs as admin...
 OK
 ```
 > $ cf service-access   
 ```
 Getting service access as admin...
+
 broker: mysql-service-broker
-   service    plan                 access   orgs
-   Mysql-DB   Mysql-Plan1-10con    all
-   Mysql-DB   Mysql-Plan2-100con   all
+   offering   plan                 access   orgs
+   Mysql-DB   Mysql-Plan1-10con    all     
+   Mysql-DB   Mysql-Plan2-100con   all 
 ```  
 
 ### <div id='3.2'> 3.2. Sample Web App 다운로드
@@ -334,7 +334,7 @@ Sample App은 K-PaaS AP에 App으로 배포되며 App구동시 Bind 된 MySQL �
 ```
 $ wget https://nextcloud.k-paas.org/index.php/s/scFDGk9iZBg8apZ/download --content-disposition  
 $ unzip ap-service-samples-db49d1e.zip  
-$ cd ap-service-samples/mysql  
+$ cd ap-service-samples/mysql
 ```
 
 ### <div id='3.3'> 3.3. K-PaaS에서 서비스 신청
@@ -346,13 +346,12 @@ Sample App에서 MySQL 서비스를 사용하기 위해서는 서비스 신청(P
 
 > $ cf marketplace   
 ```  
-Getting services from marketplace in org org system / space dev as admin...
-OK
+Getting all service offerings from marketplace in org system / space dev as admin...
 
-service      plans                                    description
-Mysql-DB     Mysql-Plan1-10con, Mysql-Plan2-100con*   A simple mysql implementation
+offering   plans                                   description                     broker
+Mysql-DB   Mysql-Plan1-10con, Mysql-Plan2-100con   A simple mysql implementation   mysql-service-broker
 
-TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
+TIP: Use 'cf marketplace -e SERVICE_OFFERING' to view descriptions of individual plans of a given service offering.
 ```  
 
 - 서비스 인스턴스 신청 명령어
@@ -368,21 +367,20 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 
 > $ cf create-service Mysql-DB Mysql-Plan2-100con mysql-service-instance   
 ```  
-Creating service instance mysql-service-instance in org org system / space dev as admin...
-OK
+Creating service instance mysql-service-instance in org system / space dev as admin...
 
-Attention: The plan `Mysql-Plan2-100con` of service `Mysql-DB` is not free.  The instance `mysql-service-instance` will incur a cost.  Contact your administrator if you think this is in error.
+Service instance mysql-service-instance created.
+OK
 ```  
 
 - 생성된 MySQL 서비스 인스턴스를 확인한다.  
 
 > $ cf services 
 ```  
-Getting services in org system / space dev as admin...
-OK
+Getting service instances in org system / space dev as admin...
 
-name                      service    plan                 bound apps            last operation
-mysql-service-instance    Mysql-DB   Mysql-Plan2-100con                         create succeeded
+name                     offering   plan                 bound apps   last operation     broker                 upgrade available
+mysql-service-instance   Mysql-DB   Mysql-Plan2-100con                create succeeded   mysql-service-broker   no
 ```  
 
 ### <div id='3.4'> 3.4. Sample Web App 배포 및 MySQL바인드 확인
@@ -402,10 +400,10 @@ applications:
   buildpack: java_buildpack
   path: mysql-sample-app.war
   env:
-    mysql_datasource_driver-class-name: com.mysql.cj.jdbc.Driver
-    mysql_datasource_jdbc-url: jdbc:\${vcap.services.mysql-service-instance.credentials.uri}
-    mysql_datasource_username: \${vcap.services.mysql-service-instance.credentials.username}
-    mysql_datasource_password: \${vcap.services.mysql-service-instance.credentials.password}
+  mysql_datasource_driver-class-name: com.mysql.cj.jdbc.Driver
+  mysql_datasource_jdbc-url: jdbc:\${vcap.services.mysql-service-instance.credentials.uri}
+  mysql_datasource_username: \${vcap.services.mysql-service-instance.credentials.username}
+  mysql_datasource_password: \${vcap.services.mysql-service-instance.credentials.password}
 
 ```
 
@@ -416,7 +414,7 @@ Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/mysql/m
 Manifest applied
 Packaging files to upload...
 Uploading files...
- 26.48 MiB / 26.48 MiB [================================================================================================================] 100.00% 1s
+26.48 MiB / 26.48 MiB [================================================================================================================] 100.00% 1s
 
 Waiting for API to complete processing files...
 
@@ -425,14 +423,14 @@ requested state:   stopped
 routes:            mysql-sample-app.ap.kr
 last uploaded:     
 stack:             
-buildpacks:        
+buildpacks:
 
 type:           web
 sidecars:       
 instances:      0/1
 memory usage:   1024M
-     state   since                  cpu    memory   disk     details
-#0   down    2021-11-22T05:21:57Z   0.0%   0 of 0   0 of 0   
+state   since                  cpu    memory   disk     details
+#0   down    2021-11-22T05:21:57Z   0.0%   0 of 0   0 of 0
 ```  
 	
 - Sample Web App에서 생성한 서비스 인스턴스 바인드 신청을 한다.
@@ -440,8 +438,10 @@ memory usage:   1024M
 > $ cf bind-service mysql-sample-app mysql-service-instance  
 
 ```
-Binding service mysql-service-instance to app mysql-sample-app in org system / space dev as admin...
+Binding service instance mysql-service-instance to app mysql-sample-app in org system / space dev as admin...
 OK
+
+TIP: Use 'cf restage mysql-sample-app' to ensure your env variable changes take effect
 ```
 
 App 구동 시 Service와의 통신을 위하여 보안 그룹을 추가한다.
@@ -451,11 +451,11 @@ App 구동 시 Service와의 통신을 위하여 보안 그룹을 추가한다.
 ```
 ## mysql의 proxy IP를 destination에 설정
 [
-  {
-    "protocol": "tcp",
-    "destination": "<proxy_ip>",
-    "ports": "13307"
-  }
+{
+"protocol": "tcp",
+"destination": "<proxy_ip>",
+"ports": "13307"
+}
 ]
 ```
 <br>
@@ -467,7 +467,7 @@ App 구동 시 Service와의 통신을 위하여 보안 그룹을 추가한다.
 ```
 Creating security group mysql as admin...
 
-OK		
+OK
 ```
 
 <br>
@@ -476,7 +476,7 @@ OK
 > $ cf bind-running-security-group mysql  
 ```
 Binding security group mysql to running as admin...
-OK		
+OK
 ```
 	
 - App을 재기동 한다.  
@@ -489,39 +489,53 @@ Restarting app mysql-sample-app in org system / space dev as admin...
 Staging app and tracing logs...
    Downloading java_buildpack...
    Downloaded java_buildpack
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd creating container for instance 678aa272-945b-41a9-8924-0782891d0cc4
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd successfully created container for instance 678aa272-945b-41a9-8924-0782891d0cc4
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c creating container for instance b9b1470a-c9ca-41a2-b42a-279267ca14bb
+   Security group rules were updated
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c successfully created container for instance b9b1470a-c9ca-41a2-b42a-279267ca14bb
    Downloading app package...
-   Downloaded app package (30.5M)
-
+   Downloaded app package (33.6M)
 ........
 ........
+Instances starting...
 Instances starting...
 Instances starting...
 
 name:              mysql-sample-app
 requested state:   started
 routes:            mysql-sample-app.ap.kr
-last uploaded:     Mon 22 Nov 05:23:48 UTC 2021
+last uploaded:     Wed 11 Oct 14:18:35 KST 2023
 stack:             cflinuxfs3
 buildpacks:        
-	name             version                                                             detect output   buildpack name
-	java_buildpack   v4.37-https://github.com/cloudfoundry/java-buildpack.git#ab2b4512   java            java
+	name             version                                                         detect output   buildpack name
+	java_buildpack   v4.50-git@github.com:cloudfoundry/java-buildpack.git#5fe41f89   java            java
+
+type:           web
+sidecars:       
+instances:      1/1
+memory usage:   1024M
+     state     since                  cpu    memory    disk      details
+#0   running   2023-10-11T05:18:54Z   0.0%   0 of 1G   0 of 1G   
+
+type:           task
+sidecars:       
+instances:      0/0
+memory usage:   1024M
+There are no running instances of this process.
 ```  
 
-- App이 정상적으로 MySQL 서비스를 사용하는지 확인한다.  
+- App이 정상적으로 MySQL 서비스를 사용하는지 확인한다.
 
-![update_mysql_vsphere_34]  
+![update_mysql_vsphere_34]
 
 ## <div id='4'> 4. MySQL Client 툴 접속
 
-Application에 바인딩 된 MySQL 서비스 연결정보는 Private IP로 구성되어 있기 때문에 MySQL Client 툴에서 직접 연결할수 없다. 따라서 MySQL Client 툴에서 SSH 터널, Proxy 터널 등을 제공하는 툴을 사용해서 연결하여야 한다. 본 가이드는 SSH 터널을 이용하여 연결 하는 방법을 제공하며 MySQL Client 툴로써는 오픈 소스인 HeidiSQL로 가이드한다. HeidiSQL 에서 접속하기 위해서 먼저 SSH 터널링 할수 있는 VM 인스턴스를 생성해야한다. 이 인스턴스는 SSH로 접속이 가능해야 하고 접속 후 Open PaaS 에 설치한 서비스팩에 Private IP 와 해당 포트로 접근이 가능하도록 시큐리티 그룹을 구성해야 한다. 이 부분은 vSphere관리자 및 OpenPaaS 운영자에게 문의하여 구성한다.  
+Application에 바인딩 된 MySQL 서비스 연결정보는 Private IP로 구성되어 있기 때문에 MySQL Client 툴에서 직접 연결할수 없다. 따라서 MySQL Client 툴에서 SSH 터널, Proxy 터널 등을 제공하는 툴을 사용해서 연결하여야 한다. 본 가이드는 SSH 터널을 이용하여 연결 하는 방법을 제공하며 MySQL Client 툴로써는 오픈 소스인 HeidiSQL로 가이드한다. HeidiSQL 에서 접속하기 위해서 먼저 SSH 터널링 할수 있는 VM 인스턴스를 생성해야한다. 이 인스턴스는 SSH로 접속이 가능해야 하고 접속 후 Open PaaS 에 설치한 서비스팩에 Private IP 와 해당 포트로 접근이 가능하도록 시큐리티 그룹을 구성해야 한다. 이 부분은 vSphere관리자 및 OpenPaaS 운영자에게 문의하여 구성한다.
 
 ### <div id='4.1'> 4.1. HeidiSQL 설치 및 연결
 
-HeidiSQL 프로그램은 무료로 사용할 수 있는 오픈소스 소프트웨어이다.  
+HeidiSQL 프로그램은 무료로 사용할 수 있는 오픈소스 소프트웨어이다.
 
-- HeidiSQL을 다운로드 하기 위해 아래 URL로 이동하여 설치파일을 다운로드 한다.  
+- HeidiSQL을 다운로드 하기 위해 아래 URL로 이동하여 설치파일을 다운로드 한다.
 
 >[http://www.heidisql.com/download.php](http://www.heidisql.com/download.php)
 
@@ -555,7 +569,7 @@ HeidiSQL 프로그램은 무료로 사용할 수 있는 오픈소스 소프트�
 
 <br>
 
-- 설치 완료 후 시작메뉴에 HeidiSQL 바로가기 아이콘의 이름을 설정하는 과정이다.  
+- 설치 완료 후 시작메뉴에 HeidiSQL 바로가기 아이콘의 이름을 설정하는 과정이다.
 >Next 버튼을 클릭하여 다음 과정을 진행한다.
 
 >![mysql_vsphere_4.1.06]
@@ -564,10 +578,10 @@ HeidiSQL 프로그램은 무료로 사용할 수 있는 오픈소스 소프트�
 
 - 체크박스가 4개가 있다. 아래의 경우를 고려하여 체크 및 해제를 한다.
 >
-  바탕화면에 바로가기 아이콘을 생성할 경우  
-  sql확장자를 HeidiSQL 프로그램으로 실행할 경우  
-  heidisql 공식 홈페이지를 통해 자동으로 update check를 할 경우  
-  heidisql 공식 홈페이지로 자동으로 버전을 전송할 경우
+바탕화면에 바로가기 아이콘을 생성할 경우  
+sql확장자를 HeidiSQL 프로그램으로 실행할 경우  
+heidisql 공식 홈페이지를 통해 자동으로 update check를 할 경우  
+heidisql 공식 홈페이지로 자동으로 버전을 전송할 경우
 
 > 체크박스에 체크 설정/해제를 완료했다면 Next 버튼을 클릭한다.
 
@@ -631,14 +645,14 @@ HeidiSQL 프로그램은 무료로 사용할 수 있는 오픈소스 소프트�
 
 <br>
 
-- 우측 화면에 쿼리 탭을 클릭하여 Query문을 작성한 후 실행 버튼(삼각형)을 클릭한다.  
+- 우측 화면에 쿼리 탭을 클릭하여 Query문을 작성한 후 실행 버튼(삼각형)을 클릭한다.
 
 >쿼리문에 이상이 없다면 정상적으로 결과를 얻을 수 있을 것이다.
 
 >![mysql_vsphere_4.1.17]
-	
-	
-	
+
+
+
 [mysql_vsphere_1.3.01]:./images/mysql/mysql_vsphere_1.3.01.png
 [mysql_vsphere_2.2.01]:./images/mysql/mysql_vsphere_2.2.01.png
 [mysql_vsphere_2.2.02]:./images/mysql/mysql_vsphere_2.2.02.png

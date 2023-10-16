@@ -312,8 +312,6 @@ Pinpoint 서비스팩 배포가 완료 되었으면 Application에서 서비스 
 > $ cf service-brokers
 ```
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```
 
@@ -396,11 +394,12 @@ Sample Web App에서 Pinpoint 서비스를 사용하기 위해서는 서비스 �
 > $ cf marketplace
 
 ```
-Getting services from marketplace in org org / space space as admin...
-OK
+ Getting all service offerings from marketplace in org system / space dev as admin...
 
-service    plans               description
-Pinpoint   Pinpoint_standard   A simple pinpoint implementation
+offering   plans               description                        broker
+Pinpoint   Pinpoint_standard   A simple pinpoint implementation   pinpoint-service-broker
+
+TIP: Use 'cf marketplace -e SERVICE_OFFERING' to view descriptions of individual plans of a given service offering.
 ```
 
 - 서비스 인스턴스 신청 명령어
@@ -417,7 +416,9 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 > $ cf create-service Pinpoint Pinpoint_standard PS1
 
 ```
-Creating service instance PS1 in org org / space space as admin...
+Creating service instance PS1 in org system / space dev as admin...
+
+Service instance PS1 created.
 OK
 ```
 
@@ -425,11 +426,10 @@ OK
 
 > $ cf services
 ```
-Getting services in org system / space space as admin...
-OK
+Getting service instances in org system / space dev as admin...
 
-name   service      plan                 bound apps   last
-PS1    Pinpoint     Pinpoint_standard                 create succeeded
+name   offering   plan                bound apps   last operation     broker                    upgrade available
+PS1    Pinpoint   Pinpoint_standard                create succeeded   pinpoint-service-broker   no
 ```
 
 ### <div id='3.4'> 3.4. Sample Web App에 서비스 바인드 신청 및 App 확인
@@ -474,17 +474,31 @@ OK
 
 > $ cf push --no-start 
 ```  
+Pushing app spring-music-pinpoint to org system / space dev as admin...
 Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/pinpoint/manifest.yml...
+
+Updating with these attributes...
+  ---
+  applications:
++ - name: spring-music-pinpoint
+    disk-quota: 1G
+    path: /home/ubuntu/workspace/samples/ap-service-samples/pinpoint/spring-music-1.0.jar
+    memory: 1G
++   default-route: true
++   buildpacks:
++   - pinpoint_buildpack
++   env:
++     JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
 Manifest applied
 Packaging files to upload...
 Uploading files...
- 48.91 MiB / 48.91 MiB [=================================================================================================
+ 45.25 MiB / 45.25 MiB [=====================================================================================] 100.00% 1s
 
 Waiting for API to complete processing files...
 
 name:              spring-music-pinpoint
 requested state:   stopped
-routes:            spring-music-pinpoint.apcloud.shop
+routes:            spring-music-pinpoint.ap.kr
 last uploaded:     
 stack:             
 buildpacks:        
@@ -494,7 +508,8 @@ sidecars:
 instances:      0/1
 memory usage:   1024M
      state   since                  cpu    memory   disk     details
-#0   down    2021-11-22T05:26:04Z   0.0%   0 of 0   0 of 0   
+#0   down    2023-10-12T00:28:00Z   0.0%   0 of 0   0 of 0   
+#0   down    2023-10-12T00:28:00Z   0.0%   0 of 0   0 of 0   
 ```  
 	
 - Sample Web App에서 생성한 서비스 인스턴스 바인드 신청을 한다.
@@ -502,8 +517,9 @@ memory usage:   1024M
 > $ cf bind-service spring-music-pinpoint PS1 -c '{"application_name":"spring-music-pinpoint"}'
 	
 ```	
-Binding service PS1 to app spring-music-pinpoint in org org / space space as admin...
+Binding service instance PS1 to app spring-music-pinpoint in org system / space dev as admin...
 OK
+
 TIP: Use 'cf restage spring-music-pinpoint' to ensure your env variable changes take effect
 ```
 	
@@ -535,7 +551,9 @@ OK
 > $ cf bind-running-security-group pinpoint  
 ```
 Binding security group pinpoint to running as admin...
-OK		
+OK
+
+TIP: Changes require an app restart (for running) or restage (for staging) to apply to existing applications.
 ```
 
 - 바인드가 적용되기 위해서 App을 restage한다.
@@ -543,14 +561,18 @@ OK
 > $ cf restage spring-music-pinpoint
 
 ```	
+This action will cause app downtime.
+
+Restaging app spring-music-pinpoint in org system / space dev as admin...
+
 Staging app and tracing logs...
    Downloading pinpoint_buildpack...
    Downloaded pinpoint_buildpack (14M)
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd creating container for instance 89996fa5-3197-4a9c-8304-9a5b288c74ee
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd successfully created container for instance 89996fa5-3197-4a9c-8304-9a5b288c
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c creating container for instance ce2873af-053b-4a83-90ab-40e3943ecb80
+   Security group rules were updated
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c successfully created container for instance ce2873af-053b-4a83-90ab-40e3943ecb80
    Downloading app package...
-   Downloaded app package (50M)
-
+   Downloaded app package (49.9M)
 ........
 ........
 	
@@ -560,7 +582,7 @@ Instances starting...
 name:              spring-music-pinpoint
 requested state:   started
 routes:            spring-music-pinpoint.ap.kr
-last uploaded:     Mon 22 Nov 05:28:14 UTC 2021
+last uploaded:     Thu 12 Oct 09:31:39 KST 2023
 stack:             cflinuxfs3
 buildpacks:        
 	name                 version   detect output   buildpack name
@@ -570,8 +592,8 @@ type:           web
 sidecars:       
 instances:      1/1
 memory usage:   1024M
-     state     since                  cpu    memory        disk           details
-#0   running   2021-11-22T05:28:37Z   0.0%   47.5M of 1G   177.9M of 1G   
+     state     since                  cpu    memory    disk      details
+#0   running   2023-10-12T00:31:59Z   0.0%   0 of 1G   0 of 1G   
 
 type:           task
 sidecars:       

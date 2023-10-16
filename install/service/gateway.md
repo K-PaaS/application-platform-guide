@@ -293,8 +293,6 @@ K-PaaS AP 운영자 포탈을 통해 서비스를 등록하고 공개하면, K-P
 
 ```
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```
 

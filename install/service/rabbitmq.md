@@ -327,8 +327,6 @@ RabbitMQ 서비스팩 배포가 완료 되었으면 Application에서 서비스 
 > $ cf service-brokers
 ```
 Getting service brokers as admin...
-  
-name   url
 No service brokers found
 ```
 
@@ -372,9 +370,10 @@ rabbitmq-service-broker http://10.30.107.191:4567
 
 ```
 Getting service access as admin...
+
 broker: rabbitmq-service-broker
-   service      plan       access   orgs
-   rabbitmq     standard   none      
+   offering   plan       access   orgs
+   rabbitmq   standard   none     
 ```
 
 - 서비스 브로커 등록시 최초에는 접근을 허용하지 않는다. 따라서 access는 none으로 설정된다.
@@ -384,16 +383,17 @@ broker: rabbitmq-service-broker
 > $ cf enable-service-access rabbitmq 
 
 ```
-Enabling access to all plans of service rabbitmq for all orgs as admin...
+Enabling access to all plans of service offering rabbitmq for all orgs as admin...
 OK
 ```
 
 > $ cf service-access
 ```
 Getting service access as admin...
+
 broker: rabbitmq-service-broker
-   service      plan       access   orgs
-   rabbitmq     standard   all      
+   offering   plan       access   orgs
+   rabbitmq   standard   all         
 ```
 
 ### <div id='3.2'> 3.2. Sample App 다운로드
@@ -417,13 +417,12 @@ Sample App에서 RabbitMQ 서비스를 사용하기 위해서는 서비스 신�
 > $ cf marketplace
 
 ```
-getting services from marketplace in org system / space dev as admin...
-OK
+Getting all service offerings from marketplace in org system / space dev as admin...
 
-service      plans         description                                                                           broker
-rabbitmq     standard      RabbitMQ is a robust and scalable high-performance multi-protocol messaging broker.   rabbitmq-service-broker
+offering   plans          description                                                                                                                   broker
+rabbitmq   standard       RabbitMQ service to provide shared instances of this high-performance multi-protocol messaging broker.                        rabbitmq-service-broker
 
-TIP: Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
+TIP: Use 'cf marketplace -e SERVICE_OFFERING' to view descriptions of individual plans of a given service offering.
 ```
 <br>
 
@@ -451,10 +450,10 @@ OK
 > $ cf services
 
 ```
-Getting services in org system / space dev as admin...
+Getting service instances in org system / space dev as admin...
 
-name                  service      plan       bound apps   last operation     broker                    upgrade available
-my_rabbitmq_service   rabbitmq     standard                create succeeded   rabbitmq-service-broker   
+name                  offering   plan           bound apps          last operation     broker                    upgrade available
+my_rabbitmq_service   rabbitmq   standard                           create succeeded   rabbitmq-service-broker   no
 ```
 
 <br>
@@ -481,11 +480,22 @@ applications:
 
 > $ cf push --no-start 
 ```  
+Pushing app rabbit-example-app to org system / space dev as admin...
 Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/rabbitmq/manifest.yml...
+
+Updating with these attributes...
+  ---
+  applications:
++ - name: rabbit-example-app
+    path: /home/ubuntu/workspace/samples/ap-service-samples/rabbitmq
++   default-route: true
++   buildpacks:
++   - ruby_buildpack
++   command: thin -R config.ru start
 Manifest applied
 Packaging files to upload...
 Uploading files...
- 3.16 MiB / 3.16 MiB [===================================================================================================
+ 18.25 KiB / 18.25 KiB [=================================================================] 100.00% 1s
 
 Waiting for API to complete processing files...
 
@@ -502,7 +512,7 @@ instances:       0/1
 memory usage:    1024M
 start command:   thin -R config.ru start
      state   since                  cpu    memory   disk     details
-#0   down    2021-11-22T05:32:24Z   0.0%   0 of 0   0 of 0   
+#0   down    2023-10-12T08:05:15Z   0.0%   0 of 0   0 of 0 
 
 ```  
   
@@ -511,8 +521,10 @@ start command:   thin -R config.ru start
 > $ cf bind-service rabbit-example-app my_rabbitmq_service 
 
 ```	
-Binding service my_rabbitmq_service to app rabbit-example-app in org system / space dev as admin...
+Binding service instance my_rabbitmq_service to app rabbit-example-app in org system / space dev as admin...
 OK
+
+TIP: Use 'cf restage rabbit-example-app' to ensure your env variable changes take effect
 ```
 
 App 구동 시 Service와의 통신을 위하여 보안 그룹을 추가한다.
@@ -555,12 +567,15 @@ Restarting app rabbit-example-app in org system / space dev as admin...
 
 Staging app and tracing logs...
    Downloading ruby_buildpack...
-   Downloaded ruby_buildpack (5.2M)
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd creating container for instance 934daf45-8787-4d8a-86fd-bd6dbde78f30
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd successfully created container for instance 934daf45-8787-4d8a-86fd-bd6dbde7
+   Downloaded ruby_buildpack
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c creating container for instance 17d0d71e-75d3-48f4-b7a2-de1f31702ae4
+   Security group rules were updated
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c successfully created container for instance 17d0d71e-75d3-48f4-b7a2-de1f31702ae4
    Downloading app package...
-   Downloaded app package (3.2M)
-   -----> Ruby Buildpack version 1.8.37
+   Downloaded app package (18.3K)
+   -----> Ruby Buildpack version 1.8.56
+   -----> Supplying Ruby
+   -----> Installing bundler 1.17.3
 
 
 ........
@@ -571,18 +586,18 @@ Instances starting...
 name:              rabbit-example-app
 requested state:   started
 routes:            rabbit-example-app.ap.kr
-last uploaded:     Mon 22 Nov 05:34:27 UTC 2021
+last uploaded:     Thu 12 Oct 17:07:34 KST 2023
 stack:             cflinuxfs3
 buildpacks:        
 	name             version   detect output   buildpack name
-	ruby_buildpack   1.8.37    ruby            ruby
+	ruby_buildpack   1.8.56    ruby            ruby
 
 type:           web
 sidecars:       
 instances:      1/1
 memory usage:   1024M
-     state     since                  cpu    memory   disk     details
-#0   running   2021-11-22T05:34:36Z   0.0%   0 of 0   0 of 0   
+     state     since                  cpu    memory    disk      details
+#0   running   2023-10-12T08:07:47Z   0.0%   0 of 1G   0 of 1G   
 ```  
 
 
