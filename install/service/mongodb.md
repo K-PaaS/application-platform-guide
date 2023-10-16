@@ -300,8 +300,6 @@ Mongodb 서비스팩 배포가 완료 되었으면 Application에서 서비스 �
 
 ```
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```
 
@@ -394,13 +392,12 @@ Sample Web App에서 Mongodb 서비스를 사용하기 위해서는 서비스 �
 > $ cf marketplace
 
 ```  
-Getting services from marketplace in org system / space dev as admin...
-OK
+Getting all service offerings from marketplace in org system / space dev as admin...
 
-service      plans          description
-Mongo-DB     default-plan   A simple mongo implementation
+offering   plans          description                     broker
+Mongo-DB   default-plan   A simple mongo implementation   mongodb-shard-service-broker
 
-TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
+TIP: Use 'cf marketplace -e SERVICE_OFFERING' to view descriptions of individual plans of a given service offering.
 ```  
 
 <br>
@@ -419,6 +416,8 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 > $ cf create-service Mongo-DB default-plan mongodb-service-instance 
 ```  
 Creating service instance mongodb-service-instance in org system / space dev as admin...
+
+Service instance mongodb-service-instance created.
 OK
 ```  
 
@@ -428,11 +427,10 @@ OK
 
 > $ cf services 
 ```  
-Getting services in org system / space dev as admin...
-OK
+Getting service instances in org system / space dev as admin...
 
-name                      service    plan                 bound apps            last operation
-mongodb-service-instance  Mongo-DB   default-plan                               create succeeded
+name                       offering   plan           bound apps   last operation     broker                         upgrade available
+mongodb-service-instance   Mongo-DB   default-plan                create succeeded   mongodb-shard-service-broker   no
 ```  
 
 <br>
@@ -458,11 +456,21 @@ applications:
 - --no-start 옵션으로 App을 배포한다.  
 > $ cf push --no-start 
 ```  
+Pushing app hello-spring-mongodb to org system / space dev as admin...
 Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/mongodb/manifest.yml...
+
+Updating with these attributes...
+  ---
+  applications:
++ - name: hello-spring-mongodb
++   instances: 1
+    path: /home/ubuntu/workspace/samples/ap-service-samples/mongodb/hello-spring-mongodb.war
+    memory: 1G
++   default-route: true
 Manifest applied
 Packaging files to upload...
 Uploading files...
- 17.06 MiB / 17.06 MiB [=================================================================================================
+ 17.16 MiB / 17.16 MiB [========================================================================================================] 100.00% 1s
 
 Waiting for API to complete processing files...
 
@@ -478,7 +486,7 @@ sidecars:
 instances:      0/1
 memory usage:   1024M
      state   since                  cpu    memory   disk     details
-#0   down    2021-11-22T05:13:12Z   0.0%   0 of 0   0 of 0   
+#0   down    2023-10-11T04:25:42Z   0.0%   0 of 0   0 of 0   
 ```  
   
 - Sample Web App에서 생성한 서비스 인스턴스 바인드 신청을 한다.
@@ -486,7 +494,7 @@ memory usage:   1024M
 > $ cf bind-service hello-spring-Mongodb mongodb-service-instance 
 
 ```
-Binding service mongodb-service-instance to app hello-spring-Mongodb in org system / space dev as admin...
+Binding service instance mongodb-service-instance to app hello-spring-Mongodb in org system / space dev as admin...
 OK
 ```
 
@@ -531,31 +539,35 @@ Restarting app hello-spring-mongodb in org system / space dev as admin...
 
 Staging app and tracing logs...
    Downloading binary_buildpack...
-   Downloading nodejs_buildpack...
-   Downloading php_buildpack...
-   Downloading nginx_buildpack...
+   Downloading ruby_buildpack...
+   Downloading java_buildpack...
+   Downloading dotnet_core_buildpack...
 
 ........
 ........
 Instances starting...
 Instances starting...
-
 name:              hello-spring-mongodb
 requested state:   started
 routes:            hello-spring-mongodb.ap.kr
-last uploaded:     Mon 22 Nov 05:19:59 UTC 2021
+last uploaded:     Wed 11 Oct 13:28:49 KST 2023
 stack:             cflinuxfs3
 buildpacks:        
-	name             version                                                             detect output   buildpack na
-	java_buildpack   v4.37-https://github.com/cloudfoundry/java-buildpack.git#ab2b4512   java            java
+	name             version                                                         detect output   buildpack name
+	java_buildpack   v4.50-git@github.com:cloudfoundry/java-buildpack.git#5fe41f89   java            java
 
 type:           web
 sidecars:       
 instances:      1/1
 memory usage:   1024M
-     state     since                  cpu    memory    disk       details
-#0   running   2021-11-22T05:20:19Z   0.0%   0 of 1G   8K of 1G   
+     state     since                  cpu    memory    disk      details
+#0   running   2023-10-11T04:29:04Z   0.0%   0 of 1G   0 of 1G   
 
+type:           task
+sidecars:       
+instances:      0/0
+memory usage:   1024M
+There are no running instances of this process.
 ```  
 
 

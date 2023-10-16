@@ -326,7 +326,7 @@ OK
 Getting service brokers as admin...
 
 name                           url
-app-lifecycle-service-broker   http://10.0.81.123:8081
+app-lifecycle-service-broker   http://10.0.81.123:8080
 ```
 
 - 라이프사이클 관리 서비스의 서비스 접근 정보를 확인한다.

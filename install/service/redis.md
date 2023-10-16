@@ -283,8 +283,6 @@ Redis 서비스팩 배포가 완료 되었으면 Application에서 서비스 팩
 > $ cf service-brokers
 ```
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```
 
@@ -368,9 +366,12 @@ Sample App에서 Redis 서비스를 사용하기 위해서는 서비스 신청(P
 > $ cf marketplace
 
 ```
-OK
-service   plans          description
-redis     dedicated-vm   A Application Platform source control service for application development.provision parameters : parameters {owner : owner}
+Getting all service offerings from marketplace in org system / space dev as admin...
+
+offering   plans          description                                                                                                                   broker
+redis      dedicated-vm   A Application Platform source control service for application development.provision parameters : parameters {owner : owner}   on-demand-redis-service
+
+TIP: Use 'cf marketplace -e SERVICE_OFFERING' to view descriptions of individual plans of a given service offering.
 ```
 
 <br>
@@ -406,42 +407,70 @@ Create in progress. Use 'cf services' or 'cf service redis' to check operation s
 Showing info of service redis in org system / space dev as admin...
 
 name:            redis
-service:         redis
-tags:            
+guid:            671f4bbc-3453-4f51-a523-a7b2bf00527c
+type:            managed
+broker:          on-demand-redis-service
+offering:        redis
 plan:            dedicated-vm
-description:     A Application Platform source control service for application development.provision parameters : parameters {owner : owner}
+tags:            
+offering tags:   dedicated-vm
+description:     A Application Platform source control service for application development.provision
+                 parameters : parameters {owner : owner}
 documentation:   https://k-paas.or.kr
-dashboard:       10.30.255.26
+dashboard url:   10.0.0.68
 
-Showing status of last operation from service redis...
+Showing status of last operation:
+   status:    create in progress
+   message:   
+   started:   2023-10-12T07:39:04Z
+   updated:   2023-10-12T07:39:04Z
 
-status:    create in progress
-message:   
-started:   2019-07-05T05:58:13Z
-updated:   2019-07-05T05:58:16Z
+Showing bound apps:
+   There are no bound apps for this service instance.
 
-There are no bound apps for this service.
+Showing sharing info:
+   This service instance is not currently being shared.
+
+   The "service_instance_sharing" feature flag is disabled for this Cloud Foundry platform.
+   Service instance sharing is disabled for this service offering.
+
+Showing upgrade status:
+   Upgrades are not supported by this broker.
 ```
 - 생성된 Redis 서비스 인스턴스의 status가 create succeeded가 된것을 확인한다.
 ```
 Showing info of service redis in org system / space dev as admin...
 
 name:            redis
-service:         redis
-tags:            
+guid:            671f4bbc-3453-4f51-a523-a7b2bf00527c
+type:            managed
+broker:          on-demand-redis-service
+offering:        redis
 plan:            dedicated-vm
-description:     A Application Platform source control service for application development.provision parameters : parameters {owner : owner}
+tags:            
+offering tags:   dedicated-vm
+description:     A Application Platform source control service for application development.provision
+                 parameters : parameters {owner : owner}
 documentation:   https://k-paas.or.kr
-dashboard:       10.30.255.26
+dashboard url:   10.0.0.68
 
-Showing status of last operation from service redis...
+Showing status of last operation:
+   status:    create succeeded
+   message:   test
+   started:   2023-10-12T07:51:08Z
+   updated:   2023-10-12T07:51:08Z
 
-status:    create succeeded
-message:   test
-started:   2019-07-05T05:58:13Z
-updated:   2019-07-05T06:01:20Z
+Showing bound apps:
+   There are no bound apps for this service instance.
 
-There are no bound apps for this service.
+Showing sharing info:
+   This service instance is not currently being shared.
+
+   The "service_instance_sharing" feature flag is disabled for this Cloud Foundry platform.
+   Service instance sharing is disabled for this service offering.
+
+Showing upgrade status:
+   Upgrades are not supported by this broker.
 ```
 
 <br>
@@ -457,15 +486,13 @@ There are no bound apps for this service.
 > $ cf security-groups  
 ```
 Getting security groups as admin...
-OK
 
-     name                                         organization   space   lifecycle
-#0   abacus                                       abacus-org     dev     running
-#1   dns                                          <all>          <all>   running
-     dns                                          <all>          <all>   staging
-#2   public_networks                              <all>          <all>   running
-     public_networks                              <all>          <all>   staging
-#3   redis_20bc9b52-c3d5-4cd2-94d9-7f444f9ab464   system         dev     running
+name                                         organization   space    lifecycle
+public_networks                              <all>          <all>    staging
+public_networks                              <all>          <all>    running
+dns                                          <all>          <all>    staging
+dns                                          <all>          <all>    running
+redis_266ea624-fc66-4de5-8fa2-b03d32019c4a   system           dev   running
 ```
 
 
@@ -493,16 +520,27 @@ applications:
 ```  
 Pushing app redis-example-app to org system / space dev as admin...
 Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/redis/manifest.yml...
+
+Updating with these attributes...
+  ---
+  applications:
++ - name: redis-example-app
++   instances: 1
+    path: /home/ubuntu/workspace/luna/ap-service-samples/redis
+    memory: 256M
++   default-route: true
++   buildpacks:
++   - ruby_buildpack
 Manifest applied
 Packaging files to upload...
 Uploading files...
- 1.23 MiB / 1.23 MiB [===================================================================================================
+ 1.37 MiB / 1.37 MiB [===================================================================] 100.00% 1s
 
 Waiting for API to complete processing files...
 
 name:              redis-example-app
 requested state:   stopped
-routes:            redis-example-app.apcloud.shop
+routes:            redis-example-app.ap.kr
 last uploaded:     
 stack:             
 buildpacks:        
@@ -512,7 +550,7 @@ sidecars:
 instances:      0/1
 memory usage:   256M
      state   since                  cpu    memory   disk     details
-#0   down    2021-11-22T05:39:06Z   0.0%   0 of 0   0 of 0   
+#0   down    2023-10-12T07:58:02Z   0.0%   0 of 0   0 of 0  
 ```  
   
 - Sample Web App에서 생성한 서비스 인스턴스 바인드 신청을 한다.
@@ -520,7 +558,7 @@ memory usage:   256M
 > $ cf bind-service redis-example-app redis 
 
 ```	
-Binding service redis to app redis-example-app in org system / space dev as admin...
+Binding service instance redis to app redis-example-app in org system / space dev as admin...
 OK
 ```
 	
@@ -534,11 +572,14 @@ Restarting app redis-example-app in org system / space dev as admin...
 Staging app and tracing logs...
    Downloading ruby_buildpack...
    Downloaded ruby_buildpack
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd creating container for instance 4a47d02a-24d6-4046-b2b8-866b915eaf6a
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd successfully created container for instance 4a47d02a-24d6-4046-b2b8-866b915e
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c creating container for instance 5d9f73b6-f9e2-45d0-b45b-93a511a9a588
+   Security group rules were updated
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c successfully created container for instance 5d9f73b6-f9e2-45d0-b45b-93a511a9a588
    Downloading app package...
    Downloaded app package (1.4M)
-   -----> Ruby Buildpack version 1.8.37
+   -----> Ruby Buildpack version 1.8.56
+   -----> Supplying Ruby
+   -----> Installing bundler 2.3.17
 
 ........
 ........
@@ -547,19 +588,19 @@ Instances starting...
 
 name:              redis-example-app
 requested state:   started
-routes:            redis-example-app.apcloud.shop
-last uploaded:     Mon 22 Nov 05:40:50 UTC 2021
+routes:            redis-example-app.ap.kr
+last uploaded:     Thu 12 Oct 16:59:55 KST 2023
 stack:             cflinuxfs3
 buildpacks:        
 	name             version   detect output   buildpack name
-	ruby_buildpack   1.8.37    ruby            ruby
+	ruby_buildpack   1.8.56    ruby            ruby
 
 type:           web
 sidecars:       
 instances:      1/1
 memory usage:   256M
      state     since                  cpu    memory   disk     details
-#0   running   2021-11-22T05:41:01Z   0.0%   0 of 0   0 of 0  
+#0   running   2023-10-12T08:00:10Z   0.0%   0 of 0   0 of 0  
 ```  
 
 

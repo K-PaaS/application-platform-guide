@@ -287,8 +287,6 @@ GlusterFS 서비스팩 배포가 완료 되었으면 Application에서 서비스
 > $ cf service-brokers
 ```  
 Getting service brokers as admin...
-
-name   url
 No service brokers found
 ```  
 
@@ -322,14 +320,15 @@ glusterfs-service              http://10.30.52.11:8080
 
 - 접근 가능한 서비스 목록을 확인한다.
 
->`$ cf service-access`  
+> $ cf service-access
 ```  
 Getting service access as admin...
+
 broker: glusterfs-service
-   service     plan               access   orgs
-   glusterfs   glusterfs-5Mb      none
-   glusterfs   glusterfs-100Mb    none
-   glusterfs   glusterfs-1000Mb   none
+   offering    plan               access   orgs
+   glusterfs   glusterfs-1000Mb   none     
+   glusterfs   glusterfs-100Mb    none     
+   glusterfs   glusterfs-5Mb      none     
 ```  
 >서비스 브로커 등록시 최초에는 접근을 허용하지 않는다. 따라서 access는 none으로 설정된다.
 
@@ -337,17 +336,18 @@ broker: glusterfs-service
 
 > $ cf enable-service-access glusterfs   
 ```
-Enabling access to all plans of service glusterfs for all orgs as admin...
+Enabling access to all plans of service offering glusterfs for all orgs as admin...
 OK
 ```
 > $ cf service-access   
 ```  
 Getting service access as admin...
+
 broker: glusterfs-service
-   service     plan               access   orgs
-   glusterfs   glusterfs-5Mb      all
-   glusterfs   glusterfs-100Mb    all
-   glusterfs   glusterfs-1000Mb   all
+   offering    plan               access   orgs
+   glusterfs   glusterfs-1000Mb   all      
+   glusterfs   glusterfs-100Mb    all      
+   glusterfs   glusterfs-5Mb      all      
 ```  
 
 
@@ -371,13 +371,12 @@ Sample App에서 GlusterFS 서비스를 사용하기 위해서는 서비스 신�
 > $ cf marketplace
 
 ```  
-Getting services from marketplace in org system / space dev as admin...
-OK
+Getting all service offerings from marketplace in org system / space dev as admin...
 
-service      plans                                              description
-glusterfs    glusterfs-5Mb, glusterfs-100Mb, glusterfs-1000Mb   A simple glusterfs implementation 
+offering    plans                                              description                         broker
+glusterfs   glusterfs-5Mb, glusterfs-100Mb, glusterfs-1000Mb   A simple glusterfs implementation   glusterfs-service
 
-TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
+TIP: Use 'cf marketplace -e SERVICE_OFFERING' to view descriptions of individual plans of a given service offering.
 ```  
 
 <br>
@@ -395,7 +394,7 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 
 > $ cf create-service glusterfs glusterfs-1000Mb glusterfs-service-instance 
 ```  
-Creating service instance glusterfs-service-instance in org system / space dev as admin...
+Service instance glusterfs-service-instance created.
 OK
 ```  
 
@@ -406,11 +405,10 @@ OK
 
 > $ cf services
 ```  
-Getting services in org system / space dev as admin...
-OK
+Getting service instances in org system / space dev as admin...
 
-name                        service     plan                 bound apps            last operation
-glusterfs-service-instance  glusterfs   glusterfs-1000Mb                           create succeeded
+name                         offering    plan               bound apps   last operation     broker              upgrade available
+glusterfs-service-instance   glusterfs   glusterfs-1000Mb                create succeeded   glusterfs-service   no
 ```  
 
 <br>
@@ -441,11 +439,25 @@ applications:
 
 > $ cf push --no-start 
 ```  
+Pushing app hello-spring-glusterfs to org system / space dev as admin...
 Applying manifest file /home/ubuntu/workspace/samples/ap-service-samples/gluserfs/manifest.yml...
+
+Updating with these attributes...
+  ---
+  applications:
++ - name: hello-spring-glusterfs
++   instances: 1
+    path: /home/ubuntu/workspace/ap-service-samples/glusterfs/hello-spring-glusterfs.war
+    memory: 1G
++   default-route: true
++   buildpacks:
++   - java_buildpack
++   env:
++     swift_region: kpaas
 Manifest applied
 Packaging files to upload...
 Uploading files...
- 17.06 MiB / 17.06 MiB [=================================================================================================
+ 19.21 MiB / 19.21 MiB [=========================================================================================================] 100.00% 1s
 
 Waiting for API to complete processing files...
 
@@ -461,7 +473,7 @@ sidecars:
 instances:      0/1
 memory usage:   1024M
      state   since                  cpu    memory   disk     details
-#0   down    2021-11-22T05:13:12Z   0.0%   0 of 0   0 of 0   
+#0   down    2023-10-11T06:54:59Z   0.0%   0 of 0   0 of 0 
 ```  
   
 - Sample Web App에서 생성한 서비스 인스턴스 바인드 신청을 한다.
@@ -469,7 +481,7 @@ memory usage:   1024M
 > $ cf bind-service hello-spring-glusterfs glusterfs-service-instance
 
 ```
-Binding service glusterfs-service-instance to app hello-spring-glusterfs in org system / space dev as admin...
+Binding service instance glusterfs-service-instance to app hello-spring-glusterfs in org system / space dev as admin...
 OK
 ```
 
@@ -517,11 +529,12 @@ Restarting app hello-spring-glusterfs in org system / space dev as admin...
 Staging app and tracing logs...
    Downloading java_buildpack...
    Downloaded java_buildpack
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd creating container for instance 678aa272-945b-41a9-8924-0782891d0cc4
-   Cell 4a88ce8b-1e72-485a-8f62-1fe0c6b9a7cd successfully created container for instance 678aa272-945b-41a9-8924-0782891d0cc4
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c creating container for instance 60d278f0-8ea7-40c5-9cf7-29756aeb5e69
+   Security group rules were updated
+   Cell 67f9c5f5-04bc-42a9-a5bc-d628dd9f2a2c successfully created container for instance 60d278f0-8ea7-40c5-9cf7-29756aeb5e69
    Downloading app package...
-   Downloaded app package (30.5M)
-
+   Downloaded app package (29.6M)
+   
 ........
 ........
 Instances starting...
@@ -530,19 +543,24 @@ Instances starting...
 name:              hello-spring-glusterfs
 requested state:   started
 routes:            hello-spring-glusterfs.ap.kr
-last uploaded:     Mon 22 Nov 05:19:59 UTC 2021
+last uploaded:     Wed 11 Oct 17:44:38 KST 2023
 stack:             cflinuxfs3
 buildpacks:        
-	name             version                                                             detect output   buildpack na
-	java_buildpack   v4.37-https://github.com/cloudfoundry/java-buildpack.git#ab2b4512   java            java
+	name             version                                                         detect output   buildpack name
+	java_buildpack   v4.50-git@github.com:cloudfoundry/java-buildpack.git#5fe41f89   java            java
 
 type:           web
 sidecars:       
 instances:      1/1
 memory usage:   1024M
-     state     since                  cpu    memory    disk       details
-#0   running   2021-11-22T05:20:19Z   0.0%   0 of 1G   8K of 1G   
+     state     since                  cpu    memory   disk     details
+#0   running   2023-10-11T08:44:57Z   0.0%   0 of 0   0 of 0   
 
+type:           task
+sidecars:       
+instances:      0/0
+memory usage:   1024M
+There are no running instances of this process.
 ```  
 
 

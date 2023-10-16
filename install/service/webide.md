@@ -342,7 +342,7 @@ broker: webide-service-broker
 - 특정 조직에 해당 서비스 접근 허용을 할당하고 접근 서비스 목록을 다시 확인한다. (전체 조직)
 > $ cf enable-service-access webide <br>
 ```
-Enabling access to all plans of service webide for all orgs as admin...
+Enabling access to all plans of service offering webide for all orgs as admin...
 OK
 ```
 > $ cf service-access 
@@ -417,9 +417,9 @@ cf create-service [SERVICE] [PLAN] [SERVICE_INSTANCE]
 > $ cf create-service webide dedicated-vm webide-service  
 ```
 Creating service instance webide-service in org system / space dev as admin...
-OK
 
-Create in progress. Use 'cf services' or 'cf service webide' to check operation status.
+Service instance webide-service created.
+OK
 ```
 <br>
 
