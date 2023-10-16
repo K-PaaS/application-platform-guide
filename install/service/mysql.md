@@ -451,11 +451,11 @@ App 구동 시 Service와의 통신을 위하여 보안 그룹을 추가한다.
 ```
 ## mysql의 proxy IP를 destination에 설정
 [
-{
-"protocol": "tcp",
-"destination": "<proxy_ip>",
-"ports": "13307"
-}
+  {
+    "protocol": "tcp",
+    "destination": "<proxy_ip>",
+    "ports": "13307"
+  }
 ]
 ```
 <br>
