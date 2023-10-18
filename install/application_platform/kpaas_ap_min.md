@@ -28,7 +28,7 @@
 
 ## <div id='1.2'/>1.2. 범위
 K-PaaS AP min은 bosh-deployment를 기반으로 한 BOSH 환경에서 설치하며 ap-deployment v5.8.8.1-min의 설치를 기준으로 가이드를 작성하였다.  
-K-PaaS AP min은 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원하며,  ap-deployment v5.8.8.1-min에서 검증한 IaaS 환경은 AWS, OpenStack, vSphere, Azure, GCP 환경이다.
+K-PaaS AP min은 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원하며,  ap-deployment v5.8.8.1-min에서 검증한 IaaS 환경은 OpenStack, vSphere 환경이다.
 
 <br>
 
@@ -123,8 +123,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} update-runtime-config {PATH} --name={NAME}
 
 K-PaaS AP min에서 적용하는 Runtime Config는 다음과 같다.  
 
-- DNS Runtime Config  
-  K-PaaS AP 4.0부터 적용되는 부분으로 K-PaaS AP Component에서 Consul이 대체된 Component이다.  
+- DNS Runtime Config
   K-PaaS AP Component 간의 통신을 위해 BOSH DNS 배포가 선행되어야 한다.  
 
 - OS Configuration Runtime Config  
@@ -315,6 +314,7 @@ common_vars.yml파일과 vars.yml을 수정하여 K-PaaS AP min 설치시 적용
 <td>deploy-openstack-7vms.sh</td>
 <td>OpenStack 환경에 K-PaaS AP min 7vm 설치를 위한 Shell Script 파일</td>
 </tr>
+<tr>
 <td>deploy-vsphere-4vms.sh</td>
 <td>vSphere 환경에 K-PaaS AP min 4vm 설치를 위한 Shell Script 파일</td>
 </tr>
@@ -322,6 +322,7 @@ common_vars.yml파일과 vars.yml을 수정하여 K-PaaS AP min 설치시 적용
 <td>deploy-vsphere-7vms.sh</td>
 <td>vSphere 환경에 K-PaaS AP min 7vm 설치를 위한 Shell Script 파일</td>
 </tr>
+<tr>
 <td>deploy-azure-4vms.sh</td>
 <td>Azure 환경에 K-PaaS AP min 4vm 설치를 위한 Shell Script 파일</td>
 </tr>
@@ -329,6 +330,7 @@ common_vars.yml파일과 vars.yml을 수정하여 K-PaaS AP min 설치시 적용
 <td>deploy-azure-7vms.sh</td>
 <td>Azure 환경에 K-PaaS AP min 7vm 설치를 위한 Shell Script 파일</td>
 </tr>
+<tr>
 <td>deploy-gcp-4vms.sh</td>
 <td>GCP 환경에 K-PaaS AP min 4vm 설치를 위한 Shell Script 파일</td>
 </tr>
