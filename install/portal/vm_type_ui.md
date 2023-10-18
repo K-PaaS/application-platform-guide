@@ -321,7 +321,7 @@ Feature user_org_creation Enabled.
 ```
 
 ### <div id="3.2"/> 3.2. 사용자포탈 UAA 페이지 오류
->![portal-31]
+![portal-31]
 1. uaac portalclient가 등록이 되어있지 않다면 해당 화면과 같이 redirect오류가 발생한다.
 2. uaac client add를 통해 potalclient를 추가시켜주어야 한다.
     > $ uaac target\
@@ -337,7 +337,7 @@ $ uaac client add portalclient -s xxxxx --redirect_uri "http://portal-web-user.x
 --authorities="uaa.resource" \
 --autoapprove="openid , cloud_controller_service_permissions.read"
 
- >![portal-32]
+ ![portal-32]
 1. uaac portalclient가 url이 잘못 등록되어있다면 해당 화면과 같이 redirect오류가 발생한다.
 2. uaac client update를 통해 url을 수정해야한다.
    > $ uaac target\
@@ -446,16 +446,16 @@ K-PaaS AP Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을
 
  1. 관리자 포탈에 접속한다.(portal-web-admin.[public ip].nip.io)
     
-    >![portal-15]
+    ![portal-15]
  2. 운영관리를 누른다.
     
-    >![portal-16]
+    ![portal-16]
  3. 카탈로그 페이지에 들어간다.
     
-    >![portal-17]
+    ![portal-17]
  4. 빌드팩, 서비스팩 상세화면에 들어가서 각 항목란에 값을 입력후에 저장을 누른다.
     
-    >![portal-18]
+    ![portal-18]
 
     ※ 카탈로그 등록 및 수정 시 카탈로그 관리 코드는 선택 필수이며, 현재 사용 가능한 코드가 없는 경우 다음 내용을 참고하여 처리하도록 한다.
     1. ①"코드 관리"를 클릭한다.
@@ -464,7 +464,7 @@ K-PaaS AP Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을
     ![portal-18-1]
  5. 사용자포탈에서 변경된값이 적용되어있는지 확인한다.
     
-    >![portal-19]
+    ![portal-19]
 
 ### <div id="3.6"/> 3.6. 모니터링 및 오토스케일링 적용
 ##### 1. 포탈 설치 이전 모니터링 설정 적용
@@ -474,7 +474,7 @@ K-PaaS AP Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을
 ##### 2. 포탈 설치 이후 모니터링 설정 적용
  1. 사용자 포탈의 앱 상세 페이지로 이동한다.
     
-    >![portal-30]
+    ![portal-30]
  2. ① 상세페이지 레이아웃 하단의 모니터링 버튼을 누른다.
 
  3. ② 모니터링 오토 스케일링 화면
