@@ -376,8 +376,8 @@ broker: webide-service-broker
 > - 요약 : WEB IDE
 > - 설명 :
 > 웹 프로그래밍을 위한 WEB IDE - eclipse-che
->  
-> ![3-2-2]
+  
+![3-2-2]
 
 - K-PaaS AP 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 

@@ -402,14 +402,16 @@ There are no running instances of this process.
 > ※ Group Table  
 > 코드 ID  : LOGGING  
 > 코드 이름 : Logging Service  
-> ![003]
->
+
+![003]
+
 > ※ Detail Table  
 > Key : enable_logging_service  
 > Value : true  
 > 요약 : Logging Service Enable Code  
 > 사용 : Y  
-> ![004]
+
+![004]
 
 ![005]
 

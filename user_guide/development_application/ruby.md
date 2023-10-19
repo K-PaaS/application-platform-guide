@@ -134,6 +134,7 @@ Ruby 샘플 애플리케이션을 개발하기 위한 애플리케이션의 생�
 
 1)	Rails 애플리케이션 생성(bundle install 제외)
 >rails new [application name] –B –skip-bundle
+
 ![ruby14] 
 ![ruby15] 
 

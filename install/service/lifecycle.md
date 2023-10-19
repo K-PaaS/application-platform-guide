@@ -376,7 +376,7 @@ broker: app-lifecycle-service-broker
 > 체계적인 Agile 개발 지원과 프로젝트 협업에 필요한 커뮤니케이션 중심의 문서 및 지식 공유 지원 기능을 제공하는 TAIGA를 dedicated 방식으로 제공합니다.
 > 서비스 관리자 계정은 serviceadmin/<서비스 신청 시 입력한 Password> 입니다.
 >  
-> ![002]
+![002]
 
 -	K-PaaS AP 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 
