@@ -222,7 +222,7 @@ K-PaaS AP 사용자 포탈은 조직, 공간, 애플리케이션을 관리하는
 2.  “새 조직 추가” 버튼을 클릭하여 조직 생성 페이지로 이동한다.
 ![2-3-1-1]
 
-     > **"새 조직 추가"** 버튼 활성화는 [AP Portal 배포 가이드 문서](https://github.com/K-PaaS/Guide-3.0-Penne-/blob/master/Use-Guide/portal/PaaS-TA%20Portal%20%EB%B0%B0%ED%8F%AC%20%EA%B0%80%EC%9D%B4%EB%93%9C_v1.1.md#7-1) **2.2. 사용자의 조직 생성 Flag 활성화** 를 참고한다.
+     > **"새 조직 추가"** 버튼 활성화는 [AP Portal 배포 가이드 문서](https://github.com/K-PaaS/application-platform-guide/blob/master/install/portal/vm_type_ui.md#:~:text=AP%20Portal%20%EC%9A%B4%EC%98%81-,3.1.%20%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98%20%EC%A1%B0%EC%A7%81%20%EC%83%9D%EC%84%B1%20Flag%20%ED%99%9C%EC%84%B1%ED%99%94,-K%2DPaaS%EB%8A%94) **3.1. 사용자의 조직 생성 Flag 활성화** 를 참고한다.
 
 3.  조직명을 입력한다. "조직생성" 버튼을 클릭하여 조직생성을 완료한다. 
 ![2-3-1-2]
