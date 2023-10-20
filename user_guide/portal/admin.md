@@ -45,7 +45,7 @@
 
 본 사용 가이드는 설치에 대한 내용은 기술하지 않았다.
 
- 운영자 포탈 설치는 [AP Portal 배포 가이드 문서](https://github.com/K-PaaS/application-platform-guide/blob/master/install/portal/vm_type_ui.md#:~:text=AP%20Portal%20%EC%9A%B4%EC%98%81-,3.1.%20%EC%82%AC%EC%9A%A9%EC%9E%90%EC%9D%98%20%EC%A1%B0%EC%A7%81%20%EC%83%9D%EC%84%B1%20Flag%20%ED%99%9C%EC%84%B1%ED%99%94,-K%2DPaaS%EB%8A%94)를 참고한다.
+ 운영자 포탈 설치는 [AP Portal 배포 가이드 문서](https://github.com/K-PaaS/application-platform-guide/blob/master/install/portal/vm_type_ui.md)를 참고한다.
 
 ## <a name="2"/>2.  K-PaaS AP 운영자 포탈 시작
 
