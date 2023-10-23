@@ -505,7 +505,7 @@ Succeeded
 
 
 
-## <div id='5'/> 2. WEB IDE IP 증설
+## <div id='5'/> 5. WEB IDE IP 증설
 ### <div id="5.1"/> 5.1. 서비스 확인
 
 현재 생성된 WEB-IDE VM 인스턴스를 확인한다.

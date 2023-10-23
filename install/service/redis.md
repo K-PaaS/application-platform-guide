@@ -8,12 +8,11 @@
   1.3. [참고자료](#1.3)  
   
 2. [On-Demand-Redis 서비스 설치](#2)  
-  2.1. [Prerequisite](#2.1)   
-  2.2. [Stemcell 확인](#2.2)    
-  2.3. [Deployment 다운로드](#2.3)   
-  2.4. [Deployment 파일 수정](#2.4)  
-  2.5. [서비스 설치](#2.5)    
-  2.6. [서비스 설치 확인](#2.6)  
+  2.1. [Prerequisite](#2.1)    
+  2.2. [Deployment 다운로드](#2.2)   
+  2.3. [Deployment 파일 수정](#2.3)  
+  2.4. [서비스 설치](#2.4)    
+  2.5. [서비스 설치 확인](#2.5)  
 
 3. [CF CLI를 이용한 On-Demand-Redis 서비스 브로커 등록](#3)  
   3.1. [K-PaaS에서 서비스 신청](#3.1)  
@@ -68,7 +67,7 @@ Succeeded
 $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 ```
 
-### <div id="2.3"/> 2.3. Deployment 다운로드
+### <div id="2.2"/> 2.2. Deployment 다운로드
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
@@ -86,7 +85,7 @@ $ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
 $ git clone https://github.com/K-PaaS/common.git
 ```
 
-### <div id="2.4"/> 2.4. Deployment 파일 수정
+### <div id="2.3"/> 2.3. Deployment 파일 수정
 
 BOSH Deployment manifest는 Components 요소 및 배포의 속성을 정의한 YAML 파일이다.  
 Deployment 파일에서 사용하는 network, vm_type, disk_type 등은 Cloud config를 활용하고, 활용 방법은 K-PaaS AP 설치 가이드를 참고한다.  
@@ -222,7 +221,7 @@ service_instance_bullet_desc: "Redis Service Using a Dedicated Server"   # Servi
 service_instance_plan_guid: "2a26b717-b8b5-489c-8ef1-02bcdc445720"       # Service Instance Plan Guid
 ```
 
-### <div id="2.5"/> 2.5. 서비스 설치
+### <div id="2.4"/> 2.4. 서비스 설치
 
 - 서버 환경에 맞추어 Deploy 스크립트 파일의 VARIABLES 설정을 수정하고, Option file을 추가할지 선택한다.  
      (선택) -o operations/cce.yml (CCE 조치를 적용하여 설치)
@@ -250,7 +249,7 @@ $ sh ./deploy.sh
 ```  
 
 
-### <div id="2.6"/> 2.6. 서비스 설치 확인
+### <div id="2.5"/> 2.5. 서비스 설치 확인
 
 설치 완료된 서비스를 확인한다.  
 
