@@ -379,7 +379,7 @@ Feature user_org_creation Enabled.
 
 ### <div id="3.2"/> 3.2. 사용자포탈 UAA페이지 오류
 
->![portal-31]
+![portal-31]
 1. uaac portalclient가 등록이 되어있지 않다면 해당 화면과 같이 redirect오류가 발생한다.
 2. uaac client add를 통해 potalclient를 추가시켜주어야 한다.
     > $ uaac target\
@@ -395,7 +395,7 @@ $ uaac client add portalclient -s xxxxx --redirect_uri "http://portal-web-user.x
 --authorities="uaa.resource" \
 --autoapprove="openid , cloud_controller_service_permissions.read"
 
- >![portal-32]
+ ![portal-32]
 1. uaac portalclient가 url이 잘못 등록되어있다면 해당 화면과 같이 redirect오류가 발생한다.
 2. uaac client update를 통해 url을 수정해야한다.
    > $ uaac target\
@@ -414,19 +414,19 @@ $ uaac client add portalclient -s xxxxx --redirect_uri "http://portal-web-user.x
 ##### 1. DB tool을 이용해 기존에 사용한 DB와 K-PaaS AP 3.5 Portal DB를 연결한다.
  * 가이드의 DB tool을 이용한 마이그레이션 설명은 navicat을 기준으로 한다.
 ##### 2. 마이그레이션할 table의 레코드 데이터를 전부 삭제한다.
->![portal-25]
+![portal-25]
 ##### 3. Tools - Data Transfer를 클릭해서 마이그레이션 설정창을 띄운다.
->![portal-21]
+![portal-21]
 ##### 4. 마이그레이션할 source DB(기존 DB), target DB(K-PaaS AP 3.5 Portal DB)를 설정한다.
->![portal-20]
+![portal-20]
 ##### 5. Option에 들어가 Table Options의 Create tables 옵션에 체크를 해제, Orther Options의 Contiune on error를 체크한 후 next를 누른다.
->![portal-24]
+![portal-24]
 ##### 6. 데이터를 이동할 테이블을 설정 후 next를 누른다.
->![portal-22]
+![portal-22]
 ##### 7-1. 마이그레이션이 정상적으로 완료된 모습
->![portal-23]
+![portal-23]
 ##### 7-2. 마이그레이션 오류난 모습
->![portal-26]
+![portal-26]
 ##### 7-3. 기존 DB에 오류난 K-PaaS AP Portal table의 Design에 맞춰 수정후에 다시 마이그레이션을 진행한다.
 
 ### <div id="3.5"/> 3.5. Log
@@ -527,16 +527,16 @@ K-PaaS AP Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을
 
  1. 관리자 포탈에 접속한다.(portal-web-admin.[public ip].nip.io)
     
-    >![portal-15]
+    ![portal-15]
  2. 운영관리를 누른다.
     
-    >![portal-16]
+    ![portal-16]
  3. 카탈로그 페이지에 들어간다.
     
-    >![portal-17]
+    ![portal-17]
  4. 빌드팩, 서비스팩 상세화면에 들어가서 각 항목란에 값을 입력후에 저장을 누른다.
     
-    >![portal-18]
+    ![portal-18]
 
     ※ 카탈로그 등록 및 수정 시 카탈로그 관리 코드는 선택 필수이며, 현재 사용 가능한 코드가 없는 경우 다음 내용을 참고하여 처리하도록 한다.
     1. ①"코드 관리"를 클릭한다.
@@ -545,7 +545,7 @@ K-PaaS AP Portal 설치 후에 관리자 포탈에서 빌드팩, 서비스팩을
     ![portal-18-1]
  5. 사용자포탈에서 변경된값이 적용되어있는지 확인한다.
     
-    >![portal-19]
+    ![portal-19]
 
 [portal-01]:./images/Portal_01.png
 [portal-02]:./images/Portal_02.png

@@ -75,7 +75,8 @@ Node.js 애플리케이션 개발을 위해 다음과 같은 환경으로 개발
 - 아래의 주소로 접속한 후 node-v0.12.4-x64.msi를 다운받는다.
 
 >https://nodejs.org/dist/v0.12.4/x64/node-v0.12.4-x64.msi
->![2-2-1-0]
+
+![2-2-1-0]
 
 ##### 2. Node.js 설치
 
@@ -952,6 +953,7 @@ module.exports = client;
 
 >$ cf api --skip-ssl-validation https://api.cf.open-paas.com # 개방형 플랫폼 TARGET 지정<br>
 >$ cf login -u testUser -o sample_test -s sample_space # 로그인 요청<br>
+
 ![2-4-1-0]
 
 

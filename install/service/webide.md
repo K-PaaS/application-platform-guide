@@ -376,8 +376,8 @@ broker: webide-service-broker
 > - 요약 : WEB IDE
 > - 설명 :
 > 웹 프로그래밍을 위한 WEB IDE - eclipse-che
->  
-> ![3-2-2]
+  
+![3-2-2]
 
 - K-PaaS AP 사용자 포탈에 접속하여, 카탈로그를 통해 서비스를 신청한다.   
 
@@ -505,7 +505,7 @@ Succeeded
 
 
 
-## <div id='5'/> 2. WEB IDE IP 증설
+## <div id='5'/> 5. WEB IDE IP 증설
 ### <div id="5.1"/> 5.1. 서비스 확인
 
 현재 생성된 WEB-IDE VM 인스턴스를 확인한다.

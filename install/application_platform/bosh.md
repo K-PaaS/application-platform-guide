@@ -38,6 +38,7 @@
 
 ## <div id='1.2'/>1.2. 범위
 본 문서는 Linux 환경(Ubuntu 18.04)을 기준으로 BOSH 설치를 위한 패키지와 라이브러리를 설치 및 구성하고, 이를 이용하여 BOSH를 설치하는 것을 기준으로 작성하였다.
+BOSH는 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원하며, 검증한 IaaS 환경은 OpenStack, vSphere 환경이다.
 
 ## <div id='1.3'/>1.3. 참고 자료
 
@@ -194,9 +195,11 @@ Shell Script 파일을 이용하여 BOSH를 설치한다.
 <td>deploy-aws.sh</td>
 <td>AWS 환경에 BOSH 설치를 위한 Shell Script 파일</td>
 </tr>
+<tr>
 <td>deploy-azure.sh</td>
 <td>Azure 환경에 BOSH 설치를 위한 Shell Script 파일</td>
 </tr>
+<tr>
 <td>deploy-gcp.sh</td>
 <td>GCP 환경에 BOSH 설치를 위한 Shell Script 파일</td>
 </tr>

@@ -606,7 +606,7 @@ memory usage:   1024M
 
 - 브라우저에서 확인
 
->![rabbitmq_image_12]
+![rabbitmq_image_12]
 
 - 스토어 엔드포인트 테스트
 ```	

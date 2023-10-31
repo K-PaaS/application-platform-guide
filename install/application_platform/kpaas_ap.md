@@ -513,7 +513,7 @@ ex) uaa_login_logout_redirect_parameter_whitelist=["{AP PORTAL URI}","{AP PORTAL
 ex) uaa_login_links_signup="{AP PORTAL URI}/createuser"
 ```
 
-<img src="https://github.com/K-PaaS/Guide-5.0-Ravioli/blob/master/install-guide/paasta/images/uaa-login-2.png">
+![UAA_Login_Create_Account]
 
 3. uaa_login_links_passwd : UAA 페이지에서 Reset Password 버튼 클릭 시 이동하는 링크 주소
 
@@ -521,7 +521,7 @@ ex) uaa_login_links_signup="{AP PORTAL URI}/createuser"
 ex) uaa_login_links_passwd="{AP PORTAL URI}/resetpasswd"
 ```
 
-<img src="https://github.com/K-PaaS/Guide-5.0-Ravioli/blob/master/install-guide/paasta/images/uaa-login.png" width="663px">
+![UAA_Login_Reset_Password]
 
 
 4. uaa_client_portal_redirect_uri : UAAC Portal Client의 Redirect URI 지정 변수, 포탈에서 로그인 버튼 클릭 후 UAA 페이지에서 로그인 성공 시 이동하는 URI
@@ -856,6 +856,7 @@ space:          No space targeted, use 'cf target -s SPACE'
 ```
 
 [FLAVOR_Image]:./images/ap/aws-vmtype.png
-
+[UAA_Login_Create_Account]:./images/ap/uaa-login-2.png
+[UAA_Login_Reset_Password]:./images/ap/uaa-login.png
 
 ### [Index](https://github.com/K-PaaS/Guide/blob/master/README.md) > [AP Install](../README.md) > K-PaaS AP
