@@ -201,7 +201,7 @@ K-PaaS AP 포탈의 운영에 필요한 관리를 수행하기 위한 메뉴이�
 4. 서비스는 "ap-sourcecontrol" 로 지정한다.
 5. 썸네일은 사용자가 등록하고자 하는 이미지를 지정하여 선택한다.
 6. 문서 URL을 넣어준다.
-     > (예) https://github.com/K-PaaS/Guide-3.0-Penne-/blob/master/Service-Guide/Tools/PaaS-TA%20%ED%98%95%EC%83%81%EA%B4%80%EB%A6%AC%20%EC%84%9C%EB%B9%84%EC%8A%A4%ED%8C%A9%20%EC%84%A4%EC%B9%98%20%EA%B0%80%EC%9D%B4%EB%93%9C_v1.0.md <br>
+     > (예) [https://github.com/K-PaaS/application-platform-guide/blob/master/user_guide/service/source_control.md](https://github.com/K-PaaS/application-platform-guide/blob/master/user_guide/service/source_control.md) <br>
      > **문서 URL 적용 시 'K-PaaS AP 사용자'카탈로그 서비스 등록 '문서보기' 버튼 활성화 된다.**<br>
 7. 서비스 생성시 필요한 파라미터값을 설정한다.
     (예) owner : '자동입력' /  org_name : '자동입력'
