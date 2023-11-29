@@ -37,7 +37,7 @@
 클라우드 환경에 서비스 시스템을 배포할 수 있는 BOSH는 릴리즈 엔지니어링, 개발, 소프트웨어 라이프사이클 관리를 통합한 오픈소스 프로젝트로 본 문서에서는 Inception 환경(설치환경)에서 BOSH를 설치하는 데 그 목적이 있다.
 
 ## <div id='1.2'/>1.2. 범위
-본 문서는 Linux 환경(Ubuntu 18.04)을 기준으로 BOSH 설치를 위한 패키지와 라이브러리를 설치 및 구성하고, 이를 이용하여 BOSH를 설치하는 것을 기준으로 작성하였다.
+본 문서는 Linux 환경(Ubuntu 22.04)을 기준으로 BOSH 설치를 위한 패키지와 라이브러리를 설치 및 구성하고, 이를 이용하여 BOSH를 설치하는 것을 기준으로 작성하였다.
 BOSH는 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원하며, 검증한 IaaS 환경은 OpenStack, vSphere 환경이다.
 
 ## <div id='1.3'/>1.3. 참고 자료
@@ -53,9 +53,9 @@ Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundr
 
 ## <div id='2.1'/>2.1. BOSH 설치 절차
 Inception(K-PaaS 설치 환경)은 BOSH 및 K-PaaS를 설치하기 위한 설치 환경으로, VM 또는 서버 장비이다.  
-OS Version은 Ubuntu 18.04를 기준으로 한다. IaaS에서 수동으로 Inception VM을 생성해야 한다.
+OS Version은 Ubuntu 22.04를 기준으로 한다. IaaS에서 수동으로 Inception VM을 생성해야 한다.
 
-Inception VM은 Ubuntu 18.04, vCPU 2 Core, Memory 4G, Disk 100G 이상을 권고한다.
+Inception VM은 Ubuntu 22.04, vCPU 2 Core, Memory 4G, Disk 100G 이상을 권고한다.
 
 ## <div id='2.2'/>2.2.  Inception 서버 구성
 
@@ -73,7 +73,7 @@ BOSH 및 Application Platform (이하 AP) 설치를 위해 Inception 서버에 �
 
 ### <div id='2.3.1'/>2.3.1.    Prerequisite
 
-- 본 설치 가이드는 Ubuntu 18.04 버전을 기준으로 한다.  
+- 본 설치 가이드는 Ubuntu 22.04 버전을 기준으로 한다.  
 
 - IaaS Security Group의 열어줘야할 Port를 설정한다.
 
@@ -97,18 +97,18 @@ BOSH 및 Application Platform (이하 AP) 설치를 위해 Inception 서버에 �
 
 ### <div id='2.3.2'/>2.3.2.    BOSH CLI 및 Dependency 설치
 
-- BOSH Dependency 설치 (Ubuntu 18.04)
+- BOSH Dependency 설치 (Ubuntu 22.04)
 
 ```
 $ sudo apt-get update
-$ sudo apt install -y build-essential zlibc zlib1g-dev ruby ruby-dev openssl libxslt1-dev libxml2-dev libssl-dev libreadline7 libreadline-dev libyaml-dev libsqlite3-dev sqlite3
+$ sudo apt-get install -y build-essential zlib1g-dev ruby ruby-dev openssl libxslt1-dev libxml2-dev libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3
 ```
 
-- BOSH Dependency 설치 (Ubuntu 16.04)
+- BOSH Dependency 설치 (Ubuntu 20.04)
 
 ```
 $ sudo apt-get update
-$ sudo apt install -y libcurl4-openssl-dev gcc g++ build-essential zlibc zlib1g-dev ruby ruby-dev openssl libxslt-dev libxml2-dev libssl-dev libreadline6 libreadline6-dev libyaml-dev libsqlite3-dev sqlite3
+$ sudo apt install -y build-essential zlibc zlib1g-dev ruby ruby-dev openssl libxslt1-dev libxml2-dev libssl-dev  libreadline-dev libyaml-dev libsqlite3-dev sqlite3
 ```
 
 - BOSH CLI 설치
@@ -597,13 +597,22 @@ $ ssh jumpbox@{bosh_url} -i jumpbox.key
 ubuntu@inception:~/workspace/ap-deployment/bosh$ ssh jumpbox@10.0.1.6 -i jumpbox.key
 Unauthorized use is strictly prohibited. All access and activity
 is subject to logging and monitoring.
-Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-54-generic x86_64)
+Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 6.2.0-34-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
-Last login: Thu Oct 17 03:57:48 UTC 2019 from 10.0.0.9 on pts/0
-Last login: Fri Oct 25 07:05:42 2019 from 10.0.0.9
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Wed Nov 29 09:14:51 2023 from 10.0.12.94
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
 bosh/0:~$
 ```
 
