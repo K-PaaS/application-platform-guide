@@ -53,7 +53,7 @@ Cloud Foundry Document: [https://docs.cloudfoundry.org](https://docs.cloudfoundr
 ## <div id="2.2"/> 2.2. Stemcell 확인
 
 Stemcell 목록을 확인하여 서비스 설치에 필요한 Stemcell이 업로드 되어 있는 것을 확인한다.  
-본 가이드의 Stemcell은 ubuntu-jammy 1.181를 사용한다.  
+본 가이드의 Stemcell은 ubuntu-jammy 1.260를 사용한다.  
 
 > $ bosh -e ${BOSH_ENVIRONMENT} stemcells  
 
@@ -61,7 +61,7 @@ Stemcell 목록을 확인하여 서비스 설치에 필요한 Stemcell이 업로
 Using environment '10.0.1.6' as client 'admin'
 
 Name                                       Version  OS             CPI  CID  
-bosh-openstack-kvm-ubuntu-jammy-go_agent   1.181*   ubuntu-jammy   -    5f8c7470-e948-4a6f-99e6-5dffce49026f
+bosh-openstack-kvm-ubuntu-jammy-go_agent   1.260*   ubuntu-jammy   -    5f8c7470-e948-4a6f-99e6-5dffce49026f
 
 (*) Currently deployed
 
@@ -81,7 +81,7 @@ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.25.1
+- Service Deployment Git Repository URL : https://github.com/K-PaaS/service-deployment/tree/v5.1.26
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -89,7 +89,7 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.25.1
+$ git clone https://github.com/K-PaaS/service-deployment.git -b v5.1.26
 ```
 
 ## <div id="2.4"/> 2.4. Deployment 파일 수정
@@ -112,7 +112,7 @@ uaa_client_admin_secret: "admin-secret"		# UAAC Admin Client에 접근하기 위
 ```yaml
 # STEMCELL
 stemcell_os: "ubuntu-jammy"   # Stemcell OS
-stemcell_version: "1.181"   # Stemcell Version
+stemcell_version: "1.260"   # Stemcell Version
 
 
 # VARIABLE
@@ -226,9 +226,9 @@ Task 193. Done
 Deployment 'logging-service'
 
 Instance                                        Process State  AZ  IPs         VM CID                                VM Type  Active  Stemcell  
-collector/542d5b3f-6243-4bea-a8a9-185edba2cbee  running        z1  10.0.1.162  67ad8e85-2ac2-420e-bb71-14fbd7e43013  small    true    bosh-openstack-kvm-ubuntu-jammy-go_agent/1.181  
-fluentd/4ec53005-6390-401f-a569-285d1d9bcb95    running        z1  10.0.1.105  2f5d3ab2-787e-4034-ac6f-fb5b75fc29ec  small    true    bosh-openstack-kvm-ubuntu-jammy-go_agent/1.181  
-influxdb/e8fc41b5-e5ed-4176-ad5b-216d2cccf88b   running        z1  10.0.1.115  7654584c-ee0c-42df-bef7-d070362eb878  large    true    bosh-openstack-kvm-ubuntu-jammy-go_agent/1.181
+collector/542d5b3f-6243-4bea-a8a9-185edba2cbee  running        z1  10.0.1.162  67ad8e85-2ac2-420e-bb71-14fbd7e43013  small    true    bosh-openstack-kvm-ubuntu-jammy-go_agent/1.260  
+fluentd/4ec53005-6390-401f-a569-285d1d9bcb95    running        z1  10.0.1.105  2f5d3ab2-787e-4034-ac6f-fb5b75fc29ec  small    true    bosh-openstack-kvm-ubuntu-jammy-go_agent/1.260  
+influxdb/e8fc41b5-e5ed-4176-ad5b-216d2cccf88b   running        z1  10.0.1.115  7654584c-ee0c-42df-bef7-d070362eb878  large    true    bosh-openstack-kvm-ubuntu-jammy-go_agent/1.260
 
 ```
 
