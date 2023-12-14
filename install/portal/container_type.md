@@ -83,7 +83,7 @@ $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell -n {STEMCELL_URL}
 
 서비스 설치에 필요한 Deployment를 Git Repository에서 받아 서비스 설치 작업 경로로 위치시킨다.  
 
-- Portal Deployment Git Repository URL : https://github.com/K-PaaS/portal-deployment/tree/v5.2.24
+- Portal Deployment Git Repository URL : https://github.com/K-PaaS/portal-deployment/tree/v5.2.25
 
 ```
 # Deployment 다운로드 파일 위치 경로 생성 및 설치 경로 이동
@@ -91,7 +91,7 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 
 # Deployment 파일 다운로드
-$ git clone https://github.com/K-PaaS/portal-deployment.git -b v5.2.24
+$ git clone https://github.com/K-PaaS/portal-deployment.git -b v5.2.25
 ```
 
 ### <div id="2.4"/> 2.4. Deployment 파일 수정
@@ -262,15 +262,15 @@ Succeeded
 ### <div id="3.1"/> 3.1. Portal App 구성
 K-PaaS AP에 Portal 관련 App이 8개 배포되며 구성은 다음과 같다.
 ```
-portal-app-1.2.14
-├── portal-api-2.4.3
-├── portal-common-api-2.2.6
-├── portal-gateway-2.1.2
-├── portal-registration-2.1.0
-├── portal-ssh-1.0.0
-├── portal-storage-api-2.2.1
-├── portal-web-admin-2.3.5
-└── portal-web-user-2.4.10
+portal-app
+├── portal-api
+├── portal-common-api
+├── portal-gateway
+├── portal-registration
+├── portal-ssh
+├── portal-storage-api
+├── portal-web-admin
+└── portal-web-user
 ```
 ### <div id="3.2"/> 3.2. Portal App 배포 Script 변수 설정
 Portal App 배포 Script 실행을 위하여 Script가 있는 위치로 이동한다.
