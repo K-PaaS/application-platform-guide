@@ -27,8 +27,8 @@
 <br>
 
 ## <div id='1.2'/>1.2. 범위
-K-PaaS AP min은 bosh-deployment를 기반으로 한 BOSH 환경에서 설치하며 ap-deployment v5.8.8.1-min의 설치를 기준으로 가이드를 작성하였다.  
-K-PaaS AP min은 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원하며,  ap-deployment v5.8.8.1-min에서 검증한 IaaS 환경은 OpenStack, vSphere 환경이다.
+K-PaaS AP min은 bosh-deployment를 기반으로 한 BOSH 환경에서 설치하며 ap-deployment v5.8.9-min의 설치를 기준으로 가이드를 작성하였다.  
+K-PaaS AP min은 VMware vSphere, Google Cloud Platform, Amazon Web Services EC2, OpenStack, Microsoft Azure 등의 IaaS를 지원하며,  ap-deployment v5.8.9-min에서 검증한 IaaS 환경은 OpenStack, vSphere 환경이다.
 
 <br>
 
@@ -61,14 +61,14 @@ $ mkdir -p ~/workspace
 $ cd ~/workspace
 $ git clone https://github.com/K-PaaS/common.git
 $ cd ~/workspace
-$ git clone https://github.com/K-PaaS/ap-deployment.git -b v5.8.8.1-min ap-deployment-min
+$ git clone https://github.com/K-PaaS/ap-deployment.git -b v5.8.9-min ap-deployment-min
 ```
 
 <br>
 
 ## <div id='2.3'/>2.3. Stemcell 업로드
 Stemcell은 배포 시 생성되는 VM Base OS Image이다.  
-ap-deployment v5.8.8.1-min은 Ubuntu jammy stemcell 1.181을 기반으로 한다.  
+ap-deployment v5.8.9-min은 Ubuntu jammy stemcell 1.260을 기반으로 한다.  
 기본적인 Stemcell 업로드 명령어는 다음과 같다.  
 ```                     
 $ bosh -e ${BOSH_ENVIRONMENT} upload-stemcell {URL}
@@ -83,7 +83,7 @@ BOSH_ENVIRONMENT는 BOSH 설치 시 사용한 Director 명이고, CURRENT_IAAS�
 > $ vi ~/workspace/ap-deployment/bosh/upload-stemcell.sh
 ```                     
 #!/bin/bash
-JAMMY_STEMCELL_VERSION=1.181
+JAMMY_STEMCELL_VERSION=1.260
 CURRENT_IAAS="${CURRENT_IAAS}"        # IaaS Information (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 aws/azure/gcp/openstack/vsphere/bosh-lite 입력)
 BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"      # bosh director alias name (K-PaaS에서 제공되는 create-bosh-login.sh 미 사용시 bosh envs에서 이름을 확인하여 입력)
 
@@ -402,7 +402,7 @@ syslog_fallback_servers: []             # [MONITORING] Syslog Fallback Servers
 
 # STEMCELL
 stemcell_os: "ubuntu-jammy"		# Stemcell OS
-stemcell_version: "1.181"		# Stemcell Version
+stemcell_version: "1.260"		# Stemcell Version
 
 # SMOKE-TEST
 smoke_tests_azs: ["z1"]			# Smoke-Test 가용 존
@@ -875,10 +875,10 @@ Task 134. Done
 Deployment 'ap'
 
 Instance                                       Process State  AZ  IPs          VM CID               VM Type             Active  Stemcell  
-compute/e154dcdc-a2c1-4a85-86b7-607a02a30acf   running        z1  10.0.31.235  i-0f92f55575bf2567e  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-control/a18f5e97-098c-47ab-9147-77f594571bd6   running        z1  10.0.31.234  i-053cd8f71d99f1a15  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-database/7ea28d82-5d5b-471f-bde6-a65d4809062e  running        z1  10.0.31.233  i-0b2e54deaf0734f59  small               true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-router/c01b1aa4-43c9-42f6-9003-cf8f8664d142    running        z7  10.0.30.204  i-0a449def3351877b3  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
+compute/e154dcdc-a2c1-4a85-86b7-607a02a30acf   running        z1  10.0.31.235  i-0f92f55575bf2567e  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+control/a18f5e97-098c-47ab-9147-77f594571bd6   running        z1  10.0.31.234  i-053cd8f71d99f1a15  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+database/7ea28d82-5d5b-471f-bde6-a65d4809062e  running        z1  10.0.31.233  i-0b2e54deaf0734f59  small               true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+router/c01b1aa4-43c9-42f6-9003-cf8f8664d142    running        z7  10.0.30.204  i-0a449def3351877b3  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
                                                                   54.180.53.80                                                 
 
 4 vms
@@ -894,14 +894,14 @@ Task 134. Done
 Deployment 'ap'
 
 Instance                                                  Process State  AZ  IPs             VM CID               VM Type             Active  Stemcell  
-compute/c3f53aed-469f-47ab-aa9b-94be30ca3687              running        z1  10.0.21.156     i-0617a496567bd859e  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-control/acd880a6-b309-452e-b996-0ef4252f8dd3              running        z1  10.0.21.153     i-0d9fbf3f662dec9a0  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-database/c92fd45f-1165-4d71-8df4-9b4270abdd0a             running        z1  10.0.21.151     i-0ead4f61c9be951b9  small               true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-haproxy/5ccc73dd-cf7e-4f4c-a204-1e933eddfcf8              running        z7  10.0.20.151     i-02e5277d6fd829f34  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
+compute/c3f53aed-469f-47ab-aa9b-94be30ca3687              running        z1  10.0.21.156     i-0617a496567bd859e  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+control/acd880a6-b309-452e-b996-0ef4252f8dd3              running        z1  10.0.21.153     i-0d9fbf3f662dec9a0  small-highmem-16GB  true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+database/c92fd45f-1165-4d71-8df4-9b4270abdd0a             running        z1  10.0.21.151     i-0ead4f61c9be951b9  small               true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+haproxy/5ccc73dd-cf7e-4f4c-a204-1e933eddfcf8              running        z7  10.0.20.151     i-02e5277d6fd829f34  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
                                                                              54.180.53.80                                             
-router/4f58af5a-529c-41f7-866c-e2327978ea99               running        z1  10.0.21.154     i-0b5f2d42d2c2b9d06  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-singleton-blobstore/5ed376fe-1d84-45c8-a6e8-f938b7320a36  running        z1  10.0.21.152     i-08a432269ffb76663  small               true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
-tcp-router/f8fe5974-8340-4d16-ae02-0b7150828388           running        z1  10.0.21.155     i-04a845c8e7fc7cfb4  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.181 
+router/4f58af5a-529c-41f7-866c-e2327978ea99               running        z1  10.0.21.154     i-0b5f2d42d2c2b9d06  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+singleton-blobstore/5ed376fe-1d84-45c8-a6e8-f938b7320a36  running        z1  10.0.21.152     i-08a432269ffb76663  small               true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
+tcp-router/f8fe5974-8340-4d16-ae02-0b7150828388           running        z1  10.0.21.155     i-04a845c8e7fc7cfb4  minimal             true    bosh-aws-xen-hvm-ubuntu-jammy-go_agent/1.260 
 
 
 7 vms
