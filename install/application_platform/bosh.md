@@ -135,7 +135,7 @@ BOSH 인증서는 BOSH 내부 Component 간의 통신 시 필요한 certificate�
 ```
 $ mkdir -p ~/workspace
 $ cd ~/workspace
-$ git clone https://github.com/K-PaaS/ap-deployment.git -b v5.8.9
+$ git clone https://github.com/K-PaaS/ap-deployment.git -b v5.8.11
 ```
 
 - ap-deployment 이하 폴더 확인
